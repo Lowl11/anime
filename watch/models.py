@@ -6,6 +6,9 @@ class Anime(models.Model):
     season = models.IntegerField(default = 1)
     image = models.ImageField(upload_to = 'anime')
 
+    class Meta:
+        verbose_name_plural = 'Список аниме'
+
     def __str__(self):
         if len(self.title_foreign) > 0:
             slash = ' / '
