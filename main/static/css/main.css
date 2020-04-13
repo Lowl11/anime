@@ -1,6 +1,7 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: #edeef0;
 }
 
 .container-fluid {
@@ -17,24 +18,27 @@ body {
 
 /* Каждый столбец */
 .column-container {
-    border: 1px solid #000;
     box-sizing: border-box;
     margin: 20px;
     /* Тестовые параметры */
-    height: 1000px;
 }
 
 /* Левый столбец */
 .left-container {
     flex: 1;
+    height: 1000px;
+    border: 1px solid #000;
 }
 
 /* Центральный столбец */
 .center-container {
     flex: 5;
+    background: #fff;
 }
 
 /* Правый столбец */
 .right-container {
     flex: 1;
+    height: 1000px;
+    border: 1px solid #000;
 }

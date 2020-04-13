@@ -13,7 +13,9 @@ CONSTANTS = settings.A_CONSTANTS
 ####################################################################
 ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
 ####################################################################
-# Create your views here.
+"""
+    Отображение списка аниме
+"""
 def page_view(reqeust):
     vm = ViewModel()
     vm.add_path('watch/page.html')
@@ -23,9 +25,19 @@ def page_view(reqeust):
     vm.add_object('anime_cover_height', CONSTANTS['anime_cover_height'])
     return vm.render(reqeust)
 
+"""
+    Отображение одного аниме
+"""
+def anime_view(reqeust, id):
+    vm = ViewModel()
+    vm.add_path('watch/anime.html')
+    anime = AnimeHelper.get_anime_by_id(id = id)
+    if anime == False:
+        return not_found()
+    return vm.render(reqeust)
 
 ####################################################################
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
 ####################################################################
-def some_private_method():
-    pass
+def not_found():
+    return SETTINGS['not_found_method']()
