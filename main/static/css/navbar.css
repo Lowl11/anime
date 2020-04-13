@@ -28,14 +28,29 @@ nav ul {
 }
 
 nav ul li {
+    display: inline;
     list-style: none;
 }
 
 nav ul li a {
+    display: inline-block;
     color: #d7e2ec;
+    background-color: #385b82;
+    height: 100%;
+    padding: 0 20px;
 }
 
 nav ul li a:hover {
     color: #d7e2ec;
     text-decoration: none;
+}
+
+nav .auth {
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+nav .auth ul li a {
+    background-color: #4a76a8;
 }
