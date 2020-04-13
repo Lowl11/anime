@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 
-A_SETTINGS = settings.A_SETTINGS
+# Подключение кастомных классов
+from .navigation_links import NavigationLinksHelper
+
+SETTINGS = settings.A_SETTINGS
 
 # Видмодель нужна чтобы не увеличивать кол-во кода при отправлении больших context'ов
 # Еще при рендеринге можно добавлять настройки или проверки для каждого экшона
@@ -11,17 +14,21 @@ class ViewModel:
 
     # рендеринг страницы
     def render(self, request):
+        self.pre_render_settings(request)
         return render(request, self.__path, self.__context)
     
     # настройки / проверки перед рендерингом абсолютно каждой страницы
-    def pre_render_settings(request):
+    def pre_render_settings(self, request):
         # Проверка на залогиненность юзера
         user = request.user
         if user is not None:
             self.add_object('user', user)
         
         # Проверка на необходимость прогружать прелоадер
-        self.add_object('preloader', A_SETTINGS['preloader'])
+        self.add_object('preloader', SETTINGS['preloader'])
+
+        # добавление пунктов навигационной панели
+        self.add_object('navbar_links', NavigationLinksHelper.get_links())
     
     # добавляет путь к HTML файлу
     def add_path(self, path):

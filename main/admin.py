@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import NavigationLink
+
+# Регистрация моделей БД в админ-панели
+admin.site.register(NavigationLink)

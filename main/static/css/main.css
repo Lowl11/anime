@@ -3,22 +3,6 @@ body {
     padding: 0;
 }
 
-nav {
-    background-color: #4a76a8;
-    height: 50px;
-    display: flex;
-    align-items: center;
-    color: #d7e2ec;
-}
-
-nav ul {
-    margin: 0;
-}
-
-nav ul li {
-    list-style: none;
-}
-
 .container-fluid {
     padding: 0;
 }
