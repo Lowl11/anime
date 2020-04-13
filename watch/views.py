@@ -28,10 +28,11 @@ def page_view(reqeust):
 """
     Отображение одного аниме
 """
-def anime_view(reqeust, id):
+def anime_view(reqeust, pk):
     vm = ViewModel()
     vm.add_path('watch/anime.html')
-    anime = AnimeHelper.get_anime_by_id(id = id)
+    anime = AnimeHelper.get_anime_by_id(pk)
+    vm.add_object('anime', anime)
     if anime == False:
         return not_found()
     return vm.render(reqeust)

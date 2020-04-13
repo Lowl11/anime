@@ -8,7 +8,7 @@ class AnimeHelper:
     
     @staticmethod
     def get_anime_by_id(id):
-        anime = Anime.objects.get(pk=id)
+        anime = Anime.objects.get(pk = id)
         if anime is None:
             return False
         return anime

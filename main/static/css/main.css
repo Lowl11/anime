@@ -20,7 +20,7 @@ body {
 .column-container {
     box-sizing: border-box;
     margin: 20px;
-    /* Тестовые параметры */
+    min-height: 1000px;
 }
 
 /* Левый столбец */
