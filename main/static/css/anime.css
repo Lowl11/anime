@@ -1,0 +1,15 @@
+.anime-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.anime {
+    margin: 20px;
+    display: inline-block;
+}
+
+.anime .anime-cover {
+    width: 200px;
+    height: 300px;
+}

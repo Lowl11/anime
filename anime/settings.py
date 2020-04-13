@@ -134,5 +134,8 @@ A_CONSTANTS = {
     
     'module_name_watch': 'watch',
     'module_name_main': 'main',
-    'module_name_auth': 'a_auth'
+    'module_name_auth': 'a_auth',
+
+    'anime_cover_width': 300,
+    'anime_cover_height': 200
 }

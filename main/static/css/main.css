@@ -6,3 +6,35 @@ body {
 .container-fluid {
     padding: 0;
 }
+
+/* DIV который содержит все столбцы */
+.main-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Каждый столбец */
+.column-container {
+    border: 1px solid #000;
+    box-sizing: border-box;
+    margin: 20px;
+    /* Тестовые параметры */
+    height: 1000px;
+}
+
+/* Левый столбец */
+.left-container {
+    flex: 1;
+}
+
+/* Центральный столбец */
+.center-container {
+    flex: 5;
+}
+
+/* Правый столбец */
+.right-container {
+    flex: 1;
+}

@@ -3,6 +3,7 @@ from django.conf import settings
 
 # подключение кастомных файлов
 from help.viewmodel import ViewModel
+from help.anime import AnimeHelper
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -17,6 +18,9 @@ def page_view(reqeust):
     vm = ViewModel()
     vm.add_path('watch/page.html')
     vm.add_object('title', CONSTANTS['title_watch_home_view'])
+    vm.add_object('anime_list', AnimeHelper.get_all())
+    vm.add_object('anime_cover_width', CONSTANTS['anime_cover_width'])
+    vm.add_object('anime_cover_height', CONSTANTS['anime_cover_height'])
     return vm.render(reqeust)
 
 
