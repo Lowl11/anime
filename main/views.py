@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+def home_view(request):
+    context = {
+        'title': 'Аниме онлайн'
+    }
+    return render(request, 'watch/page.html', context)
