@@ -2,6 +2,7 @@
 
 ### Подключенные библиотеки
 import os
+from .starter import Starter
 
 ### Базовые и первые настройки
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -119,8 +120,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # Глобальный массив кастомных настроек используемых по всему проекту
-Y_SETTINGS = {
+A_SETTINGS = {
     'debug': DEBUG,
     'debugger': True,
-    'preloader': False
+    'preloader': False,
+    'start_from': Starter.start_from()
+}
+
+A_CONSTANTS = {
+    'not_found_title': 'Ошибка 404 - Страница не найдена'
 }
