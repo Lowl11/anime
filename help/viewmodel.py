@@ -5,7 +5,9 @@ from django.conf import settings
 from .navigation_links import NavigationLinksHelper
 from .genre import GenreHelper
 
+# глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
+CONSTANTS = settings.A_CONSTANTS
 
 # Видмодель нужна чтобы не увеличивать кол-во кода при отправлении больших context'ов
 # Еще при рендеринге можно добавлять настройки или проверки для каждого экшона
