@@ -36,6 +36,9 @@ def logout_get(request):
     return redirect_home()
 
 def signup_view(request):
+    if AuthHelper.is_authorized(request):
+        return redirect_home()
+
     vm = ViewModel()
     vm.add_path('a_auth/signup.html')
     vm.add_object('title', 'Регистрация пользователя')
