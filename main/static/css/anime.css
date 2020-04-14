@@ -35,3 +35,9 @@
     color: #4a76a8;
     text-decoration: none;
 }
+
+.anime .anime-info .anime-description-text {
+    overflow: hidden;
+    max-height: 140px;
+    text-overflow: ellipsis;
+}
