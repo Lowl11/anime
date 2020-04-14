@@ -33,7 +33,7 @@ class ViewModel:
         self.add_object('preloader', SETTINGS['preloader'])
 
         # добавление пунктов навигационной панели
-        self.add_object('navbar_links', NavigationLinksHelper.get_links())
+        self.add_object('navbar_links', NavigationLinksHelper.get_links_by_order())
 
         # добавление всех жанров аниме
         self.add_object('genre_list', GenreHelper.get_genres())

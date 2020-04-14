@@ -12,3 +12,13 @@ class NavigationLinksHelper:
     def get_links():
         links = NavigationLink.objects.all()
         return links
+
+    @staticmethod
+    def get_links_by_order():
+        links = NavigationLinksHelper.get_links()
+        sorted_links = NavigationLinksHelper.sort_by_order_number(links)
+        return sorted_links
+    
+    @staticmethod
+    def sort_by_order_number(links):
+        return sorted(links, key = lambda link: link.order_number, reverse = False)

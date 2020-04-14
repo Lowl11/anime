@@ -7,6 +7,7 @@ class Anime(models.Model):
     description = models.TextField('Описание', default = '')
     episodes_quantity = models.IntegerField('Количество серий', default = 12)
     start_date = models.DateField('Дата начала', default = '2020-01-01')
+    genre_list = models.CharField(max_length = 999, default = '')
     image = models.ImageField('Обложка', upload_to = 'anime')
 
     class Meta:
