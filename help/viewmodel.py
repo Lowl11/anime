@@ -5,6 +5,7 @@ from django.conf import settings
 from .navigation_links import NavigationLinksHelper
 from .genre import GenreHelper
 from .route import RouteHelper
+from .module import ModuleHelper
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -30,8 +31,10 @@ class ViewModel:
         else:
             self.add_object('user', user)
 
-        # нынешний модуль в котором находится пользователь
-        self.add_object('module', RouteHelper.module_name(request.path))
+        # нынешний модуль в котором находится пользователь и добавление контекста модуля
+        module_name = RouteHelper.module_name(request.path)
+        self.add_object('module', module_name)
+        self.add_module_context(module_name)
 
         # добавление пунктов навигационной панели
         self.add_object('navbar_links', NavigationLinksHelper.get_links_by_order())
@@ -46,4 +49,11 @@ class ViewModel:
     # добавляет новый объект в контекст
     def add_object(self, object_name, object):
         self.__context[object_name] = object
-    
+
+    # добавляет параметры контекста модуля
+    def add_module_context(self, module_name):
+        module_context = ModuleHelper.get_context(module_name)
+        for i in range(0, module_context.size()):
+            param = module_context.get(i)
+            self.add_object(param.key, param.value)
+        return True

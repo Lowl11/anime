@@ -46,8 +46,12 @@
             </nav>
 
             <div class="container-fluid">
-                {% if module == 'watch' %}
-                <h1>Watch module</h1>
+                {% if user is not None %}
+                    {% if module == 'watch' %}
+                    <div class="xsearch">
+                        {{ xsearch_form }}
+                    </div>
+                    {% endif %}
                 {% endif %}
             </div>
             
