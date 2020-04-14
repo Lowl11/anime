@@ -7,7 +7,11 @@ from watch.models import Genre
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
+"""
+    GenreHelper - вспомогающий класс
+"""
 class GenreHelper:
+    # Возвращает все жанры аниме
     @staticmethod
     def get_genres():
         genre_list = Genre.objects.all()

@@ -11,16 +11,33 @@ from .module import ModuleHelper
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
-# Видмодель нужна чтобы не увеличивать кол-во кода при отправлении больших context'ов
-# Еще при рендеринге можно добавлять настройки или проверки для каждого экшона
+"""
+    Видмодель - класс вызывающийся при каждом рендеринге страницы, вызывается на каждом Action методе.
+    Приемущества:
+        1. Видмодель нужна чтобы не увеличивать кол-во кода при отправлении больших context'ов.
+        2. Еще при рендеринге можно добавлять настройки или проверки для каждого экшона.
+        3. Так же можно управлять поведением от странице к странице.
+"""
 class ViewModel:
     __context = {}
     __path = None
 
+    ############################# ПУБЛИЧНЫЕ МЕТОДЫ #############################
     # рендеринг страницы
     def render(self, request):
         self.pre_render_settings(request)
         return render(request, self.__path, self.__context)
+    
+    # добавляет путь к HTML файлу
+    def add_path(self, path):
+        self.__path = path
+    
+    # добавляет новый объект в контекст
+    def add_object(self, object_name, object):
+        self.__context[object_name] = object
+
+    
+    ############################# ПРИВАТНЫЕ МЕТОДЫ #############################
     
     # настройки / проверки перед рендерингом абсолютно каждой страницы
     def pre_render_settings(self, request):
@@ -41,19 +58,12 @@ class ViewModel:
 
         # добавление всех жанров аниме
         self.add_object('genre_list', GenreHelper.get_genres())
-    
-    # добавляет путь к HTML файлу
-    def add_path(self, path):
-        self.__path = path
-    
-    # добавляет новый объект в контекст
-    def add_object(self, object_name, object):
-        self.__context[object_name] = object
 
     # добавляет параметры контекста модуля
     def add_module_context(self, module_name):
         module_context = ModuleHelper.get_context(module_name)
-        for i in range(0, module_context.size()):
-            param = module_context.get(i)
-            self.add_object(param.key, param.value)
+        if module_context != None:
+            for i in range(0, module_context.size()):
+                param = module_context.get(i)
+                self.add_object(param.key, param.value)
         return True

@@ -9,11 +9,16 @@ from a_auth.models import Viewer
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
+"""
+    AuthHelper - инструмент для авторизации, регистрации и выхода
+"""
 class AuthHelper:
+    # выход из аккаунта
     @staticmethod
     def logout(request):
         logout(request)
-    
+
+    # авторизация пользователя
     @staticmethod
     def signin_user(request, dict):
         base_user = authenticate(username = dict['username'], password = dict['password'])
@@ -24,6 +29,7 @@ class AuthHelper:
                 login(request, base_user)
         # end
     
+    # регистрация пользователя
     @staticmethod
     def signup_user(request, dict):
         username = dict['username']
@@ -41,6 +47,7 @@ class AuthHelper:
                 return False
         return True
 
+    # проверка авторизован ли пользователь
     @staticmethod
     def is_authorized(request):
         if request.user.is_anonymous:
