@@ -13,7 +13,7 @@ CONSTANTS = settings.A_CONSTANTS
 ####################################################################
 ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
 ####################################################################
-def login_view(request):
+def signin_view(request):
     vm = ViewModel()
     vm.add_path('a_auth/signin.html')
     return vm.render(request)
@@ -21,6 +21,11 @@ def login_view(request):
 def logout_get(request):
     AuthHelper.logout(request)
     return redirect_home()
+
+def signup_view(request):
+    vm = ViewModel()
+    vm.add_path('a_auth/signup.html')
+    return vm.render(request)
 
 ####################################################################
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################

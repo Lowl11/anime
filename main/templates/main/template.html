@@ -37,8 +37,8 @@
                         {% if user is not None %}
                         <li><a href="{% url 'logout_get' %}">Выйти [{{ user.username }}]</a></li>
                         {% else %}
-                        <li><a href="{% url 'login_view' %}">Войти</a></li>
-                        <li><a href="#">Зарегестрироваться</a></li>
+                        <li><a href="{% url 'signin_view' %}">Войти</a></li>
+                        <li><a href="{% url 'signup_view' %}">Зарегестрироваться</a></li>
                         {% endif %}
                     </ul>
                 </div>

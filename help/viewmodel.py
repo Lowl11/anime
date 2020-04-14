@@ -21,7 +21,9 @@ class ViewModel:
     def pre_render_settings(self, request):
         # Проверка на залогиненность юзера
         user = request.user
-        if user is not None:
+        if user.is_anonymous:
+            self.add_object('user', None)
+        else:
             self.add_object('user', user)
         
         # Проверка на необходимость прогружать прелоадер
