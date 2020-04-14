@@ -4,6 +4,7 @@ from django.conf import settings
 # Подключение кастомных классов
 from .navigation_links import NavigationLinksHelper
 from .genre import GenreHelper
+from .route import RouteHelper
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -28,9 +29,9 @@ class ViewModel:
             self.add_object('user', None)
         else:
             self.add_object('user', user)
-        
-        # Проверка на необходимость прогружать прелоадер
-        self.add_object('preloader', SETTINGS['preloader'])
+
+        # нынешний модуль в котором находится пользователь
+        self.add_object('module', RouteHelper.module_name(request.path))
 
         # добавление пунктов навигационной панели
         self.add_object('navbar_links', NavigationLinksHelper.get_links_by_order())
