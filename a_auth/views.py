@@ -14,6 +14,10 @@ CONSTANTS = settings.A_CONSTANTS
 ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
 ####################################################################
 def signin_view(request):
+    # если пользователь залогинен, то на страницу с формой входа запрещен
+    if AuthHelper.is_authorized(request):
+        return redirect_home()
+    
     vm = ViewModel()
     vm.add_path('a_auth/signin.html')
     return vm.render(request)

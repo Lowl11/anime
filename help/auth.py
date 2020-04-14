@@ -10,4 +10,10 @@ class AuthHelper:
     @staticmethod
     def logout(request):
         logout(request)
+
+    @staticmethod
+    def is_authorized(request):
+        if request.user.is_anonymous:
+            return False
+        return request.user.is_authenticated
     
