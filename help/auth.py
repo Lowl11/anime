@@ -15,14 +15,31 @@ class AuthHelper:
         logout(request)
     
     @staticmethod
-    def signin_user(request, username, password):
-        base_user = authenticate(username=username, password=password)
+    def signin_user(request, dict):
+        base_user = authenticate(username = dict['username'], password = dict['password'])
 
         if base_user is not None:
             viewer = Viewer.objects.get(base_user = base_user)
             if viewer is not None:
                 login(request, base_user)
         # end
+    
+    @staticmethod
+    def signup_user(request, dict):
+        username = dict['username']
+        password = dict['password']
+        re_password = dict['re_password']
+        first_name = dict['first_name']
+        last_name = dict['last_name']
+
+        if password == re_password:
+            try:
+                viewer = Viewer()
+                viewer.signup_base_user(username, password, first_name, last_name)
+                viewer.save()
+            except:
+                return False
+        return True
 
     @staticmethod
     def is_authorized(request):

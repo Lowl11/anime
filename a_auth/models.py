@@ -6,7 +6,7 @@ class Viewer(models.Model):
     image = models.ImageField(upload_to = 'users')
 
     # Регистрация базового пользователя джанго
-    def register_base_user(self, username, password, first_name, last_name):
+    def signup_base_user(self, username, password, first_name, last_name):
         base_user = User()
         base_user.username = username
         base_user.set_password(password)

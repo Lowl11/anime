@@ -13,3 +13,7 @@
     flex-direction: column;
     width: 500px;
 }
+
+.a-form .btn {
+    margin-top: 15px;
+}
