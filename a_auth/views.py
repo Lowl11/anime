@@ -5,6 +5,7 @@ from django.conf import settings
 # подключение кастомных файлов
 from help.viewmodel import ViewModel
 from help.auth import AuthHelper
+from .forms import SigninForm
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -20,7 +21,15 @@ def signin_view(request):
     
     vm = ViewModel()
     vm.add_path('a_auth/signin.html')
+    vm.add_object('form', SigninForm())
+    vm.add_object('title', 'Авторизация')
     return vm.render(request)
+
+def signin_post(request):
+    AuthHelper.signin_user(request, request.POST['username'], request.POST['password'])
+    if AuthHelper.is_authorized(request):
+        return redirect_home()
+    return redirect_signin()
 
 def logout_get(request):
     AuthHelper.logout(request)
@@ -36,3 +45,6 @@ def signup_view(request):
 ####################################################################
 def redirect_home():
     return redirect('/')
+
+def redirect_signin():
+    return redirect('/auth/signin/')

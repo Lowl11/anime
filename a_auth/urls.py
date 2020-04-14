@@ -9,7 +9,7 @@ urlpatterns = [
     # url(r'^register_post/$', views.register_post, name='register_post'),
 
     url(r'^signin/$', views.signin_view, name='signin_view'),
-    # url(r'^login_post/$', views.login_post, name='login_post'),
+    url(r'^signin_post/$', views.signin_post, name='signin_post'),
     url(r'^logout/$', views.logout_get, name='logout_get'),
     ############################# /AUTH ################################
 ]
