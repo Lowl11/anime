@@ -20,6 +20,7 @@ ALLOWED_HOSTS = []
 ### Подключение более сложных настроек
 # Список подключенных приложений
 INSTALLED_APPS = [
+    'grappelli', # для более красивой админки Django !!! Обязательно перед django.contrib.admin
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -56,6 +57,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.request',
             ],
         },
     },

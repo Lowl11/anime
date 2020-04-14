@@ -1,8 +1,44 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: #edeef0;
 }
 
 .container-fluid {
     padding: 0;
+}
+
+/* DIV который содержит все столбцы */
+.main-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Каждый столбец */
+.column-container {
+    box-sizing: border-box;
+    margin: 20px;
+    min-height: 1000px;
+}
+
+/* Левый столбец */
+.left-container {
+    flex: 1;
+    height: 1000px;
+    border: 1px solid #000;
+}
+
+/* Центральный столбец */
+.center-container {
+    flex: 5;
+    background: #fff;
+}
+
+/* Правый столбец */
+.right-container {
+    flex: 1;
+    height: 1000px;
+    border: 1px solid #000;
 }
