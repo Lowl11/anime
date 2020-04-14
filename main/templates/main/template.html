@@ -48,13 +48,12 @@
             <div class="container-fluid main-container">
                 <div class="left-container column-container">
                     <h1>Left column</h1>
+                    {% block left_content %}
+                    {% endblock %}
                 </div>
                 <div class="center-container column-container">
                     {% block content %}
                     {% endblock %}
-                </div>
-                <div class="right-container column-container">
-                    <h1>Right column</h1>
                 </div>
             </div>
 
