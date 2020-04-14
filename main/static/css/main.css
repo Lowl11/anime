@@ -18,15 +18,15 @@ body {
 /* Каждый столбец */
 .column-container {
     box-sizing: border-box;
-    margin: 20px;
-    min-height: 1000px;
+    margin: 10px;
 }
 
 /* Левый столбец */
 .left-container {
     flex: 1;
-    height: 1000px;
-    border: 1px solid #000;
+    background-color: #313131;
+    color: #edeef0;
+    border-radius: 10px;
 }
 
 /* Центральный столбец */

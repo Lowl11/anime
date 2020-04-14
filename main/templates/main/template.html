@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap-grid.css' %}">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" href="{% static 'css/left-navigation.css' %}">
     {% block css %}
     {% endblock %}
 
@@ -47,9 +48,14 @@
             <!-- Основной контент сайта -->
             <div class="container-fluid main-container">
                 <div class="left-container column-container">
-                    <h1>Left column</h1>
-                    {% block left_content %}
-                    {% endblock %}
+                    <div class="left-navigation">
+                        <h1>Жанры аниме</h1>
+                        <ul>
+                            {% for genre in genre_list %}
+                            <li>{{ genre.name }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
                 <div class="center-container column-container">
                     {% block content %}
