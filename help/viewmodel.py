@@ -3,6 +3,7 @@ from django.conf import settings
 
 # Подключение кастомных классов
 from .navigation_links import NavigationLinksHelper
+from .genre import GenreHelper
 
 SETTINGS = settings.A_SETTINGS
 
@@ -31,6 +32,9 @@ class ViewModel:
 
         # добавление пунктов навигационной панели
         self.add_object('navbar_links', NavigationLinksHelper.get_links())
+
+        # добавление всех жанров аниме
+        self.add_object('genre_list', GenreHelper.get_genres())
     
     # добавляет путь к HTML файлу
     def add_path(self, path):

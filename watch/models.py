@@ -17,3 +17,14 @@ class Anime(models.Model):
         if len(self.title_foreign) > 0:
             slash = ' / '
         return self.title_rus + slash + self.title_foreign + ' [TV-' + str(self.season) + ']'
+
+class Genre(models.Model):
+    name = models.CharField('Название жанра', max_length = 255)
+    order_number = models.IntegerField('Порядковый номер')
+
+    class Meta:
+        verbose_name = 'Жанр Аниме'
+        verbose_name_plural = 'Жанры Аниме'
+
+    def __str__(self):
+        return self.name + ' [' + str(self.order_number) + ']'
