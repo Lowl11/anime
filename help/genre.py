@@ -28,7 +28,7 @@ class GenreHelper:
         for i in range(0, length):
             genre = anime_genres[i]
             html += '<a href="/watch/genre/' + genre.constant_genre.name + '">' + genre.constant_genre.name + '</a>'
-            if i != length:
+            if i != length - 1:
                 html += ', '
         return html
 
