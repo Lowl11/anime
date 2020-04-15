@@ -13,9 +13,7 @@ CONSTANTS = settings.A_CONSTANTS
 ####################################################################
 ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
 ####################################################################
-"""
-    Отображение списка аниме
-"""
+# Отображение списка аниме
 def page_view(reqeust):
     vm = ViewModel()
     vm.add_path('watch/page.html')
@@ -25,9 +23,8 @@ def page_view(reqeust):
     vm.add_object('anime_cover_height', CONSTANTS['anime_cover_height'])
     return vm.render(reqeust)
 
-"""
-    Отображение одного аниме
-"""
+
+# Отображение одного аниме
 def anime_view(reqeust, pk):
     vm = ViewModel()
     vm.add_path('watch/anime.html')
@@ -35,6 +32,12 @@ def anime_view(reqeust, pk):
     vm.add_object('anime', anime)
     if anime == False:
         return not_found()
+    return vm.render(reqeust)
+
+# отображение аниме принадлежащие определенному жанру
+def genre_view(reqeust, name):
+    vm = ViewModel()
+    vm.add_path('watch/page.html')
     return vm.render(reqeust)
 
 ####################################################################
