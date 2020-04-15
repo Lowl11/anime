@@ -2,6 +2,7 @@ from django.conf import settings
 
 # Подключение кастомных классов
 from watch.models import Anime
+from help.genre import GenreHelper
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -15,6 +16,8 @@ class AnimeHelper:
     @staticmethod
     def get_all():
         anime_list = Anime.objects.all()
+        for anime in anime_list:
+            anime.genre_links = GenreHelper.anime_genres_links(anime)
         return anime_list
     
     # возвращает определенное аниме по ID

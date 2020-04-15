@@ -19,13 +19,26 @@ class Anime(models.Model):
             slash = ' / '
         return self.title_rus + slash + self.title_foreign + ' [TV-' + str(self.season) + ']'
 
-class Genre(models.Model):
+
+class ConstantGenre(models.Model):
     name = models.CharField('Название жанра', max_length = 255)
     order_number = models.IntegerField('Порядковый номер')
+
+    class Meta:
+        verbose_name = 'Жанр'
+        verbose_name_plural = 'Жанры'
+
+    def __str__(self):
+        return self.name + ' [' + str(self.order_number) + ']'
+
+
+class Genre(models.Model):
+    constant_genre = models.ForeignKey(ConstantGenre, on_delete = models.CASCADE)
+    anime = models.ForeignKey(Anime, on_delete = models.CASCADE)
 
     class Meta:
         verbose_name = 'Жанр Аниме'
         verbose_name_plural = 'Жанры Аниме'
 
     def __str__(self):
-        return self.name + ' [' + str(self.order_number) + ']'
+        return str(self.anime) + ' - ' + self.constant_genre.name

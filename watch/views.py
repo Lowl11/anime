@@ -38,6 +38,7 @@ def anime_view(reqeust, pk):
 def genre_view(reqeust, name):
     vm = ViewModel()
     vm.add_path('watch/page.html')
+    vm.add_object('title', 'Аниме по жанру "' + name + '"')
     return vm.render(reqeust)
 
 ####################################################################
