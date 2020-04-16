@@ -1,0 +1,10 @@
+.left-navigation {}
+
+.left-navigation h1 {
+    font-size: 16px;
+    margin: 20px;
+}
+
+.left-navigation ul {
+    margin: 5px;
+}

@@ -4,4 +4,4 @@ def home_view(request):
     context = {
         'title': 'CMS'
     }
-    return render(request, 'cms/index.html', context)
+    return render(request, 'cms/anime.html', context)

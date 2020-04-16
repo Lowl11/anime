@@ -13,8 +13,8 @@
 }
 
 .anime .anime-cover {
-    width: 200px;
-    height: 300px;
+    width: 220px;
+    height: 320px;
 }
 
 .anime .anime-info {
@@ -34,4 +34,10 @@
 .anime .anime-info .anime-title a:hover {
     color: #4a76a8;
     text-decoration: none;
+}
+
+.anime .anime-info .anime-description-text {
+    overflow: hidden;
+    max-height: 140px;
+    text-overflow: ellipsis;
 }
