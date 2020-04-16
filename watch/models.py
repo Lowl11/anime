@@ -20,8 +20,8 @@ class Anime(models.Model):
 
 
 class ConstantGenre(models.Model):
-    name = models.CharField('Название жанра', max_length = 255)
-    order_number = models.IntegerField('Порядковый номер')
+    name = models.CharField('Название жанра', max_length = 255, unique = True)
+    order_number = models.IntegerField('Порядковый номер', unique = True)
 
     class Meta:
         verbose_name = 'Жанр'
