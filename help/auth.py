@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate, logout
 from django.conf import settings
 
 # Подключение кастомных классов
-from a_auth.models import Viewer
+from a_auth.models import Viewer, Role
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -13,6 +13,10 @@ CONSTANTS = settings.A_CONSTANTS
     AuthHelper - инструмент для авторизации, регистрации и выхода
 """
 class AuthHelper:
+    ####################################################################
+    ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
+    ####################################################################
+
     # выход из аккаунта
     @staticmethod
     def logout(request):
@@ -42,6 +46,7 @@ class AuthHelper:
             try:
                 viewer = Viewer()
                 viewer.signup_base_user(username, password, first_name, last_name)
+                viewer.role = AuthHelper.default_role()
                 viewer.save()
             except:
                 return False
@@ -53,4 +58,14 @@ class AuthHelper:
         if request.user.is_anonymous:
             return False
         return request.user.is_authenticated
+    
+    
+    ####################################################################
+    ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
+    ####################################################################
+
+    # возвращает роль пользователя
+    @staticmethod
+    def default_role():
+        return Role.objects.get(value = 3)
     

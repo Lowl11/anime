@@ -1,9 +1,23 @@
 from django.db import models
 
+# Роль пользователей
+class Role(models.Model):
+    name = models.CharField(max_length = 255, unique = True)
+    value = models.IntegerField(default = 1, unique = True)
+
+    class Meta:
+        verbose_name = 'Роль'
+        verbose_name_plural = 'Роли'
+
+    def __str__(self):
+        return self.name + ' [' + str(self.value) + ']'
+
+
 # Пользователь
 class Viewer(models.Model):
     base_user = models.ForeignKey('auth.User', on_delete = models.CASCADE)
     image = models.ImageField(upload_to = 'users')
+    role = models.ForeignKey(Role, on_delete = models.PROTECT)
 
     class Meta:
         verbose_name = 'Зритель'
