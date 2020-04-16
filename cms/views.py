@@ -18,12 +18,20 @@ def home_view(request):
     first_load = CmsSettings.first_load()
     if first_load == 'anime':
         return anime_view(request)
+    elif first_load == 'dashboard':
+        return dashboard_view(request)
     return not_found()
     
 def anime_view(request):
     vm = ViewModel()
     vm.add_path('cms/anime.html')
     vm.add_object('title', 'Аниме')
+    return vm.render(request)
+
+def dashboard_view(request):
+    vm = ViewModel()
+    vm.add_path('cms/dashboard.html')
+    vm.add_object('title', 'Dashboard')
     return vm.render(request)
 
 ####################################################################

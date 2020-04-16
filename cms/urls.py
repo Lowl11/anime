@@ -7,5 +7,6 @@ urlpatterns = [
     ############################# MAIN ########################################
     url(r'^$', views.home_view, name='cms_home_view'),
     url(r'^anime/$', views.anime_view, name='cms_anime_view'),
+    url(r'^dashboard/$', views.dashboard_view, name='cms_dashboard_view')
     ############################# /MAIN #######################################
 ]
