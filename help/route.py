@@ -8,4 +8,6 @@ class RouteHelper:
     @staticmethod
     def module_name(path):
         result = re.findall('^\/(\w+)\/', path)
+        if len(result) == 0:
+            return None
         return result[0]

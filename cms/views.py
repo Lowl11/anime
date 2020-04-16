@@ -4,6 +4,7 @@ from django.conf import settings
 # подключение кастомных файлов
 from help.viewmodel import ViewModel
 from .settings import CmsSettings
+from anime.starter import Starter
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -38,4 +39,4 @@ def dashboard_view(request):
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
 ####################################################################
 def not_found():
-    return SETTINGS['not_found_method']()
+    return Starter.not_found_method()

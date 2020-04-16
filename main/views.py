@@ -19,9 +19,10 @@ def home_view(request):
     return not_found()
 
 def not_found_view(request):
+    print(CONSTANTS)
     vm = ViewModel()
     vm.add_path('main/notfound.html')
-    vm.add_object('title', CONSTANTS['not_found_title'])
+    vm.add_object('title', CONSTANTS['title_not_found'])
     return vm.render(request)
 
 
