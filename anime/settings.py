@@ -1,12 +1,13 @@
 ### Django 3.0.5
 
 ### Подключенные библиотеки
-import os
+import os, sys
 from .starter import Starter
 
 ### Базовые и первые настройки
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(__file__)
+sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 
 # Секретный ключ для расшифровкий паролей и токенов
 SECRET_KEY = '#i)f3^l)5e(uz%44z($mqacm2v%#5agz=rho(@uczoh!(%wgl-'
