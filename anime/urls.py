@@ -9,7 +9,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('main.urls')),
     path('auth/', include('a_auth.urls')),
-    path('watch/', include('watch.urls'))
+    path('watch/', include('watch.urls')),
+    path('cms/', include('cms.urls'))
 ]
 
 if settings.DEBUG:

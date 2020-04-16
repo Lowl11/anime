@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'main.apps.MainConfig',
     'a_auth.apps.AAuthConfig',
     'watch.apps.WatchConfig',
-    'a_admin.apps.AAdminConfig',
+    'cms.apps.CmsConfig',
 ]
 
 MIDDLEWARE = [
