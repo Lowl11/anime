@@ -5,6 +5,10 @@ class Viewer(models.Model):
     base_user = models.ForeignKey('auth.User', on_delete = models.CASCADE)
     image = models.ImageField(upload_to = 'users')
 
+    class Meta:
+        verbose_name = 'Зритель'
+        verbose_name_plural = 'Зрители'
+
     # Регистрация базового пользователя джанго
     def signup_base_user(self, username, password, first_name, last_name):
         base_user = User()
