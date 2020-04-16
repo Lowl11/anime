@@ -27,9 +27,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main',
-    'a_auth',
-    'watch'
+    'main.apps.MainConfig',
+    'a_auth.apps.AAuthConfig',
+    'watch.apps.WatchConfig'
 ]
 
 MIDDLEWARE = [
