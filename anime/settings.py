@@ -29,7 +29,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main.apps.MainConfig',
     'a_auth.apps.AAuthConfig',
-    'watch.apps.WatchConfig'
+    'watch.apps.WatchConfig',
+    'a_admin.apps.AAdminConfig',
 ]
 
 MIDDLEWARE = [

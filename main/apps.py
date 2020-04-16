@@ -3,4 +3,4 @@ from django.apps import AppConfig
 
 class MainConfig(AppConfig):
     name = 'main'
-    verbose_name = 'Централизованный модуль Anime'
+    verbose_name = 'Централизованный модуль приложения'
