@@ -6,13 +6,15 @@
 """
 class Dictionary:
     __nodes = []
+    __type = None
 
     ############################# ПУБЛИЧНЫЕ МЕТОДЫ #############################
     
     # добавление новой записи
     def add(self, key, value):
         if self.check_key(key):
-            self.__nodes.append(self.Node(key, value))
+            if self.check_value(value):
+                self.__nodes.append(self.Node(key, value))
     
     # возвращает запись по индексу
     def get(self, index):
@@ -21,6 +23,18 @@ class Dictionary:
     # возвращает размер словаря
     def size(self):
         return len(self.__nodes)
+    
+    # возвращает лист из значений словаря
+    def to_list(self):
+        values = []
+        nodes = self.__nodes
+        for node in nodes:
+            values.append(node.value)
+        return values
+    
+    # проставляет обязательный тип данных
+    def set_data_type(self, type):
+        self.__type = type
     
 
     ############################# ПРИВАТНЫЕ МЕТОДЫ #############################
@@ -32,6 +46,13 @@ class Dictionary:
             if node.key == key:
                 return False
         return True
+    
+    # проверка(-и) значения
+    def check_value(self, value):
+        if self.__type is not None: # у нас есть заданный тип данных
+            if self.__type is not value: # value равен заданному типу данных
+                return True
+        return False
     
     # перезапись метода toString()
     def __str__(self):
