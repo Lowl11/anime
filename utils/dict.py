@@ -9,6 +9,9 @@ class Dictionary:
     __type = None
 
     ############################# ПУБЛИЧНЫЕ МЕТОДЫ #############################
+
+    def __init__(self):
+        self.clear()
     
     # добавление новой записи
     def add(self, key, value):
@@ -35,6 +38,11 @@ class Dictionary:
     # проставляет обязательный тип данных
     def set_data_type(self, type):
         self.__type = type
+
+    # очистика словаря
+    def clear(self):
+        self.__nodes = []
+        self.__type = None
     
 
     ############################# ПРИВАТНЫЕ МЕТОДЫ #############################

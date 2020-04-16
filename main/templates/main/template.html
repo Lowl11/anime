@@ -62,7 +62,7 @@
                         <h1>Жанры аниме</h1>
                         <ul>
                             {% for genre in genre_list %}
-                            <li>{{ genre.name }}</li>
+                            <li><a href="/watch/genre/{{ genre.name }}">{{ genre.name }}</a></li>
                             {% endfor %}
                         </ul>
                     </div>
