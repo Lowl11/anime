@@ -139,5 +139,7 @@ A_CONSTANTS = {
     'module_name_auth': 'a_auth',
 
     'anime_cover_width': 300,
-    'anime_cover_height': 200
+    'anime_cover_height': 200,
+
+    'url_signin': '/auth/signin/',
 }

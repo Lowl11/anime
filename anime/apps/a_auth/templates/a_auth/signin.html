@@ -9,6 +9,7 @@
 {% block content %}
 <div class="form-container">
     <form class="a-form" action="{% url 'signin_post' %}" method="POST">{% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
         {% for field in form %}
         <div class="form-group">
             {% if field.errors %}

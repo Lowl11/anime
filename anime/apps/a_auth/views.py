@@ -6,6 +6,7 @@ from django.conf import settings
 from help.viewmodel import ViewModel
 from help.auth import AuthHelper
 from .forms import SigninForm, SignupForm
+from utils.utils import Utils
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -23,12 +24,14 @@ def signin_view(request):
     vm.add_path('a_auth/signin.html')
     vm.add_object('form', SigninForm())
     vm.add_object('title', 'Авторизация')
+    vm.add_object('next', Utils.try_get_from_request(request, 'GET', 'next'))
     return vm.render(request)
 
 def signin_post(request):
     AuthHelper.signin_user(request, request.POST)
+
     if AuthHelper.is_authorized(request):
-        return redirect_home()
+        return prepare_post(request)
     return redirect_signin()
 
 def logout_get(request):
@@ -54,6 +57,15 @@ def signup_post(request):
 ####################################################################
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
 ####################################################################
+
+def prepare_post(request):
+    if request.POST:
+        # проверка на следующий URL
+        next_value = Utils.try_get_from_request(request, 'POST', 'next')
+        if len(next_value) > 0:
+            return redirect(next_value)
+    return redirect_home()
+
 def redirect_home():
     return redirect('/')
 

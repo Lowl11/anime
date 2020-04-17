@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
+from django.contrib.auth.decorators import login_required
 
 # подключение кастомных файлов
 from help.viewmodel import ViewModel
@@ -15,6 +16,7 @@ CONSTANTS = settings.A_CONSTANTS
 ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
 ####################################################################
 
+@login_required(login_url = CONSTANTS['url_signin'])
 def home_view(request):
     first_load = CmsSettings.first_load()
     if first_load == 'anime':
@@ -22,13 +24,15 @@ def home_view(request):
     elif first_load == 'dashboard':
         return dashboard_view(request)
     return not_found()
-    
+
+@login_required(login_url = CONSTANTS['url_signin'])
 def anime_view(request):
     vm = ViewModel()
     vm.add_path('cms/anime.html')
     vm.add_object('title', 'Аниме')
     return vm.render(request)
 
+@login_required(login_url = CONSTANTS['url_signin'])
 def dashboard_view(request):
     vm = ViewModel()
     vm.add_path('cms/dashboard.html')
