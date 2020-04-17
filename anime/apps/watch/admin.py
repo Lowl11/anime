@@ -4,8 +4,8 @@ from .models import Anime, ConstantGenre, Genre
 
 class AnimeAdmin(admin.ModelAdmin):
     model = Anime
-    list_display = ['id', 'title_rus', 'title_foreign', 'season', 'episodes_quantity']
-    list_editable = ['title_rus', 'title_foreign', 'season', 'episodes_quantity', ]
+    list_display = ['id', 'title_rus', 'title_foreign', 'season', 'episodes_quantity', 'start_date']
+    list_editable = ['title_rus', 'title_foreign', 'season', 'episodes_quantity', 'start_date']
     list_filter = ['season', 'episodes_quantity']
 
 
