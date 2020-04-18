@@ -14,12 +14,14 @@ class GenreHelper:
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
+
     # Возвращает все жанры аниме
     @staticmethod
     def get_genres():
         genre_list = ConstantGenre.objects.all()
         return genre_list
     
+    # возвращает список жанров одного аниме как список ссылок HTML
     @staticmethod
     def anime_genres_links(anime):
         anime_genres = GenreHelper.anime_genres(anime)
@@ -32,14 +34,18 @@ class GenreHelper:
                 html += ', '
         return html
     
+    # TODO: Выяснить что за метод
     @staticmethod
     def get_genres_by_name(genre_name):
         genres = Genre.objects.filter(constant_genre__name = genre_name)
         return genres
 
+
     ####################################################################
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
     ####################################################################
+
+    # возвращает список жанров по аниме
     @staticmethod
     def anime_genres(anime):
         genre_list = Genre.objects.filter(anime = anime)

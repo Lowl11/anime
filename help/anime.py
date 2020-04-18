@@ -23,6 +23,7 @@ class AnimeHelper:
         anime_list = Anime.objects.all()
         return AnimeHelper.prepare_anime_list(anime_list)
     
+    # TODO Erik: выяснить что за метод
     @staticmethod
     def get_by_genre(genre_name):
         genres = GenreHelper.get_genres_by_name(genre_name)

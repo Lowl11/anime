@@ -20,8 +20,10 @@ CONSTANTS = settings.A_CONSTANTS
         3. Так же можно управлять поведением от странице к странице.
 """
 class ViewModel:
-    __context = {}
-    __path = None
+    # конструктор
+    def __init__(self):
+        self.__context = {}
+        self.__path = None
 
     ############################# ПУБЛИЧНЫЕ МЕТОДЫ #############################
     # рендеринг страницы
