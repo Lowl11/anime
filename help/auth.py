@@ -31,6 +31,8 @@ class AuthHelper:
             viewer = Viewer.objects.get(base_user = base_user)
             if viewer is not None:
                 login(request, base_user)
+                viewer = Viewer.objects.get(base_user = base_user)
+                request.session['role'] = viewer.role.value
         # end
     
     # регистрация пользователя

@@ -6,6 +6,7 @@ from .navigation_links import NavigationLinksHelper
 from .genre import GenreHelper
 from .route import RouteHelper
 from .module import ModuleHelper
+from utils.utils import Utils
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -47,6 +48,7 @@ class ViewModel:
             self.add_object('user', None)
         else:
             self.add_object('user', user)
+            self.add_object('role', Utils.try_get_from_request(request, 'SESSION', 'role'))
 
         # нынешний модуль в котором находится пользователь и добавление контекста модуля
         module_name = RouteHelper.module_name(request.path)
