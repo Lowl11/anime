@@ -11,7 +11,7 @@
     <div class="anime">
         <img src="{{ anime.image.url }}" alt="{{ anime.title }}" class="anime-cover">
         <div class="anime-info">
-            <div class="anime-title"><a href="anime/{{ anime.id }}">{{ anime.title_rus }} / {{ anime.title_foreign }}</a> {% if role == 3 %}[Редактировать]{% endif %}</div>
+            <div class="anime-title"><a href="anime/{{ anime.id }}">{{ anime.title_rus }} / {{ anime.title_foreign }}</a> {% if role == 3 %}<a href="#" class="btn btn-success anime-edit-button" target="_tab">Редактировать</a>{% endif %}</div>
             <div class="anime-genre-list"><b>Жанры: </b>{{ anime.genre_links|safe }}</div>
             <div class="anime-season"><b>Сезон: </b>{{ anime.season }}</div>
             <div class="anime-episodes-quantity"><b>Кол-во эпизодов: </b> {{ anime.episodes_quantity }}</div>
