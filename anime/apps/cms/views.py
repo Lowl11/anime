@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 
 # подключение кастомных файлов
-from help.viewmodel import ViewModel
+from utils.viewmodel import ViewModel
 from help.anime import AnimeHelper
 from .settings import CmsSettings
 from anime.starter import Starter

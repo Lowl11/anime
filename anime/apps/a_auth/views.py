@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.conf import settings
 
 # подключение кастомных файлов
-from help.viewmodel import ViewModel
+from utils.viewmodel import ViewModel
 from help.auth import AuthHelper
 from .forms import SigninForm, SignupForm
 from utils.utils import Utils

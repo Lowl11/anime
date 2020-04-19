@@ -4,7 +4,7 @@ from django.conf import settings
 from watch.models import Anime
 from help.genre import GenreHelper
 from utils.dict import Dictionary
-from help.form import FormHelper
+from utils.form import FormHelper
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS

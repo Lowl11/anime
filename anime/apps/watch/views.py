@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 
 # подключение кастомных файлов
-from help.viewmodel import ViewModel
+from utils.viewmodel import ViewModel
 from help.anime import AnimeHelper
 
 # глобальные объекты и переменные
