@@ -46,6 +46,7 @@ def anime_manage_view(request, pk):
     vm.add_object('anime', anime)
 
     vm.add_object('manage_anime_form', AnimeHelper.fill_form(ManageAnimeForm(), anime))
+    vm.add_object('anime_id', pk)
     return vm.render(request)
 
 @login_required(login_url = CONSTANTS['url_signin'])
