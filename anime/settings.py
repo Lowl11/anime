@@ -131,7 +131,6 @@ A_SETTINGS = {
 
 A_CONSTANTS = {
     'title_not_found': 'Ошибка 404 - Страница не найдена',
-
     'title_watch_home_view': 'Смотреть аниме',
     
     'module_name_watch': 'watch',
@@ -140,6 +139,9 @@ A_CONSTANTS = {
 
     'anime_cover_width': 300,
     'anime_cover_height': 200,
+
+    'manage_anime_title_min': 3,
+    'manage_anime_description_min': 100,
 
     'url_signin': '/auth/signin/',
 }

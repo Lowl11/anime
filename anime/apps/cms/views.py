@@ -7,6 +7,7 @@ from help.viewmodel import ViewModel
 from help.anime import AnimeHelper
 from .settings import CmsSettings
 from anime.starter import Starter
+from .forms import ManageAnimeForm
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -43,6 +44,8 @@ def anime_manage_view(request, pk):
     if anime is None:
         return not_found()
     vm.add_object('anime', anime)
+    
+    vm.add_object('manage_anime_form', ManageAnimeForm())
     return vm.render(request)
 
 @login_required(login_url = CONSTANTS['url_signin'])
