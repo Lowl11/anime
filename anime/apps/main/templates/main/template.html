@@ -36,6 +36,9 @@
                 <div class="auth">
                     <ul>
                         {% if user is not None %}
+                            {% if role == 3 %}
+                            <li><a href="{% url 'cms_home_view' %}">CMS</a></li>
+                            {% endif %}
                         <li><a href="{% url 'logout_get' %}">Выйти [{{ user.username }}]</a></li>
                         {% else %}
                         <li><a href="{% url 'signin_view' %}">Войти</a></li>
