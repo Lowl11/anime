@@ -24,6 +24,7 @@ class ViewModel:
     def __init__(self):
         self.__context = {}
         self.__path = None
+        self.__module = None
 
     ############################# ПУБЛИЧНЫЕ МЕТОДЫ #############################
     # рендеринг страницы
@@ -54,6 +55,7 @@ class ViewModel:
 
         # нынешний модуль в котором находится пользователь и добавление контекста модуля
         module_name = RouteHelper.module_name(request.path)
+        self.__module = module_name
         self.add_object('module', module_name)
         self.add_module_context(module_name)
 
@@ -71,3 +73,6 @@ class ViewModel:
                 param = module_context.get(i)
                 self.add_object(param.key, param.value)
         return True
+    
+    def __str__(self):
+        return 'Видмодель вызванная из модуля "' + self.module + '"'

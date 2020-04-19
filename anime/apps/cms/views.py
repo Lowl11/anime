@@ -44,8 +44,8 @@ def anime_manage_view(request, pk):
     if anime is None:
         return not_found()
     vm.add_object('anime', anime)
-    
-    vm.add_object('manage_anime_form', ManageAnimeForm())
+
+    vm.add_object('manage_anime_form', AnimeHelper.fill_form(ManageAnimeForm(), anime))
     return vm.render(request)
 
 @login_required(login_url = CONSTANTS['url_signin'])

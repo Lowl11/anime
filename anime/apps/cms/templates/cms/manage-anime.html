@@ -2,5 +2,10 @@
 
 
 {% block content %}
-{{ manage_anime_form }}
+<form action="" method="POST">{% csrf_token %}
+    {{ manage_anime_form }}
+    <br>
+    <button class="btn btn-success">Сохранить</button>
+    <button class="btn btn-danger">Удалить</button>
+</form>
 {% endblock %}

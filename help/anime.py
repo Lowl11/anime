@@ -4,6 +4,7 @@ from django.conf import settings
 from watch.models import Anime
 from help.genre import GenreHelper
 from utils.dict import Dictionary
+from help.form import FormHelper
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -43,6 +44,18 @@ class AnimeHelper:
     def get_anime_by_id(id):
         anime = Anime.objects.get(pk = id)
         return anime
+    
+    # заполнение формы значениями существующего аниме
+    @staticmethod
+    def fill_form(form, anime):
+        fields = form.fields
+        FormHelper.update_field(fields['title_rus'], anime.title_rus)
+        FormHelper.update_field(fields['title_foreign'], anime.title_foreign)
+        FormHelper.update_field(fields['season'], anime.season)
+        # FormHelper.update_field(fields['description'], anime.description)
+        FormHelper.update_field(fields['episodes_quantity'], anime.episodes_quantity)
+        FormHelper.update_field(fields['start_date'], anime.start_date)
+        return form
     
 
     ####################################################################

@@ -8,6 +8,7 @@ from .settings import CmsSettings
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
+
 class ManageAnimeForm(forms.Form):
     title_rus = forms.CharField(label = 'Название на русском', min_length = CONSTANTS['manage_anime_title_min'], max_length = 255)
     title_foreign = forms.CharField(label = 'Название на иностранном', min_length = CONSTANTS['manage_anime_title_min'], max_length = 255)
