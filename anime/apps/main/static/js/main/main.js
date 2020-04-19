@@ -1,0 +1,3 @@
+$(() => {
+    Utils.print('Hello World')
+});
