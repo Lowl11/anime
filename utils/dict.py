@@ -65,6 +65,8 @@ class Dictionary:
         if self.__type is not None: # у нас есть заданный тип данных
             if self.__type is not value: # value равен заданному типу данных
                 return True
+        else:
+            return True
         return False
     
     # перезапись метода toString()

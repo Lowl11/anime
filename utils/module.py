@@ -4,6 +4,7 @@ from django.conf import settings
 from utils.dict import Dictionary
 from watch.forms import XSearchForm
 from cms.forms import ManageAnimeForm
+from utils.debugger import Debugger
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -27,7 +28,10 @@ class ModuleHelper:
     @staticmethod
     def get_context(module_name):
         if module_name == 'watch':
-            return WATCH_CONTEXT
+            watch_context = Dictionary()
+            watch_context.add('xsearch_form', XSearchForm())
+            Debugger.write(watch_context, 'ModuleHelper')
+            return watch_context
         elif module_name == 'cms':
             return CMS_CONTEXT
         elif module_name == 'auth':

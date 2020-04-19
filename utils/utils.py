@@ -12,3 +12,10 @@ class Utils:
                 raise Exception('Данный тип запроса не поддерживается')
         except:
             return ''
+        
+    @staticmethod
+    def try_get_from_array(array, name):
+        try:
+            return array[name]
+        except:
+            return None
