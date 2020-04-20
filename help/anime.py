@@ -25,12 +25,14 @@ class AnimeHelper:
         anime_list = Anime.objects.all()
         return AnimeHelper.prepare_anime_list(anime_list)
     
-    # TODO Erik: выяснить что за метод
+    # возвращает список аниме по жанру
     @staticmethod
     def get_by_genre(genre_name):
+        # достаем список привязок аниме-жанр
         genres = GenreHelper.get_genres_by_name(genre_name)
 
-        # оставляем из списка только 1 аниме
+        # TODO возможно есть смысл попытаться избавиться от привязки к типу
+        # оставляем из списка только 1 аниме (т.к. аниме много)
         anime_list = Dictionary()
         anime_type = type(Anime)
         anime_list.set_data_type(anime_type)
@@ -40,6 +42,7 @@ class AnimeHelper:
         
         return AnimeHelper.prepare_anime_list(anime_list.to_list())
     
+    # возвращает список аниме по году
     @staticmethod
     def get_by_year(year):
         anime_list = Anime.objects.filter(start_date__year = year)
@@ -54,6 +57,7 @@ class AnimeHelper:
     # заполнение формы значениями существующего аниме
     @staticmethod
     def fill_form(form, anime):
+        # TODO понять через какое поле или через какой параметр заполняется textarea
         fields = form.fields
         FormHelper.update_field(fields['title_rus'], anime.title_rus)
         FormHelper.update_field(fields['title_foreign'], anime.title_foreign)

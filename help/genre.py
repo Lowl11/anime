@@ -34,7 +34,7 @@ class GenreHelper:
                 html += ', '
         return html
     
-    # TODO: Выяснить что за метод
+    # возвращает список привязок аниме-жанр по названию жанра
     @staticmethod
     def get_genres_by_name(genre_name):
         genres = Genre.objects.filter(constant_genre__name = genre_name)

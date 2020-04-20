@@ -1,4 +1,5 @@
 class Utils:
+    # пытатется вернуть значение с массива по названию с реквеста
     @staticmethod
     def try_get_from_request(request, type, name):
         try:
@@ -12,7 +13,8 @@ class Utils:
                 raise Exception('Данный тип запроса не поддерживается')
         except:
             return ''
-        
+    
+    # пытается вернуть значение с массива по названию
     @staticmethod
     def try_get_from_array(array, name):
         try:

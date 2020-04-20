@@ -1,4 +1,5 @@
 class Debugger:
+    # более удобный вывод в терминал
     @staticmethod
     def write(msg, description = None):
         print('')

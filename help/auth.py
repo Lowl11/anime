@@ -25,11 +25,13 @@ class AuthHelper:
     # авторизация пользователя
     @staticmethod
     def signin_user(request, dict):
+        # проверяем есть ли пользователь с такими данными
         base_user = authenticate(username = dict['username'], password = dict['password'])
 
         if base_user is not None:
             viewer = Viewer.objects.get(base_user = base_user)
             if viewer is not None:
+                # авторизуем пользователя
                 login(request, base_user)
                 viewer = Viewer.objects.get(base_user = base_user)
                 request.session['role'] = viewer.role.value
