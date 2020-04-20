@@ -15,14 +15,9 @@ CONSTANTS = settings.A_CONSTANTS
 ####################################################################
 
 # Отображение списка аниме
-def page_view(reqeust):
-    vm = ViewModel()
-    vm.add_path('watch/page.html')
-    vm.add_object('title', CONSTANTS['title_watch_home_view'])
-    vm.add_object('anime_list', AnimeHelper.get_all())
-    vm.add_object('anime_cover_width', CONSTANTS['anime_cover_width'])
-    vm.add_object('anime_cover_height', CONSTANTS['anime_cover_height'])
-    return vm.render(reqeust)
+def page_view(request):
+    title = 'Смотреть аниме'
+    return display_anime_list(request, AnimeHelper.get_all(), title)
 
 
 # Отображение одного аниме
@@ -52,6 +47,7 @@ def year_view(request, year):
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
 ####################################################################
 
+# метод отображения списка аниме
 def display_anime_list(request, anime_list, title):
     vm = ViewModel()
     vm.add_path('watch/page.html')

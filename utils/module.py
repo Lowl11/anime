@@ -6,10 +6,6 @@ from watch.forms import XSearchForm
 from cms.forms import ManageAnimeForm
 from utils.debugger import Debugger
 
-# глобальные объекты и переменные
-SETTINGS = settings.A_SETTINGS
-CONSTANTS = settings.A_CONSTANTS
-
 # A_AUTH Module
 A_AUTH_CONTEXT = Dictionary()
 
@@ -23,10 +19,14 @@ class ModuleHelper:
     # Возвращает контекст в зависимости от названия модуля
     @staticmethod
     def get_context(module_name):
+        SETTINGS = settings.A_SETTINGS
+        CONSTANTS = settings.A_CONSTANTS
         if module_name == 'watch':
             watch_context = Dictionary()
             watch_context.add('xsearch_form', XSearchForm())
             watch_context.add('search_type', 'anime')
+            watch_context.add('anime_cover_width', CONSTANTS['anime_cover_width'])
+            watch_context.add('anime_cover_height', CONSTANTS['anime_cover_height'])
             return watch_context
         elif module_name == 'cms':
             return CMS_CONTEXT

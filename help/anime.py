@@ -43,7 +43,7 @@ class AnimeHelper:
     @staticmethod
     def get_by_year(year):
         anime_list = Anime.objects.filter(start_date__year = year)
-        return anime_list
+        return AnimeHelper.prepare_anime_list(anime_list)
 
     # возвращает определенное аниме по ID
     @staticmethod
