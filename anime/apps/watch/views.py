@@ -38,25 +38,26 @@ def anime_view(reqeust, pk):
     return vm.render(reqeust)
 
 # отображение аниме принадлежащие определенному жанру
-def genre_view(reqeust, name):
-    vm = ViewModel()
-    vm.add_path('watch/page.html')
-    vm.add_object('title', 'Аниме по жанру "' + name + '"')
-    vm.add_object('anime_list', AnimeHelper.get_by_genre(name))
-    return vm.render(reqeust)
+def genre_view(request, name):
+    title = 'Аниме по жанру "' + name + '"'
+    return display_anime_list(request, AnimeHelper.get_by_genre(name), title)
 
 # отображение аниме по году
 def year_view(request, year):
-    vm = ViewModel()
-    vm.add_path('watch/page.html')
-    vm.add_object('title', 'Аниме по году "' + str(year) + '"')
-    vm.add_object('anime_list', AnimeHelper.get_by_year(year))
-    return vm.render(request)
+    title = 'Аниме по году "' + str(year) + '"'
+    return display_anime_list(request, AnimeHelper.get_by_year(year), title)
 
 
 ####################################################################
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
 ####################################################################
+
+def display_anime_list(request, anime_list, title):
+    vm = ViewModel()
+    vm.add_path('watch/page.html')
+    vm.add_object('title', title)
+    vm.add_object('anime_list', anime_list)
+    return vm.render(request)
 
 def not_found():
     return SETTINGS['not_found_method']()
