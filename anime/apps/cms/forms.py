@@ -2,7 +2,7 @@ from django import forms
 from django.conf import settings
 
 # подключение кастомных файлов
-from .settings import CmsSettings
+# empty
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS

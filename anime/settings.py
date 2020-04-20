@@ -126,7 +126,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Глобальный массив кастомных настроек используемых по всему проекту
 A_SETTINGS = {
     'debug': DEBUG,
-    'start_from': Starter.start_from()
+    'main_start_from': Starter.main_start_from(),
+    'cms_start_from': Starter.cms_start_from()
 }
 
 A_CONSTANTS = {

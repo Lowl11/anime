@@ -5,7 +5,6 @@ from django.contrib.auth.decorators import login_required
 # подключение кастомных файлов
 from utils.viewmodel import ViewModel
 from help.anime import AnimeHelper
-from .settings import CmsSettings
 from anime.starter import Starter
 from .forms import ManageAnimeForm
 
@@ -21,10 +20,10 @@ CONSTANTS = settings.A_CONSTANTS
 @login_required(login_url = CONSTANTS['url_signin'])
 def home_view(request):
     # выбираем что грузим первым
-    first_load = CmsSettings.first_load()
-    if first_load == 'anime':
+    start_from = SETTINGS['cms_start_from']
+    if start_from == 'anime':
         return anime_view(request)
-    elif first_load == 'dashboard':
+    elif start_from == 'dashboard':
         return dashboard_view(request)
     return not_found()
 

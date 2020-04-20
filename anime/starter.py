@@ -1,12 +1,17 @@
 from django.shortcuts import render, redirect
 
 class Starter:
-    # Определение с какого модуля начинается приложение
+    # определение с какого модуля начинается приложение (клиентская сторона - main)
     @staticmethod
-    def start_from():
+    def main_start_from():
         return 'watch'
     
-    # Редайрект на Not Found, Action метод
+    # определяем с чего начинается CMS
+    @staticmethod
+    def cms_start_from():
+        return 'anime'
+    
+    # редайрект на Not Found, Action метод
     @staticmethod
     def not_found_method():
         return redirect('/not-found/')

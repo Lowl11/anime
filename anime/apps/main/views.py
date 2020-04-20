@@ -16,7 +16,7 @@ CONSTANTS = settings.A_CONSTANTS
 
 def home_view(request):
     # выбираем что грузим первым
-    start_from = SETTINGS['start_from']
+    start_from = SETTINGS['main_start_from']
     if start_from == 'watch':
         return redirect('/watch/')
     return not_found()
