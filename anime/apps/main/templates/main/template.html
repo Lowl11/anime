@@ -51,9 +51,12 @@
             <div class="container-fluid">
                 {% if user is not None %}
                     {% if module == 'watch' %}
-                    <div class="xsearch">
-                        {{ xsearch_form }}
-                    </div>
+                    <form action="{% url 'xsearch_get' %}" method="GET">{% csrf_token %}
+                        <div class="xsearch">
+                            <input type="hidden" name="search_type" value="{{ search_type }}">
+                            {{ xsearch_form }}
+                        </div>
+                    </form>
                     {% endif %}
                 {% endif %}
             </div>

@@ -10,10 +10,6 @@ from utils.debugger import Debugger
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
-# WATCH Module
-WATCH_CONTEXT = Dictionary()
-WATCH_CONTEXT.add('xsearch_form', XSearchForm())
-
 # A_AUTH Module
 A_AUTH_CONTEXT = Dictionary()
 
@@ -30,7 +26,7 @@ class ModuleHelper:
         if module_name == 'watch':
             watch_context = Dictionary()
             watch_context.add('xsearch_form', XSearchForm())
-            Debugger.write(watch_context, 'ModuleHelper')
+            watch_context.add('search_type', 'anime')
             return watch_context
         elif module_name == 'cms':
             return CMS_CONTEXT
