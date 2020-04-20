@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.utils import timezone
 
 # Подключение кастомных классов
 from watch.models import Anime
@@ -39,6 +40,11 @@ class AnimeHelper:
         
         return AnimeHelper.prepare_anime_list(anime_list.to_list())
     
+    @staticmethod
+    def get_by_year(year):
+        anime_list = Anime.objects.filter(start_date__year = year)
+        return anime_list
+
     # возвращает определенное аниме по ID
     @staticmethod
     def get_anime_by_id(id):

@@ -45,6 +45,14 @@ def genre_view(reqeust, name):
     vm.add_object('anime_list', AnimeHelper.get_by_genre(name))
     return vm.render(reqeust)
 
+# отображение аниме по году
+def year_view(request, year):
+    vm = ViewModel()
+    vm.add_path('watch/page.html')
+    vm.add_object('title', 'Аниме по году "' + str(year) + '"')
+    vm.add_object('anime_list', AnimeHelper.get_by_year(year))
+    return vm.render(request)
+
 
 ####################################################################
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
