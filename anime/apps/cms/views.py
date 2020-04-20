@@ -20,6 +20,7 @@ CONSTANTS = settings.A_CONSTANTS
 
 @login_required(login_url = CONSTANTS['url_signin'])
 def home_view(request):
+    # выбираем что грузим первым
     first_load = CmsSettings.first_load()
     if first_load == 'anime':
         return anime_view(request)
