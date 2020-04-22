@@ -1,0 +1,18 @@
+.left-navigation {}
+
+.left-navigation ul li {
+    list-style: none;
+}
+
+.left-navigation ul li a {
+    display: block;
+    width: 100%;
+    margin-left: -20px;
+    padding: 2px 5px;
+}
+
+.left-navigation ul li a:hover {
+    background: #edeef0;
+    text-decoration: none;
+    transition: .25s;
+}
