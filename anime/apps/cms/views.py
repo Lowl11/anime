@@ -66,9 +66,18 @@ def elastic_view(request):
     vm.add_object('indices', es_helper.get_all_indices())
     return vm.render(request)
 
+
+def elastic_delete_index_get(request, index_name):
+    if es_helper.delete_index(index_name):
+        redirect_elastic()
+    return not_found()
+
 ####################################################################
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
 ####################################################################
 
 def not_found():
     return Starter.not_found_method()
+
+def redirect_elastic():
+    return redirect('/cms/elastic/')

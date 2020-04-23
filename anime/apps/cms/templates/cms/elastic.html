@@ -43,7 +43,7 @@
             <td>{{ index.name }}</td>
             <td>{{ index.hash_code }}</td>
             <td>{{ index.size }}</td>
-            <td><a href="" class="btn btn-danger">Удалить</a></td>
+            <td><a href="{% url 'cms_elastic_delete_index_get' index.name %}" class="btn btn-danger">Удалить</a></td>
         </tr>
         {% endfor %}
     </table>

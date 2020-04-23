@@ -10,11 +10,17 @@ class ElasticSearchHelper:
     def __init__(self):
         self.url = ''
 
+
+    ####################################################################
+    ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
+    ####################################################################
+
+    # возвращает все индексы в эластике
     def get_all_indices(self):
         data = ''
         request_type = 'GET'
-        updated_url = self.url + '/_cat/indices'
-        response = self.make_request(updated_url, data, request_type)
+        postfix = '/_cat/indices'
+        response = self.make_request(postfix, data, request_type)
 
         if response is None:
             return response
@@ -34,14 +40,37 @@ class ElasticSearchHelper:
         
         return indices
     
-    def make_request(self, url, data, request_type):
+    # удаляет индекс по имени
+    def delete_index(self, index_name):
+        postifx = '/' + index_name
+        response = self.make_request(postifx, {}, 'DELETE')
+
+        if response is None:
+            return response
+        
+        json_response = response.json()
+
+        if json_response['acknowledged'] == True:
+            return True
+        
+        return False
+    
+
+    ####################################################################
+    ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
+    ####################################################################
+
+    def make_request(self, postfix, data, request_type):
         response = None
+        full_url = self.url + postfix
         if request_type == 'POST':
-            response = requests.post(url, data = data)
+            response = requests.post(full_url, data = data)
         elif request_type == 'GET':
-            response = requests.get(url, data = data)
+            response = requests.get(full_url, data = data)
         elif request_type == 'PUT':
-            response = requests.get(url, data = data)
+            response = requests.put(full_url, data = data)
+        elif request_type == 'DELETE':
+            response = requests.delete(full_url, data = data)
         
         if response.status_code != 200:
             return None
