@@ -1,5 +1,13 @@
 from django.contrib import admin
 
-from .models import CmsNavigationLinks
+# подключение кастомных классов
+from .models import CmsNavigationLink
 
-admin.site.register(CmsNavigationLinks)
+# админ класс моделей
+class CmsNavigationLinkAdmin(admin.ModelAdmin):
+    model = CmsNavigationLink
+    list_display = ['id', 'name', 'url']
+    list_editable = ['name', 'url']
+
+# регистрация моделей БД в админ-панели
+admin.site.register(CmsNavigationLink, CmsNavigationLinkAdmin)
