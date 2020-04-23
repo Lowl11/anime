@@ -7,7 +7,9 @@
     <!-- Bootstrap -->
     <link href="{% static 'cms/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
     <!-- styles -->
-    <link href="{% static 'cms/css/styles.css' %}" rel="stylesheet">
+	<link href="{% static 'cms/css/styles.css' %}" rel="stylesheet">
+	{% block css %}
+	{% endblock %}
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -156,6 +158,8 @@
     <script src="{% static 'cms/js/jquery.js' %}"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="{% static 'cms/bootstrap/js/bootstrap.min.js' %}"></script>
-    <script src="{% static 'cms/js/custom.js' %}"></script>
+	<script src="{% static 'cms/js/custom.js' %}"></script>
+	{% block js %}
+	{% endblock %}
   </body>
 </html>
