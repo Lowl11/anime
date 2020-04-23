@@ -34,6 +34,8 @@
             <th>Статус</th>
             <th>Название</th>
             <th>Хеш код</th>
+            <th>Кол-во документов</th>
+            <th>Кол-во удаленных документов</th>
             <th>Размер</th>
             <th></th>
         </tr>
@@ -42,6 +44,8 @@
             <td class="{{ index.status }}">{{ index.status }}</td>
             <td>{{ index.name }}</td>
             <td>{{ index.hash_code }}</td>
+            <td>{{ index.docs_count }}</td>
+            <td>{{ index.delete_count }}</td>
             <td>{{ index.size }}</td>
             <td><a href="{% url 'cms_elastic_delete_index_get' index.name %}" class="btn btn-danger">Удалить</a></td>
         </tr>

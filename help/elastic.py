@@ -35,6 +35,8 @@ class ElasticSearchHelper:
             index.status = words[0]
             index.name = words[2]
             index.hash_code = words[3]
+            index.docs_count = words[6]
+            index.delete_count = words[7]
             index.size = words[8]
             indices.append(index)
         
@@ -83,6 +85,8 @@ class ElasticSearchHelper:
             self.name = ''
             self.hash_code = ''
             self.size = ''
+            self.docs_count = 0
+            self.delete_count = 0
         
         def __str__(self):
             return self.status + ' | ' + self.name + ' | ' + self.hash_code + ' | ' + self.size
