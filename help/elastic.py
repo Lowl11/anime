@@ -44,12 +44,27 @@ class ElasticSearchHelper:
     
     # удаляет индекс по имени
     def delete_index(self, index_name):
-        postifx = '/' + index_name
-        response = self.make_request(postifx, {}, 'DELETE')
+        postfix = '/' + index_name
+        response = self.make_request(postfix, {}, 'DELETE')
 
         if response is None:
             return response
         
+        json_response = response.json()
+
+        if json_response['acknowledged'] == True:
+            return True
+        
+        return False
+    
+    # создание индекса
+    def create_index(self, index_name):
+        postfix = '/' + index_name
+        response = self.make_request(postfix, {}, 'PUT')
+
+        if response is None:
+            return response
+
         json_response = response.json()
 
         if json_response['acknowledged'] == True:

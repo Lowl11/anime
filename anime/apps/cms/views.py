@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from datetime import date
 
 # подключение кастомных файлов
 from utils.viewmodel import ViewModel
@@ -69,8 +70,14 @@ def elastic_view(request):
 
 def elastic_delete_index_get(request, index_name):
     if es_helper.delete_index(index_name):
-        redirect_elastic()
+        return redirect_elastic()
     return not_found()
+
+def elastic_fill_get(request, data_type):
+    today = date.today().strftime('%d.%m.%Y')
+    if es_helper.create_index(data_type + '-' + today) == False:
+        return not_found()
+    return redirect_elastic()
 
 ####################################################################
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
