@@ -70,7 +70,15 @@ class AnimeHelper:
     # поиск аниме
     @staticmethod
     def search(query):
-        return Anime.objects.filter(title_rus__contains = query)
+        anime_list = []
+        anime_list.extend(Anime.objects.filter(title_rus__contains = query))
+        anime_list.extend(Anime.objects.filter(title_foreign__contains = query))
+
+        result_list = Dictionary()
+        for anime in anime_list:
+            result_list.add(anime.id, anime)
+
+        return result_list.to_list()
 
     ####################################################################
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
