@@ -12,6 +12,7 @@ from help.elastic import ElasticSearchHelper
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
+es_helper = SETTINGS['es_helper']
 
 
 ####################################################################
@@ -62,7 +63,7 @@ def elastic_view(request):
     vm = ViewModel()
     vm.add_path('cms/elastic.html')
     vm.add_object('title', 'ElasticSearch')
-    vm.add_object('indices', SETTINGS['es_helper'].get_all_indices())
+    vm.add_object('indices', es_helper.get_all_indices())
     return vm.render(request)
 
 ####################################################################
