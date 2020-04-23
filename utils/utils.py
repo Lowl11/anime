@@ -21,3 +21,12 @@ class Utils:
             return array[name]
         except:
             return None
+        
+    # вырезает пустые строки в массиве
+    @staticmethod
+    def erase_empty_strings(array):
+        result = []
+        for word in array:
+            if len(word) > 0:
+                result.append(word)
+        return result

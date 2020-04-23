@@ -1,8 +1,10 @@
 import requests
 import json
+import os
 
 # Подключение кастомных классов
 from utils.debugger import Debugger
+from utils.utils import Utils
 
 class ElasticSearchHelper:
     def __init__(self):
@@ -19,15 +21,17 @@ class ElasticSearchHelper:
 
         text = response.text
         lines = text.splitlines()
+
         indices = []
         for line in lines:
-            words = line.split(' ')
+            words = Utils.erase_empty_strings(line.split(' '))
             index = self.Index()
             index.status = words[0]
             index.name = words[2]
             index.hash_code = words[3]
             index.size = words[8]
             indices.append(index)
+        
         return indices
     
     def make_request(self, url, data, request_type):
