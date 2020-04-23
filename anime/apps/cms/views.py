@@ -7,6 +7,7 @@ from utils.viewmodel import ViewModel
 from help.anime import AnimeHelper
 from anime.starter import Starter
 from .forms import ManageAnimeForm
+from help.elastic import ElasticSearchHelper
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -56,6 +57,13 @@ def dashboard_view(request):
     vm.add_object('title', 'Dashboard')
     return vm.render(request)
 
+@login_required(login_url = CONSTANTS['url_signin'])
+def elastic_view(request):
+    vm = ViewModel()
+    vm.add_path('cms/elastic.html')
+    vm.add_object('title', 'ElasticSearch')
+    vm.add_object('indices', SETTINGS['es_helper'].get_all_indices())
+    return vm.render(request)
 
 ####################################################################
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################

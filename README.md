@@ -12,6 +12,7 @@
 2. psycopg2-binary
 3. Pillow
 4. django-grappelli
+5. requests
 ### К примеру
 ```Terminal
 pip install psycopg2-binary

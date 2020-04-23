@@ -1,0 +1,23 @@
+{% extends "cms/template.html" %}
+
+
+{% block content %}
+<div class="indices">
+    <table border="1">
+        <tr>
+            <th>Статус</th>
+            <th>Название</th>
+            <th>Хеш код</th>
+            <th>Размер</th>
+        </tr>
+        {% for index in indices %}
+        <tr>
+            <td>{{ index.status }}</td>
+            <td>{{ index.name }}</td>
+            <td>{{ index.hash_code }}</td>
+            <td>{{ index.size }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}
