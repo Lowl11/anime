@@ -43,6 +43,16 @@ def year_view(request, year):
     return display_anime_list(request, AnimeHelper.get_by_year(year), title)
 
 
+# поиск аниме
+def xsearch_get(request):
+    if request.GET:
+        query = request.GET['query']
+        anime_list = AnimeHelper.search(query)
+        result_quantity = len(anime_list)
+        title = 'Поиск по запросу "' + query + '" выдал ' + str(result_quantity) + ' результат(ов)'
+        return display_anime_list(request, anime_list, title)
+    return not_found()
+
 ####################################################################
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
 ####################################################################

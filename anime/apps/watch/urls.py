@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^anime/(?P<pk>\d+)$', views.anime_view, name = 'watch_anime_view'),
     url(r'^genre/(?P<name>.*)$', views.genre_view, name = 'watch_genre_view'),
     url(r'^year/(?P<year>\d+)$', views.year_view, name = 'watch_year_view'),
+    url(r'^xsearch/$', views.xsearch_get, name = 'xsearch_get'),
     ############################# /MAIN #######################################
 ]

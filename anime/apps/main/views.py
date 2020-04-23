@@ -4,6 +4,7 @@ from django.conf import settings
 # подключение кастомных файлов
 from utils.viewmodel import ViewModel
 from utils.debugger import Debugger
+from watch import views as watch_view
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -26,15 +27,6 @@ def not_found_view(request):
     vm.add_path('main/notfound.html')
     vm.add_object('title', CONSTANTS['title_not_found'])
     return vm.render(request)
-
-def xsearch_get(request):
-    if request.GET:
-        query = request.GET['query']
-        search_type = request.GET['search_type']
-        # TODO Пока что оставим так, после того как будет настроено нормальное
-        # отображение страницы со списком аниме бахнем поиск
-        return home_view(request)
-    return not_found()
 
 
 ####################################################################

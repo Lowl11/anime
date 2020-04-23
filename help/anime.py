@@ -67,6 +67,10 @@ class AnimeHelper:
         FormHelper.update_field(fields['start_date'], anime.start_date)
         return form
     
+    # поиск аниме
+    @staticmethod
+    def search(query):
+        return Anime.objects.filter(title_rus__contains = query)
 
     ####################################################################
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
