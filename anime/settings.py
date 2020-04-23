@@ -127,7 +127,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 A_SETTINGS = {
     'debug': DEBUG,
     'main_start_from': Starter.main_start_from(),
-    'cms_start_from': Starter.cms_start_from()
+    'cms_start_from': Starter.cms_start_from(),
+    'es_nodes': Starter.es_nodes()
 }
 
 A_CONSTANTS = {

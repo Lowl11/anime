@@ -11,6 +11,11 @@ class Starter:
     def cms_start_from():
         return 'anime'
     
+    # URL сервера с ElasticSearch
+    @staticmethod
+    def es_nodes():
+        return ['http://127.0.0.1:9200']
+    
     # редайрект на Not Found, Action метод
     @staticmethod
     def not_found_method():
