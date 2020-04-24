@@ -7,7 +7,7 @@ from help.genre import GenreHelper
 from help.route import RouteHelper
 from .module import ModuleHelper
 from .utils import Utils
-from .debugger import Debugger
+from utils import debugger
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS

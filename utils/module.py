@@ -4,7 +4,7 @@ from django.conf import settings
 from utils.dict import Dictionary
 from watch.forms import XSearchForm
 from cms.forms import ManageAnimeForm
-from utils.debugger import Debugger
+from utils import debugger
 from help.cms_navigation_links import CmsNavigationLinksHelper
 
 # A_AUTH Module

@@ -3,7 +3,7 @@ from django.conf import settings
 
 # подключение кастомных файлов
 from utils.viewmodel import ViewModel
-from utils.debugger import Debugger
+from utils import debugger
 from watch import views as watch_view
 
 # глобальные объекты и переменные

@@ -3,7 +3,7 @@ import json
 import os
 
 # Подключение кастомных классов
-from utils.debugger import Debugger
+from utils import debugger
 from utils.utils import Utils
 
 class ElasticSearchHelper:
