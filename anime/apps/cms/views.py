@@ -6,14 +6,14 @@ from datetime import date
 # подключение кастомных файлов
 from tools.viewmodel import ViewModel
 from dao.anime import AnimeHelper
-from tools.elastic import ElasticSearchHelper
+from tools.elastic import ElasticSearchManager
 from anime import starter
 from .forms import ManageAnimeForm
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
-es_helper = SETTINGS['es_helper']
+es_manager = SETTINGS['es_manager']
 
 
 ####################################################################
@@ -64,18 +64,18 @@ def elastic_view(request):
     vm = ViewModel()
     vm.add_path('cms/elastic.html')
     vm.add_object('title', 'ElasticSearch')
-    vm.add_object('indices', es_helper.get_all_indices())
+    vm.add_object('indices', es_manager.get_all_indices())
     return vm.render(request)
 
 
 def elastic_delete_index_get(request, index_name):
-    if es_helper.delete_index(index_name):
+    if es_manager.delete_index(index_name):
         return redirect_elastic()
     return not_found()
 
 def elastic_fill_get(request, data_type):
     today = date.today().strftime('%d.%m.%Y')
-    if es_helper.create_index(data_type + '-' + today) == False:
+    if es_manager.create_index(data_type + '-' + today) == False:
         return not_found()
     return redirect_elastic()
 

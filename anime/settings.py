@@ -3,7 +3,7 @@
 ### Подключенные библиотеки
 import os, sys
 from . import starter
-from tools.elastic import ElasticSearchHelper
+from tools.elastic import ElasticSearchManager
 
 ### Базовые и первые настройки
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -124,15 +124,15 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # ElasticSearch
-es_helper = ElasticSearchHelper()
-es_helper.url = starter.es_node()
+es_manager = ElasticSearchManager()
+es_manager.url = starter.es_node()
 
 # Глобальный массив кастомных настроек используемых по всему проекту
 A_SETTINGS = {
     'debug': DEBUG,
     'main_start_from': starter.main_start_from(),
     'cms_start_from': starter.cms_start_from(),
-    'es_helper': es_helper
+    'es_manager': es_manager
 }
 
 A_CONSTANTS = {

@@ -6,7 +6,7 @@ import os
 from . import debugger
 from . import utils as Utils
 
-class ElasticSearchHelper:
+class ElasticSearchManager:
     def __init__(self):
         self.url = ''
 
