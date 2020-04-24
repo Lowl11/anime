@@ -4,7 +4,7 @@ import os
 
 # Подключение кастомных классов
 from utils import debugger
-from utils.utils import Utils
+from utils import utils as Utils
 
 class ElasticSearchHelper:
     def __init__(self):

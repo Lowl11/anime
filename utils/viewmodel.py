@@ -6,7 +6,7 @@ from help.navigation_links import NavigationLinksHelper
 from help.genre import GenreHelper
 from . import route
 from . import module as ModuleHelper
-from .utils import Utils
+from utils import utils as Utils
 from utils import debugger
 
 # глобальные объекты и переменные
