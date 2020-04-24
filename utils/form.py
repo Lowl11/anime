@@ -8,8 +8,7 @@ SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
 
-class FormHelper:
-    # обновление значения поля (для автозаполнения)
-    @staticmethod
-    def update_field(field, value):
-        field.widget.attrs.update({ 'value': value })
+# обновление значения поля (для автозаполнения)
+def update_field(field, value):
+    field.widget.attrs.update({ 'value': value })
+

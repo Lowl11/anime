@@ -5,7 +5,7 @@ from django.utils import timezone
 from watch.models import Anime
 from help.genre import GenreHelper
 from utils.dict import Dictionary
-from utils.form import FormHelper
+from utils import form as FormHelper
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
