@@ -6,7 +6,7 @@ from datetime import date
 # подключение кастомных файлов
 from utils.viewmodel import ViewModel
 from help.anime import AnimeHelper
-from anime.starter import Starter
+from anime import starter
 from .forms import ManageAnimeForm
 from help.elastic import ElasticSearchHelper
 
@@ -84,7 +84,7 @@ def elastic_fill_get(request, data_type):
 ####################################################################
 
 def not_found():
-    return Starter.not_found_method()
+    return starter.not_found_method()
 
 def redirect_elastic():
     return redirect('/cms/elastic/')
