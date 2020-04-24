@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 
 # подключение кастомных файлов
-from utils.viewmodel import ViewModel
-from help.anime import AnimeHelper
+from tools.viewmodel import ViewModel
+from dao.anime import AnimeHelper
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS

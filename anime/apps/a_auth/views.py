@@ -3,10 +3,10 @@ from django.contrib.auth import login, authenticate
 from django.conf import settings
 
 # подключение кастомных файлов
-from utils.viewmodel import ViewModel
-from help.auth import AuthHelper
+from tools.viewmodel import ViewModel
+from dao.auth import AuthHelper
 from .forms import SigninForm, SignupForm
-from utils import utils as UtilsHelper
+from tools import utils as UtilsHelper
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS

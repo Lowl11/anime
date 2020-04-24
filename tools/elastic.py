@@ -3,8 +3,8 @@ import json
 import os
 
 # Подключение кастомных классов
-from utils import debugger
-from utils import utils as Utils
+from . import debugger
+from . import utils as Utils
 
 class ElasticSearchHelper:
     def __init__(self):

@@ -4,11 +4,11 @@ from django.contrib.auth.decorators import login_required
 from datetime import date
 
 # подключение кастомных файлов
-from utils.viewmodel import ViewModel
-from help.anime import AnimeHelper
+from tools.viewmodel import ViewModel
+from dao.anime import AnimeHelper
+from tools.elastic import ElasticSearchHelper
 from anime import starter
 from .forms import ManageAnimeForm
-from help.elastic import ElasticSearchHelper
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS

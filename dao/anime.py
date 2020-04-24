@@ -3,9 +3,9 @@ from django.utils import timezone
 
 # Подключение кастомных классов
 from watch.models import Anime
-from help.genre import GenreHelper
-from utils.dict import Dictionary
-from utils import form as FormHelper
+from .genre import GenreHelper
+from tools.dict import Dictionary
+from tools import form as FormHelper
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS

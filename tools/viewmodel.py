@@ -2,12 +2,12 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 
 # Подключение кастомных классов
-from help.navigation_links import NavigationLinksHelper
-from help.genre import GenreHelper
+from dao.navigation_links import NavigationLinksHelper
+from dao.genre import GenreHelper
 from . import route
 from . import module as ModuleHelper
-from utils import utils as Utils
-from utils import debugger
+from tools import utils as Utils
+from tools import debugger
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS

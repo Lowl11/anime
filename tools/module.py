@@ -1,11 +1,11 @@
 from django.conf import settings
 
 # Подключение кастомных классов
-from utils.dict import Dictionary
+from tools.dict import Dictionary
 from watch.forms import XSearchForm
 from cms.forms import ManageAnimeForm
-from utils import debugger
-from help.cms_navigation_links import CmsNavigationLinksHelper
+from tools import debugger
+from dao.cms_navigation_links import CmsNavigationLinksHelper
 
 """
     ModuleHelper - вспомогающий класс служащий инструменто помощи для работы с подулями

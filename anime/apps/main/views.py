@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 
 # подключение кастомных файлов
-from utils.viewmodel import ViewModel
-from utils import debugger
+from tools.viewmodel import ViewModel
+from tools import debugger
 from watch import views as watch_view
 
 # глобальные объекты и переменные

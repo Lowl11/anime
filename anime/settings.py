@@ -3,7 +3,7 @@
 ### Подключенные библиотеки
 import os, sys
 from . import starter
-from help.elastic import ElasticSearchHelper
+from tools.elastic import ElasticSearchHelper
 
 ### Базовые и первые настройки
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
