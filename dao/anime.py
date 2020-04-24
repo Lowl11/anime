@@ -3,7 +3,7 @@ from django.utils import timezone
 
 # Подключение кастомных классов
 from watch.models import Anime
-from .genre import GenreHelper
+from .genre import GenreManager
 from tools.dict import Dictionary
 from tools import forms as FormManager
 
@@ -12,9 +12,9 @@ SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
 """
-    AnimeHelper - управление записями аниме
+    AnimeManager - управление записями аниме
 """
-class AnimeHelper:
+class AnimeManager:
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
@@ -23,13 +23,13 @@ class AnimeHelper:
     @staticmethod
     def get_all():
         anime_list = Anime.objects.all()
-        return AnimeHelper.prepare_anime_list(anime_list)
+        return AnimeManager.prepare_anime_list(anime_list)
     
     # возвращает список аниме по жанру
     @staticmethod
     def get_by_genre(genre_name):
         # достаем список привязок аниме-жанр
-        genres = GenreHelper.get_genres_by_name(genre_name)
+        genres = GenreManager.get_genres_by_name(genre_name)
 
         # TODO возможно есть смысл попытаться избавиться от привязки к типу
         # оставляем из списка только 1 аниме (т.к. аниме много)
@@ -40,13 +40,13 @@ class AnimeHelper:
             anime = genre.anime
             anime_list.add(anime.id, anime)
         
-        return AnimeHelper.prepare_anime_list(anime_list.to_list())
+        return AnimeManager.prepare_anime_list(anime_list.to_list())
     
     # возвращает список аниме по году
     @staticmethod
     def get_by_year(year):
         anime_list = Anime.objects.filter(start_date__year = year)
-        return AnimeHelper.prepare_anime_list(anime_list)
+        return AnimeManager.prepare_anime_list(anime_list)
 
     # возвращает определенное аниме по ID
     @staticmethod
@@ -88,5 +88,5 @@ class AnimeHelper:
     @staticmethod
     def prepare_anime_list(anime_list):
         for anime in anime_list:
-            anime.genre_links = GenreHelper.anime_genres_links(anime)
+            anime.genre_links = GenreManager.anime_genres_links(anime)
         return anime_list

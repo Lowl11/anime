@@ -8,9 +8,9 @@ SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
 """
-    NavigationLinksHelper - вспомогательный класс являющийся инструментом для навигационных ссылок
+    NavigationLinksManager - вспомогательный класс являющийся инструментом для навигационных ссылок
 """
-class NavigationLinksHelper:
+class NavigationLinksManager:
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
@@ -24,8 +24,8 @@ class NavigationLinksHelper:
     # возвращает все ссылки отсортированные по порядковому номеру
     @staticmethod
     def get_links_by_order():
-        links = NavigationLinksHelper.get_links()
-        sorted_links = NavigationLinksHelper.sort_by_order_number(links)
+        links = NavigationLinksManager.get_links()
+        sorted_links = NavigationLinksManager.sort_by_order_number(links)
         return sorted_links
     
     

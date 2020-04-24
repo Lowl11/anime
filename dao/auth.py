@@ -10,9 +10,9 @@ SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
 """
-    AuthHelper - инструмент для авторизации, регистрации и выхода
+    AuthManager - инструмент для авторизации, регистрации и выхода
 """
-class AuthHelper:
+class AuthManager:
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
@@ -50,7 +50,7 @@ class AuthHelper:
             try:
                 viewer = Viewer()
                 viewer.signup_base_user(username, password, first_name, last_name)
-                viewer.role = AuthHelper.default_role()
+                viewer.role = AuthManager.default_role()
                 viewer.save()
             except:
                 return False

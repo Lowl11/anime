@@ -3,7 +3,7 @@ from django.conf import settings
 
 # подключение кастомных файлов
 from tools.viewmodel import ViewModel
-from dao.anime import AnimeHelper
+from dao.anime import AnimeManager
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -17,12 +17,12 @@ CONSTANTS = settings.A_CONSTANTS
 # Отображение списка аниме
 def page_view(request):
     title = 'Смотреть аниме'
-    return display_anime_list(request, AnimeHelper.get_all(), title)
+    return display_anime_list(request, AnimeManager.get_all(), title)
 
 
 # Отображение одного аниме
 def anime_view(reqeust, pk):
-    anime = AnimeHelper.get_anime_by_id(pk)
+    anime = AnimeManager.get_anime_by_id(pk)
     if anime == False:
         return not_found()
     
@@ -35,19 +35,19 @@ def anime_view(reqeust, pk):
 # отображение аниме принадлежащие определенному жанру
 def genre_view(request, name):
     title = 'Аниме по жанру "' + name + '"'
-    return display_anime_list(request, AnimeHelper.get_by_genre(name), title)
+    return display_anime_list(request, AnimeManager.get_by_genre(name), title)
 
 # отображение аниме по году
 def year_view(request, year):
     title = 'Аниме по году "' + str(year) + '"'
-    return display_anime_list(request, AnimeHelper.get_by_year(year), title)
+    return display_anime_list(request, AnimeManager.get_by_year(year), title)
 
 
 # поиск аниме
 def xsearch_get(request):
     if request.GET:
         query = request.GET['query']
-        anime_list = AnimeHelper.search(query.lower())
+        anime_list = AnimeManager.search(query.lower())
         result_quantity = len(anime_list)
         title = 'Поиск по запросу "' + query + '" выдал ' + str(result_quantity) + ' результат(ов)'
         return display_anime_list(request, anime_list, title)

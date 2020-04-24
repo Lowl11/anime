@@ -8,9 +8,9 @@ SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
 """
-    GenreHelper - вспомогающий класс
+    GenreManager - вспомогающий класс
 """
-class GenreHelper:
+class GenreManager:
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
@@ -24,7 +24,7 @@ class GenreHelper:
     # возвращает список жанров одного аниме как список ссылок HTML
     @staticmethod
     def anime_genres_links(anime):
-        anime_genres = GenreHelper.anime_genres(anime)
+        anime_genres = GenreManager.anime_genres(anime)
         length = len(anime_genres)
         html = ''
         for i in range(0, length):

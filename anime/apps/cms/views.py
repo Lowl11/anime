@@ -5,7 +5,7 @@ from datetime import date
 
 # подключение кастомных файлов
 from tools.viewmodel import ViewModel
-from dao.anime import AnimeHelper
+from dao.anime import AnimeManager
 from tools.elastic import ElasticSearchManager
 from anime import starter
 from .forms import ManageAnimeForm
@@ -43,12 +43,12 @@ def anime_manage_view(request, pk):
     vm.add_path('cms/manage-anime.html')
     vm.add_object('title', 'Управление аниме')
 
-    anime = AnimeHelper.get_anime_by_id(pk)
+    anime = AnimeManager.get_anime_by_id(pk)
     if anime is None:
         return not_found()
     vm.add_object('anime', anime)
 
-    vm.add_object('manage_anime_form', AnimeHelper.fill_form(ManageAnimeForm(), anime))
+    vm.add_object('manage_anime_form', AnimeManager.fill_form(ManageAnimeForm(), anime))
     vm.add_object('anime_id', pk)
     return vm.render(request)
 

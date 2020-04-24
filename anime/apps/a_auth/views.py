@@ -4,7 +4,7 @@ from django.conf import settings
 
 # подключение кастомных файлов
 from tools.viewmodel import ViewModel
-from dao.auth import AuthHelper
+from dao.auth import AuthManager
 from .forms import SigninForm, SignupForm
 from tools import utils as UtilsHelper
 
@@ -19,7 +19,7 @@ CONSTANTS = settings.A_CONSTANTS
 
 def signin_view(request):
     # если пользователь залогинен, то на страницу с формой входа запрещен
-    if AuthHelper.is_authorized(request):
+    if AuthManager.is_authorized(request):
         return redirect_home()
     
     vm = ViewModel()
@@ -30,18 +30,18 @@ def signin_view(request):
     return vm.render(request)
 
 def signin_post(request):
-    AuthHelper.signin_user(request, request.POST)
+    AuthManager.signin_user(request, request.POST)
 
-    if AuthHelper.is_authorized(request):
+    if AuthManager.is_authorized(request):
         return prepare_post(request)
     return redirect_signin()
 
 def logout_get(request):
-    AuthHelper.logout(request)
+    AuthManager.logout(request)
     return redirect_home()
 
 def signup_view(request):
-    if AuthHelper.is_authorized(request):
+    if AuthManager.is_authorized(request):
         return redirect_home()
 
     vm = ViewModel()
@@ -51,7 +51,7 @@ def signup_view(request):
     return vm.render(request)
 
 def signup_post(request):
-    success = AuthHelper.signup_user(request, request.POST)
+    success = AuthManager.signup_user(request, request.POST)
     if success:
         return redirect_signup()
     return redirect_signin()

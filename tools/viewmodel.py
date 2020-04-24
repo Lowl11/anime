@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect
 from django.conf import settings
 
 # Подключение кастомных классов
-from dao.navigation_links import NavigationLinksHelper
-from dao.genre import GenreHelper
+from dao.navigation_links import NavigationLinksManager
+from dao.genre import GenreManager
 from . import route
-from . import module as ModuleHelper
+from . import module as ModuleManager
 from tools import utils
 from tools import debugger
 
@@ -66,14 +66,14 @@ class ViewModel:
         self.add_module_context(module_name)
 
         # добавление пунктов навигационной панели
-        self.add_object('navbar_links', NavigationLinksHelper.get_links_by_order())
+        self.add_object('navbar_links', NavigationLinksManager.get_links_by_order())
 
         # добавление всех жанров аниме
-        self.add_object('genre_list', GenreHelper.get_genres())
+        self.add_object('genre_list', GenreManager.get_genres())
 
     # добавляет параметры контекста модуля
     def add_module_context(self, module_name):
-        module_context = ModuleHelper.get_context(module_name)
+        module_context = ModuleManager.get_context(module_name)
         if module_context != None:
             for i in range(0, module_context.size()):
                 param = module_context.get(i)

@@ -8,9 +8,9 @@ SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
 """
-    CmsNavigationLinksHelper - вспомогательный класс являющийся инструментом для навигационных ссылок CMS
+    CmsNavigationLinksManager - вспомогательный класс являющийся инструментом для навигационных ссылок CMS
 """
-class CmsNavigationLinksHelper:
+class CmsNavigationLinksManager:
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
@@ -24,8 +24,8 @@ class CmsNavigationLinksHelper:
     # возвращает все ссылки отсортированные по порядковому номеру
     @staticmethod
     def get_links_by_order():
-        links = CmsNavigationLinksHelper.get_links()
-        sorted_links = CmsNavigationLinksHelper.sort_by_order_number(links)
+        links = CmsNavigationLinksManager.get_links()
+        sorted_links = CmsNavigationLinksManager.sort_by_order_number(links)
         return sorted_links
     
     
