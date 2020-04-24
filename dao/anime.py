@@ -73,6 +73,7 @@ class AnimeManager:
         anime_list = []
         anime_list.extend(Anime.objects.filter(title_rus__icontains = query))
         anime_list.extend(Anime.objects.filter(title_foreign__icontains = query))
+        anime_list.extend(Anime.objects.filter(description__icontains = query))
 
         result_list = Dictionary()
         for anime in anime_list:
