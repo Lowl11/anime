@@ -1,3 +1,4 @@
+# более удобное отображение
 def write(msg, description = None):
     print('')
     if description is not None:

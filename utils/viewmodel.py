@@ -4,7 +4,7 @@ from django.conf import settings
 # Подключение кастомных классов
 from help.navigation_links import NavigationLinksHelper
 from help.genre import GenreHelper
-from help.route import RouteHelper
+from . import route
 from .module import ModuleHelper
 from .utils import Utils
 from utils import debugger
@@ -60,7 +60,7 @@ class ViewModel:
             self.add_object('role', Utils.try_get_from_request(request, 'SESSION', 'role'))
 
         # нынешний модуль в котором находится пользователь и добавление контекста модуля
-        module_name = RouteHelper.module_name(request.path)
+        module_name = route.module_name(request.path)
         self.__module = module_name
         self.add_object('module', module_name)
         self.add_module_context(module_name)
