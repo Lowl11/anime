@@ -6,7 +6,7 @@ from dao.navigation_links import NavigationLinksHelper
 from dao.genre import GenreHelper
 from . import route
 from . import module as ModuleHelper
-from tools import utils as Utils
+from tools import utils
 from tools import debugger
 
 # глобальные объекты и переменные
@@ -57,7 +57,7 @@ class ViewModel:
             self.add_object('user', None)
         else:
             self.add_object('user', user)
-            self.add_object('role', Utils.try_get_from_request(request, 'SESSION', 'role'))
+            self.add_object('role', utils.try_get_from_request(request, 'SESSION', 'role'))
 
         # нынешний модуль в котором находится пользователь и добавление контекста модуля
         module_name = route.module_name(request.path)
