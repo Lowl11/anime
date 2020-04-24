@@ -5,7 +5,7 @@ from django.utils import timezone
 from watch.models import Anime
 from .genre import GenreHelper
 from tools.dict import Dictionary
-from tools import form as FormHelper
+from tools import forms as FormManager
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -59,12 +59,12 @@ class AnimeHelper:
     def fill_form(form, anime):
         # TODO понять через какое поле или через какой параметр заполняется textarea
         fields = form.fields
-        FormHelper.update_field(fields['title_rus'], anime.title_rus)
-        FormHelper.update_field(fields['title_foreign'], anime.title_foreign)
-        FormHelper.update_field(fields['season'], anime.season)
-        # FormHelper.update_field(fields['description'], anime.description)
-        FormHelper.update_field(fields['episodes_quantity'], anime.episodes_quantity)
-        FormHelper.update_field(fields['start_date'], anime.start_date)
+        FormManager.update_field(fields['title_rus'], anime.title_rus)
+        FormManager.update_field(fields['title_foreign'], anime.title_foreign)
+        FormManager.update_field(fields['season'], anime.season)
+        # FormManager.update_field(fields['description'], anime.description)
+        FormManager.update_field(fields['episodes_quantity'], anime.episodes_quantity)
+        FormManager.update_field(fields['start_date'], anime.start_date)
         return form
     
     # поиск аниме
