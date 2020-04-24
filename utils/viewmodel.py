@@ -5,7 +5,7 @@ from django.conf import settings
 from help.navigation_links import NavigationLinksHelper
 from help.genre import GenreHelper
 from . import route
-from .module import ModuleHelper
+from . import module as ModuleHelper
 from .utils import Utils
 from utils import debugger
 
