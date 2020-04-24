@@ -87,17 +87,20 @@ class ElasticSearchManager:
     def make_request(self, postfix, data, request_type):
         response = None
         full_url = self.url + postfix
-        if request_type == 'POST':
-            response = requests.post(full_url, data = data)
-        elif request_type == 'GET':
-            response = requests.get(full_url, data = data)
-        elif request_type == 'PUT':
-            response = requests.put(full_url, data = data)
-        elif request_type == 'DELETE':
-            response = requests.delete(full_url, data = data)
-        
-        if response.status_code != 200:
-            return None
+        try:
+            if request_type == 'POST':
+                response = requests.post(full_url, data = data)
+            elif request_type == 'GET':
+                response = requests.get(full_url, data = data)
+            elif request_type == 'PUT':
+                response = requests.put(full_url, data = data)
+            elif request_type == 'DELETE':
+                response = requests.delete(full_url, data = data)
+            
+            if response.status_code != 200:
+                return None
+        except:
+            pass
         return response
     
     class Index:

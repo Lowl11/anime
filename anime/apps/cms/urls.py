@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^elastic/$', views.elastic_view, name = 'cms_elastic_view'),
 
     #### ElasticSearch ###
-    url(r'^elastic/delete-index/(?P<index_name>.*)/$', views.elastic_delete_index_get, name = 'cms_elastic_delete_index_get'),
+    url(r'^elastic/delete-index/(?P<index_name>.*)/$', views.elastic_delete_index_ajax, name = 'cms_elastic_delete_index_ajax'),
     url(r'^elastic/fill/(?P<data_type>\w+)/$', views.elastic_fill_get, name = 'cms_elastic_fill_get')
     ############################# /MAIN #######################################
 ]

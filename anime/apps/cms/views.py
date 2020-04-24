@@ -68,7 +68,7 @@ def elastic_view(request):
     return vm.render(request)
 
 
-def elastic_delete_index_get(request, index_name):
+def elastic_delete_index_ajax(request, index_name):
     if es_manager.delete_index(index_name):
         return redirect_elastic()
     return not_found()
