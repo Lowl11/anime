@@ -9,6 +9,13 @@ from . import utils as Utils
 class ElasticSearchManager:
     def __init__(self):
         self.url = ''
+    
+    # для starter
+    @staticmethod
+    def get_manager(url):
+        es_manager = ElasticSearchManager()
+        es_manager.url = url
+        return es_manager
 
 
     ####################################################################

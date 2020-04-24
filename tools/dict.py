@@ -23,8 +23,16 @@ class Dictionary:
                 self.__nodes.append(self.Node(key, value))
     
     # возвращает запись по индексу
-    def get(self, index):
+    def get_by_index(self, index):
         return self.__nodes[index]
+    
+    # возвращает запись по ключу
+    def get_by_key(self, key):
+        nodes = self.__nodes
+        for node in nodes:
+            if node.key == key:
+                return node.value
+        return None
     
     # возвращает размер словаря
     def size(self):
@@ -37,6 +45,14 @@ class Dictionary:
         for node in nodes:
             values.append(node.value)
         return values
+    
+    # возвращает ассоциотивный массив
+    def to_assosiative(self):
+        array = {}
+        nodes = self.__nodes
+        for node in nodes:
+            array[node.key] = node.value
+        return array
     
     # проставляет обязательный тип данных
     def set_data_type(self, type):

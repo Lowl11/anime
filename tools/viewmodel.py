@@ -76,7 +76,7 @@ class ViewModel:
         module_context = ModuleManager.get_context(module_name)
         if module_context != None:
             for i in range(0, module_context.size()):
-                param = module_context.get(i)
+                param = module_context.get_by_index(i)
                 self.add_object(param.key, param.value)
         return True
     
