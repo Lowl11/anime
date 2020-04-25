@@ -13,14 +13,13 @@ function ElasticManager() {
         this.bind_actions();
     }
 
-    this.bind_actions() = function() {
+    this.bind_actions = function() {
         // привязка действий к jquery элементам
     }
 
     this.handle_delete_buttons = function() {
         let delete_buttons = $('.delete-btn');
         this.handle_delete_index_buttons(delete_buttons);
-        console.log(this.delete_index_buttons);
     }
 
     this.handle_delete_index_buttons = function(delete_buttons) {
