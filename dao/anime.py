@@ -54,6 +54,18 @@ class AnimeManager:
         anime = Anime.objects.get(pk = id)
         return anime
     
+    # обновление данных аниме по id
+    @staticmethod
+    def update_anime_by_id(id, updated):
+        try:
+            anime = AnimeManager.get_anime_by_id(id)
+            anime.title_rus = updated['title_rus']
+            anime.title_foreign = updated['title_foreign']
+            anime.save()
+        except:
+            return False
+        return True
+    
     # заполнение формы значениями существующего аниме
     @staticmethod
     def fill_form(form, anime):

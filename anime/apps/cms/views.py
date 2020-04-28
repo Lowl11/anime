@@ -9,6 +9,9 @@ from dao.anime import AnimeManager
 from tools.elastic import ElasticSearchManager
 from anime import starter
 from .forms import ManageAnimeForm
+from tools import debugger
+from tools.dict import Dictionary
+from tools import utils
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -71,7 +74,20 @@ def elastic_view(request):
 ######################## Manage Anime ##########################
 
 def manage_anime_post(request):
-    return
+    if request.POST:
+        updated = Dictionary()
+        anime_id = request.POST['anime_id']
+
+        updated.add('title_rus', utils.try_get_from_request(request, 'POST', 'title_rus'))
+        updated.add('title_foreign', utils.try_get_from_request(request, 'POST', 'title_foreign'))
+        updated.add('episodes_quantity', utils.try_get_from_request(request, 'POST', 'episodes_quantity'))
+        updated.add('season', utils.try_get_from_request(request, 'POST', 'season'))
+        updated.add('start_date', utils.try_get_from_request(request, 'POST', 'start_date'))
+        updated.add('description', utils.try_get_from_request(request, 'POST', 'description'))
+        updated.clear_from_empty()
+
+        result = AnimeManager.update_anime_by_id(anime_id, updated.to_assosiative())
+    return redirect_manage_anime(anime_id)
 
 
 ######################## ElasticSearch ##########################
@@ -96,3 +112,6 @@ def not_found():
 
 def redirect_elastic():
     return redirect('/cms/elastic/')
+
+def redirect_manage_anime(anime_id):
+    return redirect('/cms/anime/manage/' + str(anime_id))

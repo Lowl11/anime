@@ -21,6 +21,14 @@ class Dictionary:
         if self.check_key(key):
             if self.check_value(value):
                 self.__nodes.append(self.Node(key, value))
+            
+    # удаление элемента по ключу
+    def remove_by_key(self, key):
+        del self.__nodes[key]
+    
+    # удаление по индексу
+    def remove_by_index(self, index):
+        del self.__nodes[int(index)]
     
     # возвращает запись по индексу
     def get_by_index(self, index):
@@ -53,6 +61,14 @@ class Dictionary:
         for node in nodes:
             array[node.key] = node.value
         return array
+    
+    # очистить от пустых значений
+    def clear_from_empty(self):
+        nodes = self.__nodes
+        for node in nodes:
+            if node.value is None or len(node.value) == 0:
+                self.remove_by_key(node.key)
+        return self
     
     # проставляет обязательный тип данных
     def set_data_type(self, type):
