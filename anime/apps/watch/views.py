@@ -50,11 +50,13 @@ def xsearch_get(request):
     if request.GET:
         query = request.GET['query']
         anime_list = es_manager.search_anime(query)
+        no_image = True
         if anime_list is None:
+            no_image = False
             anime_list = AnimeManager.search(query.lower())
         result_quantity = len(anime_list)
         title = 'Поиск по запросу "' + query + '" выдал ' + str(result_quantity) + ' результат(ов)'
-        return display_anime_list(request, anime_list, title)
+        return display_anime_list(request, anime_list, title, no_image)
     return not_found()
 
 ####################################################################
@@ -62,11 +64,12 @@ def xsearch_get(request):
 ####################################################################
 
 # метод отображения списка аниме
-def display_anime_list(request, anime_list, title):
+def display_anime_list(request, anime_list, title, no_image = False):
     vm = ViewModel()
     vm.add_path('watch/page.html')
     vm.add_object('title', title)
     vm.add_object('anime_list', anime_list)
+    vm.add_object('no_image', no_image)
     return vm.render(request)
 
 def not_found():

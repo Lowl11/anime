@@ -127,24 +127,32 @@ class ElasticSearchManager:
         postfix = self.anime_index_name() + '/_search'
         request_type = 'POST'
         data = {
-            'query': {
-                'multi_match': {
-                    'query': query,
-                    'fields': ['title_rus', 'title_foreign', 'description']
+            "query": {
+                "multi_match": {
+                    "query": query,
+                    "fields": ["title_rus", "title_foreign", "description"]
                 }
             }
         }
 
-        response = self.make_request(postfix, data, request_type)
+        response = self.make_request(postfix, json.dumps(data), request_type)
 
         if response is None:
             return response
 
         json_response = response.json()
+        if Utils.try_get_from_array(json_response, 'status') == '400':
+            return None
+        
+        out_hits = json_response['hits']
+        inside_hits = out_hits['hits']
 
-        debugger.write(json_response, 'Json Response: ')
+        anime_list = []
+        for hit in inside_hits:
+            anime = hit['_source']
+            anime_list.append(AnimeManager.parse(anime))
 
-        return True
+        return anime_list
 
 
     ####################################################################
@@ -159,7 +167,7 @@ class ElasticSearchManager:
         try:
             if request_type == 'POST':
                 response = requests.post(full_url, data = data, headers = headers)
-                debugger.write(response.text, 'Response:')
+                debugger.write(response, 'Response:')
             elif request_type == 'GET':
                 response = requests.get(full_url, data = data, headers = headers)
             elif request_type == 'PUT':
@@ -167,10 +175,12 @@ class ElasticSearchManager:
             elif request_type == 'DELETE':
                 response = requests.delete(full_url, data = data, headers = headers)
             
+            debugger.write(response.text, 'Response: ')
+
             if response.status_code != 200:
                 return None
-        except:
-            pass
+        except Exception:
+            raise Exception
         
         return response
     

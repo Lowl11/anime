@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.utils import timezone
+from datetime import datetime
 
 # Подключение кастомных классов
 from watch.models import Anime
@@ -99,6 +100,20 @@ class AnimeManager:
             result_list.add(anime.id, anime)
 
         return result_list.to_list()
+    
+    # превратить массив в объект
+    @staticmethod
+    def parse(array):
+        anime = Anime()
+        anime.id = array['id']
+        anime.title_rus = array['title_rus']
+        anime.title_foreign = array['title_foreign']
+        anime.description = array['description']
+        anime.start_date = datetime.strptime(array['start_date'], '%Y-%m-%d')
+        anime.season = int(array['season'])
+        anime.episodes_quantity = int(array['episodes_quantity'])
+        anime.image = open('media/anime/one_piece.png')
+        return anime
 
     ####################################################################
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
