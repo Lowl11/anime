@@ -16,7 +16,7 @@ from tools import utils
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
-es_manager = SETTINGS['es_manager']
+es_manager = ElasticSearchManager()
 
 
 ####################################################################

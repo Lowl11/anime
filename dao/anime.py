@@ -6,6 +6,7 @@ from watch.models import Anime
 from .genre import GenreManager
 from tools.dict import Dictionary
 from tools import forms as FormManager
+from tools import debugger
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS

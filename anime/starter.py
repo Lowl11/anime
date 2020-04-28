@@ -1,17 +1,9 @@
 from django.shortcuts import render, redirect
 
-from tools.elastic import ElasticSearchManager
 from tools.dict import Dictionary
 
 
 starter_dict = Dictionary()
-
-####################################################################
-########################## ElasticSearch ###########################
-####################################################################
-ES_NODE = 'http://127.0.0.1:9200'
-starter_dict.add('es_manager', ElasticSearchManager.get_manager(ES_NODE))
-
 
 ####################################################################
 ############################ NOT FOUND #############################

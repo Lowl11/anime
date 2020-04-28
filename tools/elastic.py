@@ -2,20 +2,17 @@ import requests
 import json
 import os
 
+from django.conf import settings
+from datetime import date
+
 # Подключение кастомных классов
 from . import debugger
 from . import utils as Utils
+from dao.anime import AnimeManager
 
 class ElasticSearchManager:
     def __init__(self):
-        self.url = ''
-    
-    # для starter
-    @staticmethod
-    def get_manager(url):
-        es_manager = ElasticSearchManager()
-        es_manager.url = url
-        return es_manager
+        self.url = 'http://127.0.0.1:9200/'
 
 
     ####################################################################
@@ -24,9 +21,9 @@ class ElasticSearchManager:
 
     # возвращает все индексы в эластике
     def get_all_indices(self):
-        data = ''
+        data = {}
         request_type = 'GET'
-        postfix = '/_cat/indices'
+        postfix = '_cat/indices'
         response = self.make_request(postfix, data, request_type)
 
         if response is None:
@@ -51,7 +48,7 @@ class ElasticSearchManager:
     
     # удаляет индекс по имени
     def delete_index(self, index_name):
-        postfix = '/' + index_name
+        postfix = index_name
         response = self.make_request(postfix, {}, 'DELETE')
 
         if response is None:
@@ -66,7 +63,7 @@ class ElasticSearchManager:
     
     # создание индекса
     def create_index(self, index_name):
-        postfix = '/' + index_name
+        postfix = index_name
         response = self.make_request(postfix, {}, 'PUT')
 
         if response is None:
@@ -79,6 +76,27 @@ class ElasticSearchManager:
         
         return False
     
+    # заполнение индекса
+    def fill_index_by_anime(self, anime_list):
+        postfix = self.anime_index_name() + '/_doc'
+        data = {}
+        # 
+        return False
+    
+    # создание одной записи
+    def create_doc(self, postfix, data):
+        response = self.make_request(postfix, data, 'POST')
+
+        if response is None:
+            return response
+        
+        json_response = response.json()
+
+        if json_response['result'] == 'created':
+            return True
+
+        return False
+
 
     ####################################################################
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
@@ -102,6 +120,10 @@ class ElasticSearchManager:
         except:
             pass
         return response
+    
+    # возвращает акутальное название индекса
+    def anime_index_name(self):
+        return 'anime-' + date.today().strftime('%d.%m.%Y')
     
     class Index:
         def __init__(self):
