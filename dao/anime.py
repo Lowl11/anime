@@ -62,7 +62,7 @@ class AnimeManager:
         FormManager.update_field(fields['title_rus'], anime.title_rus)
         FormManager.update_field(fields['title_foreign'], anime.title_foreign)
         FormManager.update_field(fields['season'], anime.season)
-        # FormManager.update_field(fields['description'], anime.description)
+        FormManager.update_field(fields['description'], anime.description)
         FormManager.update_field(fields['episodes_quantity'], anime.episodes_quantity)
         FormManager.update_field(fields['start_date'], anime.start_date)
         return form

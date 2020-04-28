@@ -1,8 +1,18 @@
 {% extends "cms/template.html" %}
 
+{% block js %}
+<script>
+    // это костыль, нужно понять как автозаполнить textarea
+    $(function() {
+        let textareas = $('textarea');
+        let text = textareas.attr('value');
+        textareas.text(text);
+    });
+</script>
+{% endblock %}
 
 {% block content %}
-<form action="" method="POST">{% csrf_token %}
+<form action="{% url 'cms_manage_anime_post' %}" method="POST">{% csrf_token %}
     {% for field in manage_anime_form %}
     <div class="form-group">
         {% if field.errors %}

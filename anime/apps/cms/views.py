@@ -38,7 +38,7 @@ def anime_view(request):
     return vm.render(request)
 
 @login_required(login_url = CONSTANTS['url_signin'])
-def anime_manage_view(request, pk):
+def manage_anime_view(request, pk):
     vm = ViewModel()
     vm.add_path('cms/manage-anime.html')
     vm.add_object('title', 'Управление аниме')
@@ -67,6 +67,14 @@ def elastic_view(request):
     vm.add_object('indices', es_manager.get_all_indices())
     return vm.render(request)
 
+
+######################## Manage Anime ##########################
+
+def manage_anime_post(request):
+    return
+
+
+######################## ElasticSearch ##########################
 
 def elastic_delete_index_ajax(request, index_name):
     if es_manager.delete_index(index_name):
