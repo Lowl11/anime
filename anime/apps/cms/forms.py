@@ -16,7 +16,7 @@ class ManageAnimeForm(forms.Form):
     description = forms.CharField(label = 'Описание', widget = forms.Textarea, min_length = CONSTANTS['manage_anime_description_min'])
     episodes_quantity = forms.IntegerField(label = 'Количество серий')
     start_date = forms.DateField(label = 'Дата начала')
-    image = forms.ImageField(label = 'Обложка')
+    image = forms.ImageField(label = 'Обложка', required = False)
 
     title_rus.widget.attrs.update({'class': 'form-control'})
     title_foreign.widget.attrs.update({'class': 'form-control'})

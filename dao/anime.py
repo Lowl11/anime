@@ -61,6 +61,11 @@ class AnimeManager:
             anime = AnimeManager.get_anime_by_id(id)
             anime.title_rus = updated['title_rus']
             anime.title_foreign = updated['title_foreign']
+            anime.description = updated['description']
+            anime.season = updated['season']
+            anime.episodes_quantity = updated['episodes_quantity']
+            anime.start_date = updated['start_date']
+            # TODO сделать upload обложки (и вообще файлов)
             anime.save()
         except:
             return False
@@ -77,6 +82,7 @@ class AnimeManager:
         FormManager.update_field(fields['description'], anime.description)
         FormManager.update_field(fields['episodes_quantity'], anime.episodes_quantity)
         FormManager.update_field(fields['start_date'], anime.start_date)
+        FormManager.update_field(fields['image'], anime.image.url)
         return form
     
     # поиск аниме
