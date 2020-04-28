@@ -100,6 +100,14 @@ class AnimeManager:
     # подготовка списка аниме
     @staticmethod
     def prepare_anime_list(anime_list):
+        # обязательно сортировка первая
+        anime_list = AnimeManager.sort(anime_list)
         for anime in anime_list:
             anime.genre_links = GenreManager.anime_genres_links(anime)
         return anime_list
+    
+    # сортировка аниме листа
+    @staticmethod
+    def sort(anime_list):
+        # пока что так, сортировка по дате (DESC)
+        return anime_list.order_by('-start_date')
