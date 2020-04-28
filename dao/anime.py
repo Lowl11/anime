@@ -116,4 +116,17 @@ class AnimeManager:
     @staticmethod
     def sort(anime_list):
         # пока что так, сортировка по дате (DESC)
+        if type(anime_list) == type([]):
+            return AnimeManager.sort_list(anime_list)
         return anime_list.order_by('-start_date')
+    
+    # сортировка аниме листа list
+    @staticmethod
+    def sort_list(anime_list):
+        for i in range(0, len(anime_list)):
+            for j in range(i+1, len(anime_list)):
+                # < desc
+                # > asc
+                if anime_list[i].start_date < anime_list[j].start_date:
+                    anime_list[i], anime_list[j] = anime_list[j], anime_list[i]
+        return anime_list
