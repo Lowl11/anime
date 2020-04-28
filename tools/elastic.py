@@ -80,7 +80,7 @@ class ElasticSearchManager:
     def delete_index(self, index_name):
         postfix = index_name
         response = self.make_request(postfix, {}, 'DELETE')
-        
+
         if response is None:
             return response
 
@@ -101,6 +101,8 @@ class ElasticSearchManager:
                 'title_rus': anime.title_rus,
                 'title_foreign': anime.title_foreign,
                 'description': anime.description,
+                'season': str(anime.season),
+                'episodes_quantity': str(anime.episodes_quantity),
                 'start_date': str(anime.start_date)
             }
             self.create_doc(postfix, json.dumps(data))
@@ -119,6 +121,30 @@ class ElasticSearchManager:
             return True
 
         return False
+    
+    # поиск аниме
+    def search_anime(self, query):
+        postfix = self.anime_index_name() + '/_search'
+        request_type = 'POST'
+        data = {
+            'query': {
+                'multi_match': {
+                    'query': query,
+                    'fields': ['title_rus', 'title_foreign', 'description']
+                }
+            }
+        }
+
+        response = self.make_request(postfix, data, request_type)
+
+        if response is None:
+            return response
+
+        json_response = response.json()
+
+        debugger.write(json_response, 'Json Response: ')
+
+        return True
 
 
     ####################################################################

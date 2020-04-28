@@ -4,10 +4,12 @@ from django.conf import settings
 # подключение кастомных файлов
 from tools.viewmodel import ViewModel
 from dao.anime import AnimeManager
+from tools.elastic import ElasticSearchManager
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
+es_manager = ElasticSearchManager()
 
 
 ####################################################################
@@ -47,7 +49,9 @@ def year_view(request, year):
 def xsearch_get(request):
     if request.GET:
         query = request.GET['query']
-        anime_list = AnimeManager.search(query.lower())
+        anime_list = es_manager.search_anime(query)
+        if anime_list is None:
+            anime_list = AnimeManager.search(query.lower())
         result_quantity = len(anime_list)
         title = 'Поиск по запросу "' + query + '" выдал ' + str(result_quantity) + ' результат(ов)'
         return display_anime_list(request, anime_list, title)
