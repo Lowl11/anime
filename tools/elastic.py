@@ -76,12 +76,35 @@ class ElasticSearchManager:
         
         return False
     
-    # заполнение индекса
-    def fill_index_by_anime(self, anime_list):
-        postfix = self.anime_index_name() + '/_doc'
-        data = {}
-        # 
+    # удаление индекса
+    def delete_index(self, index_name):
+        postfix = index_name
+        response = self.make_request(postfix, {}, 'DELETE')
+        
+        if response is None:
+            return response
+
+        json_response = response.json()
+
+        if json_response['acknowledged'] == True:
+            return True
+        
         return False
+    
+    # заполнение индекса
+    def fill_index_by_anime(self):
+        postfix = self.anime_index_name() + '/_doc'
+        anime_list = AnimeManager.get_all()
+        for anime in anime_list:
+            data = {
+                'id': str(anime.id),
+                'title_rus': anime.title_rus,
+                'title_foreign': anime.title_foreign,
+                'description': anime.description,
+                'start_date': str(anime.start_date)
+            }
+            self.create_doc(postfix, json.dumps(data))
+        return
     
     # создание одной записи
     def create_doc(self, postfix, data):
@@ -105,20 +128,24 @@ class ElasticSearchManager:
     def make_request(self, postfix, data, request_type):
         response = None
         full_url = self.url + postfix
+        headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+
         try:
             if request_type == 'POST':
-                response = requests.post(full_url, data = data)
+                response = requests.post(full_url, data = data, headers = headers)
+                debugger.write(response.text, 'Response:')
             elif request_type == 'GET':
-                response = requests.get(full_url, data = data)
+                response = requests.get(full_url, data = data, headers = headers)
             elif request_type == 'PUT':
-                response = requests.put(full_url, data = data)
+                response = requests.put(full_url, data = data, headers = headers)
             elif request_type == 'DELETE':
-                response = requests.delete(full_url, data = data)
+                response = requests.delete(full_url, data = data, headers = headers)
             
             if response.status_code != 200:
                 return None
         except:
             pass
+        
         return response
     
     # возвращает акутальное название индекса

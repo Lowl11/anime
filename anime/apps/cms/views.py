@@ -99,8 +99,13 @@ def elastic_delete_index_ajax(request, index_name):
 
 def elastic_fill_get(request, data_type):
     today = date.today().strftime('%d.%m.%Y')
-    if es_manager.create_index(data_type + '-' + today) == False:
+    index_name = data_type + '-' + today
+
+    es_manager.delete_index(index_name)
+    if es_manager.create_index(index_name) == False:
         return not_found()
+    es_manager.fill_index_by_anime()
+    
     return redirect_elastic()
 
 ####################################################################
