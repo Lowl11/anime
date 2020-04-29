@@ -69,6 +69,40 @@ class ElasticSearchManager:
                 "index": {
                     "number_of_shards": 3,
                     "number_of_replicas": 2
+                },
+                "analysis": {
+                    "analyzer": {
+                        "anime_analyzer": {
+                            "type": "custom",
+                            "tokenizer": "standard",
+                            "char_filter": [
+                                "html_strip"
+                            ],
+                            "filter": [
+                                "lowercase",
+                                "asciifolding",
+                                "english_stop",
+                                "russian_stop"
+                            ]
+                        }
+                    },
+                    "filter": {
+                        "english_stop": {
+                            "type": "stop",
+                            "stopwords": "_english_"
+                        },
+                        "russian_stop": {
+                            "type": "stop",
+                            "stopwords": "_russian_"
+                        }
+                    }
+                }
+            },
+            "mappings": {
+                "properties": {
+                    "title_rus": { "type": "text" },
+                    "title_foreign": { "type": "text" },
+                    "description": { "type": "text" }
                 }
             }
         }
