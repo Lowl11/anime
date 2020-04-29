@@ -64,7 +64,15 @@ class ElasticSearchManager:
     # создание индекса
     def create_index(self, index_name):
         postfix = index_name
-        response = self.make_request(postfix, {}, 'PUT')
+        data = {
+            "settings": {
+                "index": {
+                    "number_of_shards": 3,
+                    "number_of_replicas": 2
+                }
+            }
+        }
+        response = self.make_request(postfix, json.dumps(data), 'PUT')
 
         if response is None:
             return response
@@ -167,17 +175,15 @@ class ElasticSearchManager:
         try:
             if request_type == 'POST':
                 response = requests.post(full_url, data = data, headers = headers)
-                debugger.write(response, 'Response:')
             elif request_type == 'GET':
                 response = requests.get(full_url, data = data, headers = headers)
             elif request_type == 'PUT':
                 response = requests.put(full_url, data = data, headers = headers)
+                debugger.write(response.text, 'Response put: ')
             elif request_type == 'DELETE':
                 response = requests.delete(full_url, data = data, headers = headers)
-            
-            debugger.write(response.text, 'Response: ')
 
-            if response.status_code != 200:
+            if response.status_code != 200 or response.status_code == 201:
                 return None
         except Exception:
             raise Exception
