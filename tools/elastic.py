@@ -247,7 +247,7 @@ class ElasticSearchManager:
             if biggest['score'] < description_query['score']:
                 biggest = description_query
             
-            if biggest is not None:
+            if biggest['score'] > 0:
                 return self.search_anime(biggest['text'])
 
         return anime_list
