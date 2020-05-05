@@ -1,6 +1,4 @@
-import requests
 import json
-import os
 
 from tools.elastic.index import IndexManager
 from dao.anime import AnimeManager
