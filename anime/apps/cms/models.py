@@ -12,3 +12,15 @@ class CmsNavigationLink(models.Model):
 
     def __str__(self):
         return self.name + ' [' + str(self.order_number) + ']'
+
+
+class File(models.Model):
+    name = models.CharField(max_length = 255, null = False)
+    path = models.CharField(max_length = 999, null = False)
+
+    class Meta:
+        verbose_name = 'Файл'
+        verbose_name_plural = 'Файлы'
+    
+    def __str__(self):
+        return self.name
