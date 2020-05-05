@@ -71,3 +71,26 @@
 .file-manager .modal .title {
     font-size: 16px;
 }
+
+
+/* Файлы и папки */
+.file-manager .file-objects {
+    /*  */
+}
+
+.file-manager .file-objects .object {
+    width: 20px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px 20px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.file-manager .file-objects .object:hover {
+    cursor: pointer;
+    background: rgba(72, 109, 131, 0.5);
+}

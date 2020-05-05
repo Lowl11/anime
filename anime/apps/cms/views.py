@@ -62,6 +62,7 @@ def fm_view(request):
     vm = ViewModel()
     vm.add_path('cms/fm.html')
     vm.add_object('title', 'Файловый менеджер')
+    vm.add_object('root_objects', FileManager.get_root_objects())
     return vm.render(request)
 
 

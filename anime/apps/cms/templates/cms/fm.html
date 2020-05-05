@@ -19,6 +19,16 @@
     <div class="fm-buttons">
         <div id="create-folder" class="glyphicon glyphicon-plus" title="Создать папку"></div>
     </div>
+
+    <div class="file-objects">
+        {% for object in root_objects %}
+        <div class="object {{ object.type }}">
+            <div class="glyphicon glyphicon-folder-open"></div>
+            {{ object }}
+        </div>
+        {% endfor %}
+    </div>
+
     <div class="modal modal-input">
         <div class="header">
             <div class="title"></div>

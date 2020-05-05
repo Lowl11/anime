@@ -4,7 +4,10 @@ from tools import file
 class FileManager:
     @staticmethod
     def get_root_objects():
-        return
+        folders = Folder.objects.all()
+        for folder in folders:
+            folder.type = 'folder'
+        return folders
     
     # создание папки в БД и на диске
     @staticmethod
