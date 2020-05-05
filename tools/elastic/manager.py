@@ -14,6 +14,9 @@ from tools.elastic.index import IndexManager
 from tools.elastic.data import DataManager
 from tools.elastic.searcher import Searcher
 
+'''
+    ElasticSearchManager - класс помогающий делать всякое с эластиком поверхностно
+'''
 class ElasticSearchManager:
     def __init__(self):
         self.url = 'http://127.0.0.1:9200/'

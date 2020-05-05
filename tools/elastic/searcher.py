@@ -1,12 +1,20 @@
 import json
 
+# Подключение кастомных классов
 from tools.elastic.index import IndexManager
 from dao.anime import AnimeManager
 
+
+'''
+    Searcher - инструмент для поиска непосредественно по эластику
+'''
 class Searcher:
     def __init__(self, talker):
         self.talker = talker
     
+    # поиск аниме
+    # TODO: в будущем конечно будет круче вынести большинство из этого кода в общий код
+    # чтобы было без разницы какой тип данных искать
     def search_anime(self, query):
         # REST данные
         postfix = self.__anime_index_name() + '/_search'
@@ -23,25 +31,33 @@ class Searcher:
         if json_response is None:
             return json_response
         
+        # есть коренной объект hits и внутри еще один hits (в котором уже лежат данные)
         out_hits = json_response['hits']
         inside_hits = out_hits['hits']
 
+        # подводим _source объекты к анимешкам
         anime_list = []
         for hit in inside_hits:
             anime = hit['_source']
             anime_list.append(AnimeManager.parse(anime))
         
+        # если поиск не дал результатов то могут быть возвращены suggestion'ы
+        # с помощью которых можно сделать еще один запрос (к примеру пользователь ввел
+        # "злодий" а в suggestion'ах есть вариант "злодей")
         if len(inside_hits) == 0:
-            suggest = json_response['suggest']
+            suggest = json_response['suggest'] # коренной объект suggest и в нем suggestion по каждому из полей
 
-            description_suggestions = suggest['description_suggestion']
-            title_rus_suggestions = suggest['title_rus_suggestion']
-            title_foreign_suggestions = suggest['title_foreign_suggestion']
+            description_suggestions = suggest['description_suggestion'] # description
+            title_rus_suggestions = suggest['title_rus_suggestion'] # title_rus
+            title_foreign_suggestions = suggest['title_foreign_suggestion'] # title_foreign
 
+            # эластик предлогает варианты основываясь на каждом из полей
+            # по этому из каждого поля берем первый вариант (то есть самый вероятный)
             description_options = description_suggestions[0]['options']
             title_rus_options = title_rus_suggestions[0]['options']
             title_foreign_options = title_foreign_suggestions[0]['options']
 
+            # дальше вычисляем самый вероятный вариант из лучших вариантов своих полей
             description_query = { 'score': 0 }
             title_rus_query = { 'score': 0 }
             title_foreign_query = { 'score': 0 }
@@ -62,14 +78,16 @@ class Searcher:
             if biggest['score'] < description_query['score']:
                 biggest = description_query
             
-            if biggest['score'] > 0:
+            if biggest['score'] > 0: # если есть suggestion ищем по самому вероятному
                 return self.search_anime(biggest['text'])
 
         return anime_list
     
+    # возвращает актуальное название аниме индекса
     def __anime_index_name(self):
         return IndexManager.anime_index_name()
     
+    # строит multi_match запрос (тип поиска в эластике)
     def __build_multi_match(self, query, fields):
         multi_match = {
             'multi_match': {
@@ -81,12 +99,14 @@ class Searcher:
         }
         return multi_match
     
+    # строит suggestion'ы (подсказки) для каждого поискового поля
     def __build_suggestions(self, query, fields):
         suggestions = {}
         for field in fields:
             suggestions[field + '_suggestion'] = self.__text_field(field, query)
         return suggestions
     
+    # возвращает тип поля text
     def __text_field(self, field_name, query):
         text_field = {
             'text': query,

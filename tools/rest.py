@@ -4,6 +4,10 @@ import os
 
 from tools import utils
 
+'''
+    REST - тулза которая помогает отправить запрос по урлу
+'''
+
 # делает запрос по урлу
 def make_request(url, data, request_type, headers = None):
     if headers is None: # по дефолту будем отправлять JSON

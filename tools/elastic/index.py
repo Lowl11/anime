@@ -1,8 +1,13 @@
 from django.conf import settings
 from datetime import date
 
+# Подключение кастомных классов
 from tools import utils
 
+
+'''
+    IndexManager - CRUD для индексов эластика
+'''
 class IndexManager:
     def __init__(self, talker):
         self.talker = talker
@@ -11,6 +16,7 @@ class IndexManager:
     @staticmethod
     def anime_index_name():
         return 'anime-' + date.today().strftime('%d.%m.%Y')
+
 
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
@@ -66,18 +72,19 @@ class IndexManager:
         return json_response
     
 
-
     ####################################################################
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
     ####################################################################
 
     # базовая проверка каждого возвращаемого JSON
     def __base_check(self, response):
+        # после взаимодействия с индексами эластик возвращает acknowledged
         success = utils.try_get_from_array(response, 'acknowledged')
         if success is None:
             utils.raise_exception('Ошибка после запроса на действие с индексом\nResponse: ' + str(response))
         return
 
+    # анализатор аниме индекса (конкретно под данные аниме)
     def __build_anime_analyzer(self):
         anime_analyzer = {
             'anime_analyzer': {
@@ -90,6 +97,7 @@ class IndexManager:
             }
         }
     
+    # настройки индекса типа кол-ва шардов
     def __build_index_settings(self):
         index_settings = {
             "number_of_shards": 3,
@@ -97,6 +105,7 @@ class IndexManager:
         }
         return index_settings
     
+    # строит маппинг (структуру) данных судя по заданным полям
     def __build_mappings(self, fields):
         properties = {}
         for field in fields:
@@ -106,12 +115,14 @@ class IndexManager:
         }
         return mappings
     
+    # дефолтные текстовые фильтры
     def __default_text_filters(self):
         return ["lowercase",
                 "asciifolding",
                 "english_stop",
                 "russian_stop"]
 
+    # дефолтные языковые фильтры
     def __default_lang_filters(self):
         return {
             "english_stop": {
@@ -123,6 +134,7 @@ class IndexManager:
                 "stopwords": "_russian_"
             }
         }
+    
     
     class Index:
         def __init__(self):
