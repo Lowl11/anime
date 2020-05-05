@@ -71,6 +71,10 @@ function FMAnimations() {
         let closeObject = footerObject.find('.close-modal');
         let errorObject = footerObject.find('.error-msg');
 
+        // затемненный фон
+        let backgroundCover = $('.background-cover');
+        backgroundCover.show();
+
         titleObject.text(title); // ставим название модалки
 
         // действие на подтверждение модалки
@@ -88,8 +92,12 @@ function FMAnimations() {
 
     this.CloseModalInput = function() {
         let modalInput = $('.modal-input'); // модалка
+        let backgroundCover = $('.background-cover');
+
         $('#modal-input-input').val(''); // очищение поля
+
         modalInput.hide();
+        backgroundCover.hide();
     }
     
     this.Constructor();
