@@ -44,48 +44,17 @@ class IndexManager:
 
     # создание индекса аниме
     def create_anime_index(self):
+        fields = ['title_rus', 'title_foreign', 'description']
         data = {
             "settings": {
-                "index": {
-                    "number_of_shards": 3,
-                    "number_of_replicas": 2
-                },
+                "index": self.__build_index_settings(),
                 "analysis": {
-                    "analyzer": {
-                        "anime_analyzer": {
-                            "type": "custom",
-                            "tokenizer": "standard",
-                            "char_filter": [
-                                "html_strip"
-                            ],
-                            "filter": [
-                                "lowercase",
-                                "asciifolding",
-                                "english_stop",
-                                "russian_stop"
-                            ]
-                        }
-                    },
-                    "filter": {
-                        "english_stop": {
-                            "type": "stop",
-                            "stopwords": "_english_"
-                        },
-                        "russian_stop": {
-                            "type": "stop",
-                            "stopwords": "_russian_"
-                        }
-                    }
-                }
-            },
-            "mappings": {
-                "properties": {
-                    "title_rus": { "type": "text" },
-                    "title_foreign": { "type": "text" },
-                    "description": { "type": "text" }
+                    "analyzer": self.__build_anime_analyzer(),
+                    "filter": self.__default_lang_filters()
                 }
             }
         }
+        data['mappings'] = self.__build_mappings(fields)
         json_response = self.talker.talk(IndexManager.anime_index_name(), data, 'PUT')
         self.__base_check(json_response)
         return json_response
@@ -108,6 +77,52 @@ class IndexManager:
         if success is None:
             utils.raise_exception('Ошибка после запроса на действие с индексом\nResponse: ' + str(response))
         return
+
+    def __build_anime_analyzer(self):
+        anime_analyzer = {
+            'anime_analyzer': {
+                'type': 'custom',
+                "tokenizer": "standard",
+                "char_filter": [
+                    "html_strip"
+                ],
+                'filter': self.__default_text_filters()
+            }
+        }
+    
+    def __build_index_settings(self):
+        index_settings = {
+            "number_of_shards": 3,
+            "number_of_replicas": 2
+        }
+        return index_settings
+    
+    def __build_mappings(self, fields):
+        properties = {}
+        for field in fields:
+            properties[field] = { 'type': 'text' }
+        mappings = {
+            'properties': properties
+        }
+        return mappings
+    
+    def __default_text_filters(self):
+        return ["lowercase",
+                "asciifolding",
+                "english_stop",
+                "russian_stop"]
+
+    def __default_lang_filters(self):
+        return {
+            "english_stop": {
+                "type": "stop",
+                "stopwords": "_english_"
+            },
+            "russian_stop": {
+                "type": "stop",
+                "stopwords": "_russian_"
+            }
+        }
     
     class Index:
         def __init__(self):
