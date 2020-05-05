@@ -7,12 +7,34 @@
 
 {% block js %}
 <script src="{% static 'cms/js/fm.js' %}"></script>
+<script>
+    var fileManager = new FileManager();
+</script>
 {% endblock %}
 
 
 {% block content %}
 <h1>Файловый менеджер</h1>
 <div class="file-manager">
-    
+    <div class="fm-buttons">
+        <div id="create-folder" class="glyphicon glyphicon-plus" title="Создать папку"></div>
+    </div>
+    <div class="modal modal-input">
+        <div class="header">
+            <div class="title"></div>
+        </div>
+        <div class="content">
+            <input type="text" placeholder="Название папки" class="form-control" id="modal-input-input">
+        </div>
+        <div class="footer">
+            <div>
+                <div class="error-msg"></div>
+            </div>
+            <div class="footer-buttons">
+                <div class="glyphicon glyphicon-plus-sign apply-modal"></div>
+                <div class="glyphicon glyphicon-remove close-modal"></div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
