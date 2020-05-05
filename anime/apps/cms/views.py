@@ -6,6 +6,7 @@ from datetime import date
 # подключение кастомных файлов
 from tools.viewmodel import ViewModel
 from dao.anime import AnimeManager
+from dao.fm import FileManager
 from tools.elastic.manager import ElasticSearchManager
 from anime import starter
 from .forms import ManageAnimeForm

@@ -14,9 +14,20 @@ class CmsNavigationLink(models.Model):
         return self.name + ' [' + str(self.order_number) + ']'
 
 
+class Folder(models.Model):
+    name = models.CharField(max_length = 255, null = False)
+
+    class Meta:
+        verbose_name = 'Папка'
+        verbose_name_plural = 'Папки'
+
+    def __str__(self):
+        return self.name
+
 class File(models.Model):
     name = models.CharField(max_length = 255, null = False)
     path = models.CharField(max_length = 999, null = False)
+    folder = models.ForeignKey(Folder, null = True, on_delete = models.CASCADE)
 
     class Meta:
         verbose_name = 'Файл'
@@ -24,3 +35,4 @@ class File(models.Model):
     
     def __str__(self):
         return self.name
+    
