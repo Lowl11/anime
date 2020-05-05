@@ -47,13 +47,9 @@ class ElasticSearchManager:
     # заполнение данными
     def fill_index(self, data_type):
         if data_type == 'anime':
-            self.fill_index_by_anime()
+            self.data_manager.fill_anime_index()
         else:
             Utils.raise_exception('Не поддерживаемый тип данных')
-    
-    # заполнение индекса
-    def fill_index_by_anime(self):
-        self.data_manager.fill_anime_index()
     
     # поиск аниме
     def search_anime(self, query):

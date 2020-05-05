@@ -98,8 +98,8 @@ def elastic_delete_index_ajax(request, index_name):
     return not_found()
 
 def elastic_fill_get(request, data_type):
-    es_manager.create_index('anime')
-    es_manager.fill_index_by_anime()
+    es_manager.create_index(data_type)
+    es_manager.fill_index(data_type)
     
     return redirect_elastic()
 
