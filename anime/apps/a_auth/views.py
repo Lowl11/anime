@@ -66,7 +66,7 @@ def prepare_post(request):
     if request.POST:
         # проверка на следующий URL
         next_value = UtilsHelper.try_get_from_request(request, 'POST', 'next')
-        if len(next_value) > 0:
+        if next_value is None:
             return redirect(next_value)
     return redirect_home()
 

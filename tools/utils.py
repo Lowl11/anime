@@ -15,8 +15,10 @@ def try_get_from_request(request, type, name):
             return request.session[name]
         else:
             raise_exception('Данный тип не поддерживается')
-    except Exception:
-        raise_exception(Exception)
+    except:
+        # логирование
+        pass
+    return None
 
 # пытается вернуть значение с массива по названию
 def try_get_from_array(array, name):
