@@ -275,8 +275,8 @@ class ElasticSearchManager:
 
             if response.status_code != 200 or response.status_code == 201:
                 return None
-        except Exception:
-            raise Exception
+        except:
+            pass
         
         return response
     
