@@ -7,6 +7,10 @@ class IndexManager:
     def __init__(self, talker):
         self.talker = talker
     
+    # возвращает акутальное название индекса
+    @staticmethod
+    def anime_index_name():
+        return 'anime-' + date.today().strftime('%d.%m.%Y')
 
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
@@ -82,15 +86,16 @@ class IndexManager:
                 }
             }
         }
-        json_response = self.talker.talk(self.__anime_index_name(), data, 'PUT')
+        json_response = self.talker.talk(IndexManager.anime_index_name(), data, 'PUT')
         self.__base_check(json_response)
         return json_response
     
     # удаление индекса
     def delete_anime_index(self):
         data = {}
-        json_response = self.talker.talk(self.__anime_index_name(), data, 'DELETE')
+        json_response = self.talker.talk(IndexManager.anime_index_name(), data, 'DELETE')
         return json_response
+    
 
 
     ####################################################################
@@ -103,10 +108,6 @@ class IndexManager:
         if success is None:
             utils.raise_exception('Ошибка после запроса на действие с индексом\nResponse: ' + str(response))
         return
-
-    # возвращает акутальное название индекса
-    def __anime_index_name(self):
-        return 'anime-' + date.today().strftime('%d.%m.%Y')
     
     class Index:
         def __init__(self):

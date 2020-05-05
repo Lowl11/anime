@@ -101,7 +101,7 @@ class AnimeManager:
 
         return result_list.to_list()
     
-    # превратить массив в объект
+    # превращение объекта в аниме
     @staticmethod
     def parse(array):
         anime = Anime()
@@ -114,6 +114,24 @@ class AnimeManager:
         anime.episodes_quantity = int(array['episodes_quantity'])
         anime.image = open('media/anime/one_piece.png')
         return anime
+    
+    # проверащение аниме списка в список объектов
+    @staticmethod
+    def parse_to_objects(anime_list):
+        objects_list = []
+        for anime in anime_list:
+            data = {
+                'id': str(anime.id),
+                'title_rus': anime.title_rus,
+                'title_foreign': anime.title_foreign,
+                'description': anime.description,
+                'season': str(anime.season),
+                'episodes_quantity': str(anime.episodes_quantity),
+                'start_date': str(anime.start_date)
+            }
+            objects_list.append(data)
+        return objects_list
+
 
     ####################################################################
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################

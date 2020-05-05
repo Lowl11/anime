@@ -8,15 +8,17 @@ from datetime import date
 # Подключение кастомных классов
 from tools import debugger
 from tools import utils as Utils
-from tools.elastic.index import IndexManager
 from dao.anime import AnimeManager
 from tools.elastic.talker import ElasticTalker as talker
+from tools.elastic.index import IndexManager
+from tools.elastic.data import DataManager
 
 class ElasticSearchManager:
     def __init__(self):
         self.url = 'http://127.0.0.1:9200/'
         self.talker = talker(self.url)
         self.index_manager = IndexManager(self.talker)
+        self.data_manager = DataManager(self.talker)
 
 
     ####################################################################
@@ -41,37 +43,17 @@ class ElasticSearchManager:
             self.index_manager.create_anime_index()
         else:
             Utils.raise_exception('Не поддерживаемый тип данных')
+        
+    # заполнение данными
+    def fill_index(self, data_type):
+        if data_type == 'anime':
+            self.fill_index_by_anime()
+        else:
+            Utils.raise_exception('Не поддерживаемый тип данных')
     
     # заполнение индекса
     def fill_index_by_anime(self):
-        postfix = self.anime_index_name() + '/_doc'
-        anime_list = AnimeManager.get_all()
-        for anime in anime_list:
-            data = {
-                'id': str(anime.id),
-                'title_rus': anime.title_rus,
-                'title_foreign': anime.title_foreign,
-                'description': anime.description,
-                'season': str(anime.season),
-                'episodes_quantity': str(anime.episodes_quantity),
-                'start_date': str(anime.start_date)
-            }
-            self.create_doc(postfix, json.dumps(data))
-        return
-    
-    # создание одной записи
-    def create_doc(self, postfix, data):
-        response = self.make_request(postfix, data, 'POST')
-
-        if response is None:
-            return response
-        
-        json_response = response.json()
-
-        if json_response['result'] == 'created':
-            return True
-
-        return False
+        self.data_manager.fill_anime_index()
     
     # поиск аниме
     def search_anime(self, query):
