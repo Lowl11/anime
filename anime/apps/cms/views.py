@@ -81,6 +81,12 @@ def elastic_view(request):
     vm.add_object('indices', es_manager.get_all_indices())
     return vm.render(request)
 
+@login_required(login_url = CONSTANTS['url_signin'])
+def fm_view(request):
+    vm = ViewModel()
+    vm.add_path('cms/fm.html')
+    vm.add_object('title', 'Файловый менеджер')
+    return vm.render(request)
 
 ######################## Manage Anime ##########################
 
@@ -122,10 +128,11 @@ def create_anime(request):
     created.add('season', utils.try_get_from_request(request, 'POST', 'season'))
     created.add('start_date', utils.try_get_from_request(request, 'POST', 'start_date'))
     created.add('description', utils.try_get_from_request(request, 'POST', 'description'))
-    created.add('image', utils.try_get_from_request(request, 'POST', 'image'))
-    created.clear_from_empty()
 
-    debugger.write(created.to_assosiative())
+    image = utils.try_get_from_request(request, 'POST', 'image')
+    debugger.write(image)
+
+    created.clear_from_empty()
 
 def edit_anime(request):
     updated = Dictionary()

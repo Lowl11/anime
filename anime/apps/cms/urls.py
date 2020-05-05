@@ -7,12 +7,13 @@ urlpatterns = [
     ############################# MAIN ########################################
     url(r'^$', views.home_view, name='cms_home_view'),
     url(r'^anime/$', views.anime_view, name='cms_anime_view'),
-    url(r'^anime/new/$', views.anime_new_view, name = 'cms_new_anime_view'),
-    url(r'^anime/manage/(?P<pk>\d+)', views.manage_anime_view, name='cms_manage_anime_view'),
     url(r'^dashboard/$', views.dashboard_view, name='cms_dashboard_view'),
     url(r'^elastic/$', views.elastic_view, name = 'cms_elastic_view'),
+    url(r'^fm/$', views.fm_view, name = 'cms_fm_view'),
 
     ### Manage Anime ###
+    url(r'^anime/new/$', views.anime_new_view, name = 'cms_new_anime_view'),
+    url(r'^anime/manage/(?P<pk>\d+)', views.manage_anime_view, name='cms_manage_anime_view'),
     url(r'^anime/manage/$', views.manage_anime_post, name = 'cms_manage_anime_post'),
 
     #### ElasticSearch ###
