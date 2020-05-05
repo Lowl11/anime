@@ -6,6 +6,37 @@ from tools import utils
 class IndexManager:
     def __init__(self, talker):
         self.talker = talker
+    
+
+    ####################################################################
+    ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
+    ####################################################################
+    
+    # возвращает все индексы
+    def get_all(self):
+        data = {}
+        postfix = '_cat/indices'
+        response = self.talker.talk(postfix, data, 'GET')
+
+        if response is None:
+            utils.raise_exception('Response не вернулся после запроса всех индексов')
+        
+        text = response.text
+        lines = text.splitlines()
+
+        indices = []
+        for line in lines:
+            words = utils.erase_empty_strings(line.split(' '))
+            index = self.Index()
+            index.status = words[0]
+            index.name = words[2]
+            index.hash_code = words[3]
+            index.docs_count = words[6]
+            index.delete_count = words[7]
+            index.size = words[8]
+            indices.append(index)
+
+        return indices
 
     # создание индекса аниме
     def create_anime_index(self):
@@ -61,6 +92,7 @@ class IndexManager:
         json_response = self.talker.talk(self.__anime_index_name(), data, 'DELETE')
         return json_response
 
+
     ####################################################################
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
     ####################################################################
@@ -75,3 +107,16 @@ class IndexManager:
     # возвращает акутальное название индекса
     def __anime_index_name(self):
         return 'anime-' + date.today().strftime('%d.%m.%Y')
+    
+    class Index:
+        def __init__(self):
+            # yellow open test HNYXPGoRSjKBIJTot-e9oA 1 1 0 0 283b 283b
+            self.status = ''
+            self.name = ''
+            self.hash_code = ''
+            self.size = ''
+            self.docs_count = 0
+            self.delete_count = 0
+        
+        def __str__(self):
+            return self.status + ' | ' + self.name + ' | ' + self.hash_code + ' | ' + self.size

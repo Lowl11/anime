@@ -29,7 +29,10 @@ class ElasticTalker:
             utils.raise_exception('Ошибка соеденения сервера с ElasticSearch')
             self.last_request_status = 2
         
-        json_response = response.json()
+        try:
+            json_response = response.json()
+        except:
+            return response
 
         return json_response
     

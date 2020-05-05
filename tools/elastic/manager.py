@@ -25,32 +25,9 @@ class ElasticSearchManager:
 
     # возвращает все индексы в эластике
     def get_all_indices(self):
-        data = {}
-        request_type = 'GET'
-        postfix = '_cat/indices'
-        response = self.make_request(postfix, data, request_type)
-
-        if response is None:
-            return response
-
-        text = response.text
-        lines = text.splitlines()
-
-        indices = []
-        for line in lines:
-            words = Utils.erase_empty_strings(line.split(' '))
-            index = self.Index()
-            index.status = words[0]
-            index.name = words[2]
-            index.hash_code = words[3]
-            index.docs_count = words[6]
-            index.delete_count = words[7]
-            index.size = words[8]
-            indices.append(index)
-        
-        return indices
+        return self.index_manager.get_all()
     
-    # удаляет индекс
+    # удаление индекса
     def delete_index(self, data_type):
         if data_type == 'anime':
             self.index_manager.delete_anime_index()
@@ -64,21 +41,6 @@ class ElasticSearchManager:
             self.index_manager.create_anime_index()
         else:
             Utils.raise_exception('Не поддерживаемый тип данных')
-    
-    # удаление индекса
-    def delete_index(self, index_name):
-        postfix = index_name
-        response = self.make_request(postfix, {}, 'DELETE')
-
-        if response is None:
-            return response
-
-        json_response = response.json()
-
-        if json_response['acknowledged'] == True:
-            return True
-        
-        return False
     
     # заполнение индекса
     def fill_index_by_anime(self):
@@ -226,19 +188,5 @@ class ElasticSearchManager:
         
         return response
     
-    # возвращает акутальное название индекса
     def anime_index_name(self):
         return 'anime-' + date.today().strftime('%d.%m.%Y')
-    
-    class Index:
-        def __init__(self):
-            # yellow open test HNYXPGoRSjKBIJTot-e9oA 1 1 0 0 283b 283b
-            self.status = ''
-            self.name = ''
-            self.hash_code = ''
-            self.size = ''
-            self.docs_count = 0
-            self.delete_count = 0
-        
-        def __str__(self):
-            return self.status + ' | ' + self.name + ' | ' + self.hash_code + ' | ' + self.size
