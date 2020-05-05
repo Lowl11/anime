@@ -14,6 +14,7 @@
 {% block content %}
 <h1>{{ title }}</h1>
 <form action="{% url 'cms_manage_anime_post' %}" method="POST">{% csrf_token %}
+    <input type="hidden" name="action" value="{{ action }}">
     <input type="hidden" name="anime_id" value="{{ anime_id }}">
     {% for field in manage_anime_form %}
     <div class="form-group">

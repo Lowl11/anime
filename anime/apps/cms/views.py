@@ -47,6 +47,7 @@ def anime_new_view(request):
     vm.add_path('cms/manage-anime.html')
     vm.add_object('title', 'Новое аниме')
     vm.add_object('manage_anime_form', ManageAnimeForm())
+    vm.add_object('action', 'create')
     return vm.render(request)
 
 @login_required(login_url = CONSTANTS['url_signin'])
@@ -62,6 +63,7 @@ def manage_anime_view(request, pk):
 
     vm.add_object('manage_anime_form', AnimeManager.fill_form(ManageAnimeForm(), anime))
     vm.add_object('anime_id', pk)
+    vm.add_object('action', 'edit')
     return vm.render(request)
 
 @login_required(login_url = CONSTANTS['url_signin'])
@@ -84,18 +86,13 @@ def elastic_view(request):
 
 def manage_anime_post(request):
     if request.POST:
-        updated = Dictionary()
-        anime_id = request.POST['anime_id']
-
-        updated.add('title_rus', utils.try_get_from_request(request, 'POST', 'title_rus'))
-        updated.add('title_foreign', utils.try_get_from_request(request, 'POST', 'title_foreign'))
-        updated.add('episodes_quantity', utils.try_get_from_request(request, 'POST', 'episodes_quantity'))
-        updated.add('season', utils.try_get_from_request(request, 'POST', 'season'))
-        updated.add('start_date', utils.try_get_from_request(request, 'POST', 'start_date'))
-        updated.add('description', utils.try_get_from_request(request, 'POST', 'description'))
-        updated.clear_from_empty()
-
-        result = AnimeManager.update_anime_by_id(anime_id, updated.to_assosiative())
+        action = utils.try_get_from_request(request, 'POST', 'action')
+        if action == 'create':
+            create_anime(request)
+        elif action == 'edit':
+            edit_anime(request)
+        else:
+            utils.raise_exception('Не существующее действие (CMS - views - manage_anime_post)')
     return redirect_manage_anime(anime_id)
 
 
@@ -116,6 +113,32 @@ def elastic_fill_get(request, data_type):
 ####################################################################
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
 ####################################################################
+
+def create_anime(request):
+    created = Dictionary()
+    created.add('title_rus', utils.try_get_from_request(request, 'POST', 'title_rus'))
+    created.add('title_foreign', utils.try_get_from_request(request, 'POST', 'title_foreign'))
+    created.add('episodes_quantity', utils.try_get_from_request(request, 'POST', 'episodes_quantity'))
+    created.add('season', utils.try_get_from_request(request, 'POST', 'season'))
+    created.add('start_date', utils.try_get_from_request(request, 'POST', 'start_date'))
+    created.add('description', utils.try_get_from_request(request, 'POST', 'description'))
+    created.add('image', utils.try_get_from_request(request, 'POST', 'image'))
+    created.clear_from_empty()
+
+    debugger.write(created.to_assosiative())
+
+def edit_anime(request):
+    updated = Dictionary()
+    updated.add('title_rus', utils.try_get_from_request(request, 'POST', 'title_rus'))
+    updated.add('title_foreign', utils.try_get_from_request(request, 'POST', 'title_foreign'))
+    updated.add('episodes_quantity', utils.try_get_from_request(request, 'POST', 'episodes_quantity'))
+    updated.add('season', utils.try_get_from_request(request, 'POST', 'season'))
+    updated.add('start_date', utils.try_get_from_request(request, 'POST', 'start_date'))
+    updated.add('description', utils.try_get_from_request(request, 'POST', 'description'))
+    updated.clear_from_empty()
+
+    anime_id = request.try_get_from_request(request, 'POST', 'anime_id')
+    AnimeManager.update_anime_by_id(anime_id, updated.to_assosiative())
 
 def not_found():
     return starter.not_found_method()
