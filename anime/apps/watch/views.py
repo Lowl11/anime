@@ -4,7 +4,7 @@ from django.conf import settings
 # подключение кастомных файлов
 from tools.viewmodel import ViewModel
 from dao.anime import AnimeManager
-from tools.elastic import ElasticSearchManager
+from tools.elastic.manager import ElasticSearchManager
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS

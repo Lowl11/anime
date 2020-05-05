@@ -6,7 +6,7 @@ from datetime import date
 # подключение кастомных файлов
 from tools.viewmodel import ViewModel
 from dao.anime import AnimeManager
-from tools.elastic import ElasticSearchManager
+from tools.elastic.manager import ElasticSearchManager
 from anime import starter
 from .forms import ManageAnimeForm
 from tools import debugger
@@ -98,15 +98,11 @@ def elastic_delete_index_ajax(request, index_name):
     return not_found()
 
 def elastic_fill_get(request, data_type):
-    today = date.today().strftime('%d.%m.%Y')
-    index_name = data_type + '-' + today
-
-    es_manager.delete_index(index_name)
-    if es_manager.create_index(index_name) == False:
-        return not_found()
+    es_manager.create_index('anime')
     es_manager.fill_index_by_anime()
     
     return redirect_elastic()
+
 
 ####################################################################
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################

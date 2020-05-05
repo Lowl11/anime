@@ -6,13 +6,17 @@ from django.conf import settings
 from datetime import date
 
 # Подключение кастомных классов
-from . import debugger
-from . import utils as Utils
+from tools import debugger
+from tools import utils as Utils
+from tools.elastic.index import IndexManager
 from dao.anime import AnimeManager
+from tools.elastic.talker import ElasticTalker as talker
 
 class ElasticSearchManager:
     def __init__(self):
         self.url = 'http://127.0.0.1:9200/'
+        self.talker = talker(self.url)
+        self.index_manager = IndexManager(self.talker)
 
 
     ####################################################################
@@ -46,77 +50,20 @@ class ElasticSearchManager:
         
         return indices
     
-    # удаляет индекс по имени
-    def delete_index(self, index_name):
-        postfix = index_name
-        response = self.make_request(postfix, {}, 'DELETE')
-
-        if response is None:
-            return response
-        
-        json_response = response.json()
-
-        if json_response['acknowledged'] == True:
-            return True
-        
-        return False
+    # удаляет индекс
+    def delete_index(self, data_type):
+        if data_type == 'anime':
+            self.index_manager.delete_anime_index()
+        else:
+            Utils.raise_exception('Не поддерживаемый тип данных')
     
     # создание индекса
-    def create_index(self, index_name):
-        postfix = index_name
-        data = {
-            "settings": {
-                "index": {
-                    "number_of_shards": 3,
-                    "number_of_replicas": 2
-                },
-                "analysis": {
-                    "analyzer": {
-                        "anime_analyzer": {
-                            "type": "custom",
-                            "tokenizer": "standard",
-                            "char_filter": [
-                                "html_strip"
-                            ],
-                            "filter": [
-                                "lowercase",
-                                "asciifolding",
-                                "english_stop",
-                                "russian_stop"
-                            ]
-                        }
-                    },
-                    "filter": {
-                        "english_stop": {
-                            "type": "stop",
-                            "stopwords": "_english_"
-                        },
-                        "russian_stop": {
-                            "type": "stop",
-                            "stopwords": "_russian_"
-                        }
-                    }
-                }
-            },
-            "mappings": {
-                "properties": {
-                    "title_rus": { "type": "text" },
-                    "title_foreign": { "type": "text" },
-                    "description": { "type": "text" }
-                }
-            }
-        }
-        response = self.make_request(postfix, json.dumps(data), 'PUT')
-
-        if response is None:
-            return response
-
-        json_response = response.json()
-
-        if json_response['acknowledged'] == True:
-            return True
-        
-        return False
+    def create_index(self, data_type):
+        if data_type == 'anime':
+            self.index_manager.delete_anime_index()
+            self.index_manager.create_anime_index()
+        else:
+            Utils.raise_exception('Не поддерживаемый тип данных')
     
     # удаление индекса
     def delete_index(self, index_name):
@@ -269,7 +216,6 @@ class ElasticSearchManager:
                 response = requests.get(full_url, data = data, headers = headers)
             elif request_type == 'PUT':
                 response = requests.put(full_url, data = data, headers = headers)
-                debugger.write(response.text, 'Response put: ')
             elif request_type == 'DELETE':
                 response = requests.delete(full_url, data = data, headers = headers)
 
