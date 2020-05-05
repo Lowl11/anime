@@ -125,6 +125,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Глобальный массив кастомных настроек используемых по всему проекту
 A_SETTINGS = starter.get_settings()
 A_SETTINGS['debug'] = DEBUG
+A_SETTINGS['media_root'] = MEDIA_ROOT
 
 A_CONSTANTS = {
     'title_not_found': 'Ошибка 404 - Страница не найдена',

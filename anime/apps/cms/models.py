@@ -16,6 +16,7 @@ class CmsNavigationLink(models.Model):
 
 class Folder(models.Model):
     name = models.CharField(max_length = 255, null = False)
+    parent = models.ForeignKey("cms.Folder", null = True, on_delete = models.CASCADE)
 
     class Meta:
         verbose_name = 'Папка'

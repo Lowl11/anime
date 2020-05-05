@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # подключение кастомных классов
-from .models import CmsNavigationLink, File
+from .models import CmsNavigationLink, File, Folder
 
 # админ класс моделей
 class CmsNavigationLinkAdmin(admin.ModelAdmin):
@@ -12,3 +12,4 @@ class CmsNavigationLinkAdmin(admin.ModelAdmin):
 # регистрация моделей БД в админ-панели
 admin.site.register(CmsNavigationLink, CmsNavigationLinkAdmin)
 admin.site.register(File)
+admin.site.register(Folder)

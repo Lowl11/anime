@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from datetime import date
@@ -43,6 +43,42 @@ def anime_view(request):
     return vm.render(request)
 
 @login_required(login_url = CONSTANTS['url_signin'])
+def dashboard_view(request):
+    vm = ViewModel()
+    vm.add_path('cms/dashboard.html')
+    vm.add_object('title', 'Dashboard')
+    return vm.render(request)
+
+@login_required(login_url = CONSTANTS['url_signin'])
+def elastic_view(request):
+    vm = ViewModel()
+    vm.add_path('cms/elastic.html')
+    vm.add_object('title', 'ElasticSearch')
+    vm.add_object('indices', es_manager.get_all_indices())
+    return vm.render(request)
+
+@login_required(login_url = CONSTANTS['url_signin'])
+def fm_view(request):
+    vm = ViewModel()
+    vm.add_path('cms/fm.html')
+    vm.add_object('title', 'Файловый менеджер')
+    return vm.render(request)
+
+
+######################## Manage Anime ##########################
+
+def manage_anime_post(request):
+    if request.POST:
+        action = utils.try_get_from_request(request, 'POST', 'action')
+        if action == 'create':
+            create_anime(request)
+        elif action == 'edit':
+            edit_anime(request)
+        else:
+            utils.raise_exception('Не существующее действие (CMS - views - manage_anime_post)')
+    return redirect_manage_anime(anime_id)
+
+@login_required(login_url = CONSTANTS['url_signin'])
 def anime_new_view(request):
     vm = ViewModel()
     vm.add_path('cms/manage-anime.html')
@@ -67,41 +103,6 @@ def manage_anime_view(request, pk):
     vm.add_object('action', 'edit')
     return vm.render(request)
 
-@login_required(login_url = CONSTANTS['url_signin'])
-def dashboard_view(request):
-    vm = ViewModel()
-    vm.add_path('cms/dashboard.html')
-    vm.add_object('title', 'Dashboard')
-    return vm.render(request)
-
-@login_required(login_url = CONSTANTS['url_signin'])
-def elastic_view(request):
-    vm = ViewModel()
-    vm.add_path('cms/elastic.html')
-    vm.add_object('title', 'ElasticSearch')
-    vm.add_object('indices', es_manager.get_all_indices())
-    return vm.render(request)
-
-@login_required(login_url = CONSTANTS['url_signin'])
-def fm_view(request):
-    vm = ViewModel()
-    vm.add_path('cms/fm.html')
-    vm.add_object('title', 'Файловый менеджер')
-    return vm.render(request)
-
-######################## Manage Anime ##########################
-
-def manage_anime_post(request):
-    if request.POST:
-        action = utils.try_get_from_request(request, 'POST', 'action')
-        if action == 'create':
-            create_anime(request)
-        elif action == 'edit':
-            edit_anime(request)
-        else:
-            utils.raise_exception('Не существующее действие (CMS - views - manage_anime_post)')
-    return redirect_manage_anime(anime_id)
-
 
 ######################## ElasticSearch ##########################
 
@@ -115,6 +116,16 @@ def elastic_fill_get(request, data_type):
     es_manager.fill_index(data_type)
     
     return redirect_elastic()
+
+
+######################## FileManager ##########################
+
+def fm_create_folder_get(request):
+    if request.GET:
+        folder_name = utils.try_get_from_request(request, 'GET', 'name')
+        previous_path = utils.try_get_from_request(request, 'GET', 'path')
+        FileManager.create_folder(previous_path, folder_name)
+    return HttpResponse('true')
 
 
 ####################################################################

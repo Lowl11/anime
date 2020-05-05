@@ -18,6 +18,9 @@ urlpatterns = [
 
     #### ElasticSearch ###
     url(r'^elastic/delete-index/(?P<index_name>.*)/$', views.elastic_delete_index_ajax, name = 'cms_elastic_delete_index_ajax'),
-    url(r'^elastic/fill/(?P<data_type>\w+)/$', views.elastic_fill_get, name = 'cms_elastic_fill_get')
+    url(r'^elastic/fill/(?P<data_type>\w+)/$', views.elastic_fill_get, name = 'cms_elastic_fill_get'),
+
+    ### FileManager ###
+    url(r'^fm/create_folder/$', views.fm_create_folder_get, name = 'cms_fm_create_folder_get'),
     ############################# /MAIN #######################################
 ]

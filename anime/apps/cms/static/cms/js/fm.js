@@ -21,10 +21,12 @@ function FileManager () {
                     errorObject.text('Поле для заполнения пустое!');
                 } else { // валидация пройдена :D
                     errorObject.text('');
-                    let onSuccess = () => {
+                    let onSuccess = (data) => {
+                        console.log(data);
+                        this.animation.CloseModalInput();
                         this.UpdateFileManager();
                     };
-                    this.SendAjax(this.createFolderUrl, { 'name': folderName }, onSuccess);
+                    this.SendAjax(this.createFolderUrl, { 'name': folderName }, onSuccess, 'GET');
                 }
             }
             this.animation.OpenModalInput(modalTitle, onApply);
@@ -35,9 +37,9 @@ function FileManager () {
         // 
     }
 
-    this.SendAjax = function(url, data, onSuccess) {
+    this.SendAjax = function(url, data, onSuccess, requestType = 'POST') {
         $.ajax({
-            type: 'POST',
+            type: requestType,
             url: url,
             data: data,
             cached: false,
@@ -74,7 +76,6 @@ function FMAnimations() {
         // действие на подтверждение модалки
         applyObject.off('click.ApplyModalInput');
         applyObject.on('click.ApplyModalInput', () => {
-            this.CloseModalInput();
             onApply(errorObject);
         });
 
