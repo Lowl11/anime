@@ -38,13 +38,22 @@ def anime_view(request):
     vm = ViewModel()
     vm.add_path('cms/anime.html')
     vm.add_object('title', 'Аниме')
+    vm.add_object('anime_list', AnimeManager.get_all())
+    return vm.render(request)
+
+@login_required(login_url = CONSTANTS['url_signin'])
+def anime_new_view(request):
+    vm = ViewModel()
+    vm.add_path('cms/manage-anime.html')
+    vm.add_object('title', 'Новое аниме')
+    vm.add_object('manage_anime_form', ManageAnimeForm())
     return vm.render(request)
 
 @login_required(login_url = CONSTANTS['url_signin'])
 def manage_anime_view(request, pk):
     vm = ViewModel()
     vm.add_path('cms/manage-anime.html')
-    vm.add_object('title', 'Управление аниме')
+    vm.add_object('title', 'Редактирование аниме')
 
     anime = AnimeManager.get_anime_by_id(pk)
     if anime is None:

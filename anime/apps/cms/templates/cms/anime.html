@@ -1,6 +1,25 @@
 {% extends "cms/template.html" %}
+{% load static %}
 
+{% block css %}
+<link rel="stylesheet" href="{% static 'cms/css/anime.css' %}">
+{% endblock %}
 
 {% block content %}
-<h1>Edit anime data</h1>
+<h1>Anime</h1>
+<a href="{% url 'cms_new_anime_view' %}" class="btn btn-primary">Новое аниме</a>
+<div class="anime-list">
+    {% for anime in anime_list %}
+    <div class="anime">
+        <div class="anime-info">
+            <div class="title">{{ anime.title_rus }} / {{ anime.title_foreign }}</div>
+            <div class="start-date"><b>Дата начала: </b>{{ anime.start_date }}</div>
+            <div class="season"><b>Сезон: </b>{{ anime.season }}</div>
+        </div>
+        <div class="anime-buttons">
+            <a href="{% url 'cms_manage_anime_view' anime.id %}" class="btn btn-primary">Редактировать</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
 {% endblock %}

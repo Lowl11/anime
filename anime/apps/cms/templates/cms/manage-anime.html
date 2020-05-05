@@ -12,6 +12,7 @@
 {% endblock %}
 
 {% block content %}
+<h1>{{ title }}</h1>
 <form action="{% url 'cms_manage_anime_post' %}" method="POST">{% csrf_token %}
     <input type="hidden" name="anime_id" value="{{ anime_id }}">
     {% for field in manage_anime_form %}
@@ -28,6 +29,8 @@
     {% endfor %}
     <button type="submit" class="btn btn-success">Сохранить</button>
     <button type="button" class="btn btn-danger">Удалить</button>
+    {% if anime_id is not None %}
     <a href="{% url 'watch_anime_view' anime_id %}" class="btn btn-info" target="_blank">На страницу аниме</a>
+    {% endif %}
 </form>
 {% endblock %}
