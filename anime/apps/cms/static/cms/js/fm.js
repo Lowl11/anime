@@ -4,6 +4,7 @@ function FileManager () {
     this.createFolderUrl = '/cms/fm/create_folder/';
     this.renameFolderUrl = '/cms/fm/rename_folder/';
     this.parentId = 0;
+    this.backId = 0;
     this.folderName = 'Кореная папка';
     this.objects = [];
 
@@ -46,14 +47,15 @@ function FileManager () {
             this.parentId = $(e.currentTarget).data('id');
             this.folderName = $(e.currentTarget).data('name');
             $('#folder-name').text(this.folderName);
+            if (this.parentId != 0 && this.backId != 0)
+                this.backId = this.parentId;
             this.OpenFolder();
         });
 
         backFolder.off('click.BackFolder');
         backFolder.on('click.BackFolder', (e) => {
-            let id = $(e.currentTarget).data('id');
             $('#folder-name').text($(e.currentTarget).data('name'));
-            this.parentId = id;
+            this.parentId = this.backId;
             this.OpenFolder();
         });
 
