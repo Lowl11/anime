@@ -18,12 +18,16 @@
 <div class="file-manager">
     <div class="fm-buttons">
         <div id="create-folder" class="glyphicon glyphicon-plus" title="Создать папку"></div>
+        <div id="back-folder" data-id="0">
+            <div class="glyphicon glyphicon-arrow-left"></div>
+            <div id="parent-name"></div>
+        </div>
     </div>
 
     <div class="file-objects">
         {% for object in root_objects %}
         <div class="object-wrapper">
-            <div class="object {{ object.type }}" data-id="{{ object.id }}">
+            <div class="object {{ object.type }}" data-id="{{ object.id }}" data-name="{{ object }}">
                 <div class="glyphicon glyphicon-{{ object.type }}-open"></div>
                 {{ object }}
             </div>

@@ -9,11 +9,26 @@
 .file-manager .fm-buttons {
     background: #eee;
     padding: 5px 0;
+    display: flex;
+    flex-direction: row;
+}
+
+#back-folder {
+    display: flex;
+    flex-direction: row;
+}
+
+#back-folder > * {
+    margin-left: 5px;
 }
 
 .file-manager .fm-buttons > * {
     cursor: pointer;
     margin-left: 10px;
+}
+
+.file-manager .fm-buttons > *:hover {
+    color: rgb(72, 109, 131);
 }
 
 .file-manager .background-cover {

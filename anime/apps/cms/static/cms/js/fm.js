@@ -3,9 +3,11 @@ function FileManager () {
     this.animation = new FMAnimations();
     this.createFolderUrl = '/cms/fm/create_folder/';
     this.parentId = 0;
+    this.parentName = 'Кореная папка';
     this.objects = [];
 
     this.Constructor = function() {
+        $('#parent-name').text(this.parentName);
         this.OpenFolder();
     }
 
@@ -13,6 +15,7 @@ function FileManager () {
         // elements
         let createFolder = $('#create-folder');
         let folders = $('.object.folder');
+        let backFolder = $('#back-folder');
 
         // binds
         createFolder.off('click.CreateFolder');
@@ -25,7 +28,6 @@ function FileManager () {
                 } else { // валидация пройдена :D
                     errorObject.text('');
                     let onSuccess = (data) => {
-                        console.log(data);
                         this.animation.CloseModalInput();
                         this.UpdateFileManager();
                     };
@@ -37,7 +39,17 @@ function FileManager () {
 
         folders.off('click.OpenFolder');
         folders.on('click.OpenFolder', (e) => {
+            this.parentId = $(e.currentTarget).data('id');
+            this.parentName = $(e.currentTarget).data('name');
+            $('#parent-name').text(this.parentName);
+
+            this.OpenFolder();
+        });
+
+        backFolder.on('click.BackFolder');
+        backFolder.on('click.BackFolder', (e) => {
             let id = $(e.currentTarget).data('id');
+
             this.parentId = id;
             this.OpenFolder();
         });
@@ -58,7 +70,7 @@ function FileManager () {
         let html = '';
         $.each(this.objects, (index, value) => {
             html += '<div class="object-wrapper">';
-            html += '<div class="object ' + value.type + '" data-id="' + value.id + '">'
+            html += '<div class="object ' + value.type + '" data-id="' + value.id + '" data-name="' + value.name + '">'
             html += '<div class="glyphicon glyphicon-' + value.type + '-open"></div>';
             html += value.name;
             html += '</div></div>';
