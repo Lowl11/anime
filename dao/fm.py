@@ -17,7 +17,7 @@ class FileManager:
     # возвращает объекты под родительским объектом
     @staticmethod
     def get_objects(parent):
-        folders = Folder.objects.filter(parent = parent)
+        folders = Folder.objects.filter(parent = parent).order_by('folder__name')
         for folder in folders:
             folder.type = 'folder'
         return folders
