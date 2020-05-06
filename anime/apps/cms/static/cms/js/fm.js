@@ -16,6 +16,7 @@ function FileManager () {
         let createFolder = $('#create-folder');
         let folders = $('.object.folder');
         let backFolder = $('#back-folder');
+        let renameFolder = $('#rename-folder');
 
         // binds
         createFolder.off('click.CreateFolder');
@@ -46,12 +47,17 @@ function FileManager () {
             this.OpenFolder();
         });
 
-        backFolder.on('click.BackFolder');
+        backFolder.off('click.BackFolder');
         backFolder.on('click.BackFolder', (e) => {
             let id = $(e.currentTarget).data('id');
             $('#folder-name').text($(e.currentTarget).data('name'));
             this.parentId = id;
             this.OpenFolder();
+        });
+
+        renameFolder.off('click.RenameFolder');
+        renameFolder.on('click.RenameFolder', () => {
+            console.log('asd');
         });
     }
 

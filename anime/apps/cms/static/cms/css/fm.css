@@ -14,7 +14,10 @@
 }
 
 #back-folder,
-#create-folder {
+#create-folder,
+#rename-folder,
+#delete-folder,
+#upload-file {
     display: flex;
     flex-direction: row;
 }
@@ -26,7 +29,10 @@
 }
 
 #back-folder > *,
-#create-folder > * {
+#create-folder > *,
+#rename-folder > *,
+#delete-folder > *,
+#upload-file > * {
     margin-left: 5px;
 }
 
