@@ -22,9 +22,11 @@
 
     <div class="file-objects">
         {% for object in root_objects %}
-        <div class="object {{ object.type }}">
-            <div class="glyphicon glyphicon-folder-open"></div>
-            {{ object }}
+        <div class="object-wrapper">
+            <div class="object {{ object.type }}">
+                <div class="glyphicon glyphicon-folder-open"></div>
+                {{ object }}
+            </div>
         </div>
         {% endfor %}
     </div>

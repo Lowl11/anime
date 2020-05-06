@@ -124,8 +124,8 @@ def elastic_fill_get(request, data_type):
 def fm_create_folder_get(request):
     if request.GET:
         folder_name = utils.try_get_from_request(request, 'GET', 'name')
-        previous_path = utils.try_get_from_request(request, 'GET', 'path')
-        FileManager.create_folder(previous_path, folder_name)
+        parent_id = utils.try_get_from_request(request, 'GET', 'parent_id')
+        FileManager.create_folder(parent_id, folder_name)
     return HttpResponse('true')
 
 

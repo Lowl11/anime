@@ -13,12 +13,8 @@ CONSTANTS = settings.A_CONSTANTS
 '''
 
 # создание папки на диске
-def create_folder(destination_path, folder_name):
-    media_folder = SETTINGS['media_root']
-    media_folder += destination_path
-    media_folder += folder_name
-
+def create_folder(destination_path):
     try:
-        os.mkdir(media_folder)
+        os.mkdir(destination_path)
     except:
         pass

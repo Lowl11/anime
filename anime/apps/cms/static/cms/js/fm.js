@@ -2,6 +2,7 @@ function FileManager () {
 
     this.animation = new FMAnimations();
     this.createFolderUrl = '/cms/fm/create_folder/';
+    this.parentId = 0;
 
     this.Constructor = function() {
         this.BindActions();
@@ -26,7 +27,7 @@ function FileManager () {
                         this.animation.CloseModalInput();
                         this.UpdateFileManager();
                     };
-                    this.SendAjax(this.createFolderUrl, { 'name': folderName }, onSuccess, 'GET');
+                    this.SendAjax(this.createFolderUrl, { 'name': folderName, 'parent_id': parentId }, onSuccess, 'GET');
                 }
             }
             this.animation.OpenModalInput(modalTitle, onApply);
