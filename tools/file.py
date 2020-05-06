@@ -18,3 +18,6 @@ def create_folder(destination_path):
         os.mkdir(destination_path)
     except:
         pass
+
+def rename_folder(old, new):
+    os.rename(old, new)

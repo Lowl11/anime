@@ -115,6 +115,7 @@
     margin: 10px 20px;
     color: #fff;
     font-size: 16px;
+    max-width: 20px;
 }
 
 .file-manager .file-objects .object:hover { cursor: pointer; background: rgba(72, 109, 131, 0.5); }

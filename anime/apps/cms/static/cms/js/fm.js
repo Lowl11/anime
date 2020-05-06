@@ -46,7 +46,6 @@ function FileManager () {
             this.parentId = $(e.currentTarget).data('id');
             this.folderName = $(e.currentTarget).data('name');
             $('#folder-name').text(this.folderName);
-
             this.OpenFolder();
         });
 

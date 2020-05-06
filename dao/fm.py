@@ -82,8 +82,18 @@ class FileManager:
     def rename_folder(folder_id, folder_name):
         folder = FileManager.get_folder_by_id(folder_id)
         if folder is not None:
+            old_name = folder.name
             folder.name = folder_name
             folder.save()
+
+            # переименовываем папку на диске
+            old_path = SETTINGS['media_root']
+            new_path = SETTINGS['media_root']
+
+            old_path += FileManager.build_path(folder.parent, old_name)
+            new_path += FileManager.build_path(folder.parent, folder_name)
+
+            file.rename_folder(old_path, new_path)
 
     ####################################################################
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
@@ -102,9 +112,7 @@ class FileManager:
     @staticmethod
     def build_path(parent, folder_name):
         path = folder_name
-        if parent is None:
-            path = '/' + path
         while parent is not None:
             path = parent.name + '/' + path
             parent = parent.parent
-        return path
+        return '/' + path
