@@ -10,17 +10,49 @@ SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
 class FileManager:
+    ####################################################################
+    ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
+    ####################################################################
+
+    # возвращает объекты под родительским объектом
     @staticmethod
-    def get_root_objects():
-        folders = Folder.objects.filter(parent = None) # содержимое root
+    def get_objects(parent):
+        folders = Folder.objects.filter(parent = parent)
         for folder in folders:
             folder.type = 'folder'
         return folders
-
+    
+    # возвращает объекты под родительским объектом в виде массива (а не QuerySet)
     @staticmethod
-    def get_by_id(id):
+    def get_objects_array(parent):
+        objects = FileManager.get_objects(parent)
+        array = []
+        for obj in objects:
+            assosiative = {}
+            assosiative['id'] = obj.id
+            assosiative['name'] = obj.name
+            if obj.parent is not None:
+                assosiative['parent'] = obj.parent.id
+            else:
+                assosiative['parent'] = None
+            assosiative['type'] = obj.type
+            array.append(assosiative)
+        return array
+
+    # возвращает папку по id
+    @staticmethod
+    def get_folder_by_id(id):
         try:    
             return Folder.objects.get(pk = id)
+        except:
+            pass
+        return None
+    
+    # возвращает файл по id
+    @staticmethod
+    def get_file_by_id(id):
+        try:
+            return File.objects.get(pk = id)
         except:
             pass
         return None
@@ -32,7 +64,7 @@ class FileManager:
         parent = None # root
 
         if parent != 0: # если ID не 0 то значит не root
-            parent = FileManager.get_by_id(parent_id)
+            parent = FileManager.get_folder_by_id(parent_id)
         
         if FileManager.check_folder(parent, folder_name):
             folder = Folder()
@@ -44,6 +76,11 @@ class FileManager:
             destination_path = SETTINGS['media_root']
             destination_path += FileManager.build_path(parent, folder_name)
             file.create_folder(destination_path)
+    
+
+    ####################################################################
+    ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
+    ####################################################################
     
     # проверка папки (можно ли создавать)
     @staticmethod

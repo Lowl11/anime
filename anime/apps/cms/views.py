@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect, HttpResponse
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
@@ -62,7 +63,6 @@ def fm_view(request):
     vm = ViewModel()
     vm.add_path('cms/fm.html')
     vm.add_object('title', 'Файловый менеджер')
-    vm.add_object('root_objects', FileManager.get_root_objects())
     return vm.render(request)
 
 
@@ -120,6 +120,13 @@ def elastic_fill_get(request, data_type):
 
 
 ######################## FileManager ##########################
+
+def fm_objects_get(request):
+    if request.GET:
+        parent_id = utils.try_get_from_request(request, 'GET', 'parent_id')
+        parent = FileManager.get_folder_by_id(parent_id)
+        objects = FileManager.get_objects_array(parent)
+    return HttpResponse(json.dumps(objects))
 
 def fm_create_folder_get(request):
     if request.GET:

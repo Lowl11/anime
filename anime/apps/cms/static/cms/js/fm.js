@@ -3,14 +3,16 @@ function FileManager () {
     this.animation = new FMAnimations();
     this.createFolderUrl = '/cms/fm/create_folder/';
     this.parentId = 0;
+    this.objects = [];
 
     this.Constructor = function() {
-        this.BindActions();
+        this.OpenFolder();
     }
 
     this.BindActions = function() {
         // elements
         let createFolder = $('#create-folder');
+        let folders = $('.object.folder');
 
         // binds
         createFolder.off('click.CreateFolder');
@@ -32,10 +34,36 @@ function FileManager () {
             }
             this.animation.OpenModalInput(modalTitle, onApply);
         });
+
+        folders.off('click.OpenFolder');
+        folders.on('click.OpenFolder', (e) => {
+            let id = $(e.currentTarget).data('id');
+            this.parentId = id;
+            this.OpenFolder();
+        });
+    }
+
+    this.OpenFolder = function() {
+        let updateUrl = '/cms/fm/objects/';
+        let onSuccess = (data) => {
+            this.objects = JSON.parse(data);
+            this.UpdateFileManager();
+            this.BindActions();
+        };
+        this.SendAjax(updateUrl, { 'parent_id': this.parentId }, onSuccess, 'GET');
     }
 
     this.UpdateFileManager = function() {
-        // 
+        let fileObjects = $('.file-objects');
+        let html = '';
+        $.each(this.objects, (index, value) => {
+            html += '<div class="object-wrapper">';
+            html += '<div class="object ' + value.type + '" data-id="' + value.id + '">'
+            html += '<div class="glyphicon glyphicon-' + value.type + '-open"></div>';
+            html += value.name;
+            html += '</div></div>';
+        });
+        fileObjects.html(html);
     }
 
     this.SendAjax = function(url, data, onSuccess, requestType = 'POST') {

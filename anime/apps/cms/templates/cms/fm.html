@@ -23,8 +23,8 @@
     <div class="file-objects">
         {% for object in root_objects %}
         <div class="object-wrapper">
-            <div class="object {{ object.type }}">
-                <div class="glyphicon glyphicon-folder-open"></div>
+            <div class="object {{ object.type }}" data-id="{{ object.id }}">
+                <div class="glyphicon glyphicon-{{ object.type }}-open"></div>
                 {{ object }}
             </div>
         </div>

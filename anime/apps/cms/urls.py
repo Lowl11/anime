@@ -21,6 +21,7 @@ urlpatterns = [
     url(r'^elastic/fill/(?P<data_type>\w+)/$', views.elastic_fill_get, name = 'cms_elastic_fill_get'),
 
     ### FileManager ###
+    url(r'^fm/objects/$', views.fm_objects_get, name = 'cms_fm_objects_get'),
     url(r'^fm/create_folder/$', views.fm_create_folder_get, name = 'cms_fm_create_folder_get'),
     ############################# /MAIN #######################################
 ]
