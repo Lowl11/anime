@@ -142,6 +142,12 @@ def fm_rename_folder_get(request):
         FileManager.rename_folder(folder_id, folder_name)
     return HttpResponse('')
 
+def fm_delete_folder_get(request):
+    if request.GET:
+        folder_id = utils.try_get_from_request(request, 'GET', 'folder_id')
+        FileManager.delete_folder(folder_id)
+    return HttpResponse('')
+
 
 ####################################################################
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################

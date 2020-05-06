@@ -1,4 +1,4 @@
-import os
+import os, shutil
 from django.conf import settings
 
 # кастомные классы
@@ -21,3 +21,6 @@ def create_folder(destination_path):
 
 def rename_folder(old, new):
     os.rename(old, new)
+
+def delete_folder(destination_path):
+    shutil.rmtree(destination_path, ignore_errors = True)

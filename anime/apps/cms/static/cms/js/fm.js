@@ -29,6 +29,9 @@ class FileManagerGUI {
     ModalInput = $('.modal-input');
     ModalInputTitle = this.ModalInput.find('.header').find('.title');
     ModalInputField = this.ModalInput.find('.content').find('input');
+
+    ModalSure = $('.modal-sure');
+    ModalSureTitle = this.ModalSure.find('.header').find('.title');
     
     // "принять" и "закрыть" кнопки модалки
     ModalApply = $('.apply-modal');
@@ -102,6 +105,21 @@ class FileManagerGUI {
             };
             this.ShowModal('input', 'Переименовать папку', onApply, this.CurrentFolder.text());
         });
+
+        this.DeleteFolder.off('click.DeleteFolder');
+        this.DeleteFolder.on('click.DeleteFolder', () => {
+            let onApply = () => {
+                let breadCrump = this.GetBreadCrump();
+                let parentId = breadCrump[breadCrump.length - 2];
+                let onSuccess = () => {
+                    this.HideModal();
+                    this.Data.GetObjects(parentId);
+                };
+                let currentFolderId = this.CurrentFolder.data('id');
+                this.Data.DeleteFolder(currentFolderId, onSuccess);
+            };
+            this.ShowModal('sure', 'Удалить папку?', onApply);
+        });
     }
 
     DrawObjects(objects) {
@@ -144,6 +162,10 @@ class FileManagerGUI {
                 titleObject = this.ModalInputTitle;
                 this.ModalInputField.val(value);
                 break;
+            case 'sure':
+                modalObject = this.ModalSure;
+                titleObject = this.ModalSureTitle;
+                break;
             default:
                 modalObject = null;
                 titleObject = null;
@@ -157,6 +179,7 @@ class FileManagerGUI {
 
     HideModal() {
         this.ModalInput.hide();
+        this.ModalSure.hide();
         this.ToggleBlur();
     }
 
@@ -194,6 +217,7 @@ class FileManagerData {
     BaseUrl = '/cms/fm/';
     CreateFolderUrl = this.BaseUrl + 'create_folder/';
     RenameFolderUrl = this.BaseUrl + 'rename_folder/';
+    DeleteFolderUrl = this.BaseUrl + 'delete_folder/';
     GetObjectsUrl = this.BaseUrl + 'objects/';
 
     constructor(gui) {
@@ -215,7 +239,7 @@ class FileManagerData {
         let data = {
             'name': folderName,
             'parent_id': parentId
-        }
+        };
         this.SendAjax(this.CreateFolderUrl, data, onSuccess);
     }
 
@@ -223,8 +247,15 @@ class FileManagerData {
         let data = {
             'name': folderName,
             'folder_id': folderId
-        }
+        };
         this.SendAjax(this.RenameFolderUrl, data, onSuccess);
+    }
+
+    DeleteFolder(folderId, onSuccess) {
+        let data = {
+            'folder_id': folderId
+        };
+        this.SendAjax(this.DeleteFolderUrl, data, onSuccess);
     }
 
     SendAjax(url, data, onSuccess) {

@@ -20,7 +20,7 @@ class FileManager:
         folders = Folder.objects.filter(parent = parent).order_by('folder__name')
         for folder in folders:
             folder.type = 'folder'
-        return folders
+        return set(folders)
     
     # возвращает объекты под родительским объектом в виде массива (а не QuerySet)
     @staticmethod
@@ -94,6 +94,16 @@ class FileManager:
             new_path += FileManager.build_path(folder.parent, folder_name)
 
             file.rename_folder(old_path, new_path)
+    
+    # удаление папки
+    @staticmethod
+    def delete_folder(folder_id):
+        folder = FileManager.get_folder_by_id(folder_id)
+        if folder is not None:
+            destination_path = SETTINGS['media_root']
+            destination_path += FileManager.build_path(folder.parent, folder.name)
+            folder.delete()
+            file.delete_folder(destination_path)
 
 
     ####################################################################

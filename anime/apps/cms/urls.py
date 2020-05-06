@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^fm/objects/$', views.fm_objects_get, name = 'cms_fm_objects_get'),
     url(r'^fm/create_folder/$', views.fm_create_folder_get, name = 'cms_fm_create_folder_get'),
     url(r'^fm/rename_folder/$', views.fm_rename_folder_get, name = 'cms_fm_rename_folder_get'),
+    url(r'^fm/delete_folder/$', views.fm_delete_folder_get, name = 'cms_fm_delete_folder_get'),
     ############################# /MAIN #######################################
 ]
