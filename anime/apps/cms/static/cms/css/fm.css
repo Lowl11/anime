@@ -13,12 +13,20 @@
     flex-direction: row;
 }
 
-#back-folder {
+#back-folder,
+#create-folder {
     display: flex;
     flex-direction: row;
 }
 
-#back-folder > * {
+#folder-name {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+#back-folder > *,
+#create-folder > * {
     margin-left: 5px;
 }
 

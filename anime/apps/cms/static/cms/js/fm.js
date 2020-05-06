@@ -3,11 +3,11 @@ function FileManager () {
     this.animation = new FMAnimations();
     this.createFolderUrl = '/cms/fm/create_folder/';
     this.parentId = 0;
-    this.parentName = 'Кореная папка';
+    this.folderName = 'Кореная папка';
     this.objects = [];
 
     this.Constructor = function() {
-        $('#parent-name').text(this.parentName);
+        $('#folder-name').text(this.folderName);
         this.OpenFolder();
     }
 
@@ -40,8 +40,8 @@ function FileManager () {
         folders.off('click.OpenFolder');
         folders.on('click.OpenFolder', (e) => {
             this.parentId = $(e.currentTarget).data('id');
-            this.parentName = $(e.currentTarget).data('name');
-            $('#parent-name').text(this.parentName);
+            this.folderName = $(e.currentTarget).data('name');
+            $('#folder-name').text(this.folderName);
 
             this.OpenFolder();
         });
@@ -49,7 +49,7 @@ function FileManager () {
         backFolder.on('click.BackFolder');
         backFolder.on('click.BackFolder', (e) => {
             let id = $(e.currentTarget).data('id');
-
+            $('#folder-name').text($(e.currentTarget).data('name'));
             this.parentId = id;
             this.OpenFolder();
         });
