@@ -133,7 +133,14 @@ def fm_create_folder_get(request):
         folder_name = utils.try_get_from_request(request, 'GET', 'name')
         parent_id = utils.try_get_from_request(request, 'GET', 'parent_id')
         FileManager.create_folder(parent_id, folder_name)
-    return HttpResponse('true')
+    return HttpResponse('')
+
+def fm_rename_folder_get(request):
+    if request.GET:
+        folder_name = utils.try_get_from_request(request, 'GET', 'name')
+        folder_id = utils.try_get_from_request(request, 'GET', 'folder_id')
+        FileManager.rename_folder(folder_id, folder_name)
+    return HttpResponse('')
 
 
 ####################################################################

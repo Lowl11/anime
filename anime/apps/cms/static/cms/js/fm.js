@@ -2,6 +2,7 @@ function FileManager () {
 
     this.animation = new FMAnimations();
     this.createFolderUrl = '/cms/fm/create_folder/';
+    this.renameFolderUrl = '/cms/fm/rename_folder/';
     this.parentId = 0;
     this.folderName = 'Кореная папка';
     this.objects = [];
@@ -32,7 +33,7 @@ function FileManager () {
                     errorObject.text('');
                     let onSuccess = (data) => {
                         this.animation.CloseModalInput();
-                        this.UpdateFileManager();
+                        this.OpenFolder();
                     };
                     this.SendAjax(this.createFolderUrl, { 'name': folderName, 'parent_id': this.parentId }, onSuccess, 'GET');
                 }
@@ -59,7 +60,21 @@ function FileManager () {
 
         renameFolder.off('click.RenameFolder');
         renameFolder.on('click.RenameFolder', () => {
-            console.log('rename folder');
+            let modalTitle = 'Переименовать папку';
+            let onApply = (errorObject) => {
+                let folderName = $('#modal-input-input').val();
+                if (folderName.length == 0) {
+                    errorObject.text('Поле для заполнения пустое!');
+                } else { // валидация пройдена :D
+                    errorObject.text('');
+                    let onSuccess = (data) => {
+                        this.animation.CloseModalInput();
+                        this.OpenFolder();
+                    };
+                    this.SendAjax(this.renameFolderUrl, { 'name': folderName, 'folder_id': this.parentId }, onSuccess, 'GET');
+                }
+            }
+            this.animation.OpenModalInput(modalTitle, onApply, this.folderName);
         });
 
         deleteFolder.off('click.DeleteFolder');
@@ -117,7 +132,7 @@ function FMAnimations() {
 
     this.Constructor = function() {}
 
-    this.OpenModalInput = function(title, onApply) {
+    this.OpenModalInput = function(title, onApply, defaultValue = '') {
         let modalInput = $('.modal-input'); // модалка
 
         // верх модалки (header)
@@ -133,6 +148,10 @@ function FMAnimations() {
         // затемненный фон
         let backgroundCover = $('.background-cover');
         backgroundCover.show();
+
+        // инпут
+        let input = modalInput.find('input');
+        input.val(defaultValue);
 
         titleObject.text(title); // ставим название модалки
 

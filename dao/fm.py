@@ -77,6 +77,13 @@ class FileManager:
             destination_path += FileManager.build_path(parent, folder_name)
             file.create_folder(destination_path)
     
+    # редактирование названия папки
+    @staticmethod
+    def rename_folder(folder_id, folder_name):
+        folder = FileManager.get_folder_by_id(folder_id)
+        if folder is not None:
+            folder.name = folder_name
+            folder.save()
 
     ####################################################################
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
