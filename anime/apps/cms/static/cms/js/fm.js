@@ -17,6 +17,8 @@ function FileManager () {
         let folders = $('.object.folder');
         let backFolder = $('#back-folder');
         let renameFolder = $('#rename-folder');
+        let deleteFolder = $('#delete-folder');
+        let uploadFile = $('#upload-file');
 
         // binds
         createFolder.off('click.CreateFolder');
@@ -32,7 +34,7 @@ function FileManager () {
                         this.animation.CloseModalInput();
                         this.UpdateFileManager();
                     };
-                    this.SendAjax(this.createFolderUrl, { 'name': folderName, 'parent_id': parentId }, onSuccess, 'GET');
+                    this.SendAjax(this.createFolderUrl, { 'name': folderName, 'parent_id': this.parentId }, onSuccess, 'GET');
                 }
             }
             this.animation.OpenModalInput(modalTitle, onApply);
@@ -57,7 +59,17 @@ function FileManager () {
 
         renameFolder.off('click.RenameFolder');
         renameFolder.on('click.RenameFolder', () => {
-            console.log('asd');
+            console.log('rename folder');
+        });
+
+        deleteFolder.off('click.DeleteFolder');
+        deleteFolder.on('click.DeleteFolder', () => {
+            console.log('delete folder');
+        });
+
+        uploadFile.off('click.UploadFile');
+        uploadFile.on('click.UploadFile', () => {
+            console.log('upload file');
         });
     }
 

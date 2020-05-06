@@ -95,6 +95,9 @@ class FileManager:
     @staticmethod
     def build_path(parent, folder_name):
         path = folder_name
+        if parent is None:
+            path = '/' + path
         while parent is not None:
             path = parent.name + '/' + path
+            parent = parent.parent
         return path
