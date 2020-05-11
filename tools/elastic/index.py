@@ -46,7 +46,7 @@ class IndexManager:
             index.size = words[8]
             indices.append(index)
 
-        return indices
+        return self.__sort_indices(indices)
 
     # создание индекса аниме
     def create_anime_index(self):
@@ -134,6 +134,16 @@ class IndexManager:
                 "stopwords": "_russian_"
             }
         }
+    
+    # сортировка индексов
+    # TODO нужно добавить сортировку по месяцам
+    def __sort_indices(self, indices):
+        length = len(indices)
+        for i in range(length):
+            for j in range(i+1, length):
+                if indices[i].name > indices[j].name:
+                    indices[i], indices[j] = indices[j], indices[i]
+        return indices
     
     
     class Index:
