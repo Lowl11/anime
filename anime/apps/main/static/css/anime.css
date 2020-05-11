@@ -38,7 +38,7 @@
 
 .anime .anime-info .anime-description-text {
     overflow: hidden;
-    max-height: 140px;
+    max-height: 170px;
     text-overflow: ellipsis;
 }
 
