@@ -104,6 +104,22 @@ class FileManager:
             destination_path += FileManager.build_path(folder.parent, folder.name)
             folder.delete()
             file.delete_folder(destination_path)
+        
+    # загрузка файла
+    def upload_file(parent_id, file):
+        folder = FileManager.get_folder_by_id(parent_id)
+        if folder is not None:
+            destination_path = SETTINGS['media_root']
+            destination_path += FileManager.build_path(folder, file.name)
+
+            created_file = File()
+            created_file.name = file.name
+            created_file.path = ''
+            created_file.folder = folder
+
+            # created_file.save()
+            file.upload_file(destination_path, file)
+
 
 
     ####################################################################

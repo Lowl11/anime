@@ -148,6 +148,15 @@ def fm_delete_folder_get(request):
         FileManager.delete_folder(folder_id)
     return HttpResponse('')
 
+def fm_upload_file_post(request):
+    if request.POST:
+        debugger.write(request.FILES, 'request files: ')
+        parent_id = utils.try_get_from_request(request, 'POST', 'parent_id')
+        file = utils.try_get_from_request(request, 'POST', 'file')
+        debugger.write(parent_id, 'Parent ID: ')
+        FileManager.upload_file(parent_id, file)
+    return HttpResponse('')
+
 
 ####################################################################
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################

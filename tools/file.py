@@ -24,3 +24,6 @@ def rename_folder(old, new):
 
 def delete_folder(destination_path):
     shutil.rmtree(destination_path, ignore_errors = True)
+
+def upload_file(destination_path, file):
+    pass

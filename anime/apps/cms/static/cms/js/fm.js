@@ -32,6 +32,10 @@ class FileManagerGUI {
 
     ModalSure = $('.modal-sure');
     ModalSureTitle = this.ModalSure.find('.header').find('.title');
+
+    ModalUpload = $('.modal-upload');
+    ModalUploadTitle = this.ModalUpload.find('.header').find('.title');
+    ModalUploadInput = this.ModalUpload.find('.content').find('input');
     
     // "принять" и "закрыть" кнопки модалки
     ModalApply = $('.apply-modal');
@@ -120,6 +124,20 @@ class FileManagerGUI {
             };
             this.ShowModal('sure', 'Удалить папку?', onApply);
         });
+
+        this.UploadFile.off('click.UploadFile');
+        this.UploadFile.on('click.UploadFile', () => {
+            let onApply = () => {
+                let parentId = this.CurrentFolder.data('id');
+                let file = this.ModalUploadInput.val();
+                let onSuccess = () => {
+                    this.HideModal();
+                    this.Data.GetObjects(parentId);
+                };
+                this.Data.UploadFile(parentId, file, onSuccess);
+            };
+            this.ShowModal('upload', 'Загрузить файл', onApply);
+        });
     }
 
     DrawObjects(objects) {
@@ -166,6 +184,10 @@ class FileManagerGUI {
                 modalObject = this.ModalSure;
                 titleObject = this.ModalSureTitle;
                 break;
+            case 'upload':
+                modalObject = this.ModalUpload;
+                titleObject = this.ModalUploadTitle;
+                break;
             default:
                 modalObject = null;
                 titleObject = null;
@@ -180,6 +202,7 @@ class FileManagerGUI {
     HideModal() {
         this.ModalInput.hide();
         this.ModalSure.hide();
+        this.ModalUpload.hide();
         this.ToggleBlur();
     }
 
@@ -219,9 +242,12 @@ class FileManagerData {
     RenameFolderUrl = this.BaseUrl + 'rename_folder/';
     DeleteFolderUrl = this.BaseUrl + 'delete_folder/';
     GetObjectsUrl = this.BaseUrl + 'objects/';
+    UploadFileUrl = this.BaseUrl + 'upload_file/';
+    CSRF = '';
 
     constructor(gui) {
         this.GUI = gui;
+        this.CSRF = this.GetCSRFToken();
     }
 
     GetObjects(parentId) {
@@ -258,6 +284,13 @@ class FileManagerData {
         this.SendAjax(this.DeleteFolderUrl, data, onSuccess);
     }
 
+    UploadFile(parentId, file, onSuccess) {
+        let data = new FormData();
+        data.append('file', file);
+        data.append('parent_id', parentId);
+        this.UploadFileAjax(this.UploadFileUrl, data, onSuccess);
+    }
+
     SendAjax(url, data, onSuccess) {
         $.ajax({
             type: 'GET',
@@ -269,6 +302,45 @@ class FileManagerData {
                 console.error('Ошибка отправки Ajax запроса');
             }
         });
+    }
+
+    UploadFileAjax(url, data, onSuccess) {
+        $.ajaxSetup({
+            beforeSend: (xhr, settings) => {
+                xhr.setRequestHeader("X-CSRFToken", this.CSRF);
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: data,
+            success: onSuccess,
+            error: function() {
+                console.error('Ошибка загрузки файла');
+            },
+            async: true,
+            cache: false,
+            contentType: false,
+            processData: false,
+            timeout: 6000
+        });
+    }
+
+    GetCSRFToken() {
+        let name = 'csrftoken';
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            let cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
     }
 
 }
