@@ -36,6 +36,11 @@
 
 
 {% block content %}
+{% if status is False %}
+<div>
+    <h3 style="color: rgb(179, 62, 62);">Сервер ElasticSearch не отвечает</h3>
+</div>
+{% endif %}
 <div class="fill-indcices">
     <a href="{% url 'cms_elastic_fill_get' 'anime' %}" class="btn btn-primary">Заполнить индекс анимешками</a>
 </div>

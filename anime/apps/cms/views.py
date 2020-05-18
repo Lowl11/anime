@@ -56,6 +56,7 @@ def elastic_view(request):
     vm.add_path('cms/elastic.html')
     vm.add_object('title', 'ElasticSearch')
     vm.add_object('indices', es_manager.get_all_indices())
+    vm.add_object('status', es_manager.check_status())
     return vm.render(request)
 
 @login_required(login_url = CONSTANTS['url_signin'])

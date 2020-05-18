@@ -42,3 +42,16 @@ class ElasticTalker:
             return response
 
         return json_response
+    
+    # проверка статуса сервера
+    def check_status(self):
+        postfix = '_cat/indices'
+        full_url = self.url + postfix
+        data = {}
+
+        response = rest.make_request(full_url, json.dumps(data), 'GET')
+
+        if response is None:
+            return False
+
+        return True

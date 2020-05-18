@@ -30,6 +30,7 @@ class IndexManager:
 
         if response is None:
             utils.raise_exception('Response не вернулся после запроса всех индексов')
+            return
         
         text = response.text
         lines = text.splitlines()

@@ -30,6 +30,10 @@ class ElasticSearchManager:
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
 
+    # проверка статуса сервера эластика
+    def check_status(self):
+        return self.talker.check_status()
+
     # возвращает все индексы в эластике
     def get_all_indices(self):
         return self.index_manager.get_all()
