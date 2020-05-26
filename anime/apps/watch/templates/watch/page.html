@@ -10,7 +10,9 @@
     {% for anime in anime_list %}
     <div class="anime">
         {% if no_image is False %}
-        <img src="{{ anime.image.url }}" alt="{{ anime.title }}" class="anime-cover">
+        <img src="{{ anime.image.url }}" alt="{{ anime.title_rus }} / {{ anime.title_foreign }}" class="anime-cover">
+        {% else %}
+        <img src="{{ anime.image }}" alt="{{ anime.title_rus }} / {{ anime.title_foreign }}" class="anime-cover">
         {% endif %}
         <div class="anime-info">
             <div class="anime-title"><a href="{% url 'watch_anime_view' anime.id %}">{{ anime.title_rus }} / {{ anime.title_foreign }} [TV-{{ anime.season }}]</a> {% if role == 3 %}<a href="{% url 'cms_manage_anime_view' anime.id %}" class="btn btn-success anime-edit-button" target="_tab">Редактировать</a>{% endif %}</div>
