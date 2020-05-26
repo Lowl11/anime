@@ -75,10 +75,11 @@ def manage_anime_post(request):
         if action == 'create':
             create_anime(request)
         elif action == 'edit':
-            edit_anime(request)
+            anime_id = edit_anime(request)
+            return redirect_manage_anime(anime_id)
         else:
             utils.raise_exception('Не существующее действие (CMS - views - manage_anime_post)')
-    return redirect_manage_anime(anime_id)
+    return redirect('/cms/')
 
 @login_required(login_url = CONSTANTS['url_signin'])
 def anime_new_view(request):
@@ -187,8 +188,9 @@ def edit_anime(request):
     updated.add('description', utils.try_get_from_request(request, 'POST', 'description'))
     updated.clear_from_empty()
 
-    anime_id = request.try_get_from_request(request, 'POST', 'anime_id')
+    anime_id = utils.try_get_from_request(request, 'POST', 'anime_id')
     AnimeManager.update_anime_by_id(anime_id, updated.to_assosiative())
+    return anime_id
 
 def not_found():
     return starter.not_found_method()
