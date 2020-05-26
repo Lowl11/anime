@@ -1,6 +1,24 @@
 {% extends "main/template.html" %}
+{% load static %}
 
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/anime.css' %}">
+{% endblock %}
 
 {% block content %}
-    {{ anime }}
+<div class="anime-page">
+    <div class="description-block">
+        <img src="{{ anime.image.url }}" class="anime-cover" alt="{{ anime.title_rus }} / {{ anime.title_foreign }}">
+        <div class="anime-info">
+            <div class="title"><b>Название: </b>{{ anime.title_rus }} / {{ anime.title_foreign }}</div>
+            <div class="season"><b>Сезон: </b>{{ anime.season }}</div>
+            <div class="episodes-quantity"><b>Кол-во эпизодов: </b>{{ anime.episodes_quantity }}</div>
+            <div class="start-date"><b>Дата начала: </b>{{ anime.start_date }}</div>
+            <div class="description"><b>Описание: </b><br>{{ anime.description }}</div>
+        </div>
+    </div>
+    <div class="watch-block">
+        <h1>Watch</h1>
+    </div>
+</div>
 {% endblock %}
