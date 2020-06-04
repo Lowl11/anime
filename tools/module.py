@@ -6,6 +6,7 @@ from watch.forms import XSearchForm
 from cms.forms import ManageAnimeForm
 from tools import debugger
 from dao.cms_navigation_links import CmsNavigationLinksManager
+from dao.cms_main_info import CmsMainInfoManager
 
 """
     ModuleHelper - вспомогающий класс служащий инструменто помощи для работы с подулями
@@ -24,6 +25,7 @@ def get_context(module_name):
     elif module_name == 'cms':
         cms_context = Dictionary()
         cms_context.add('cms_navigation_links', CmsNavigationLinksManager.get_links_by_order())
+        cms_context.add('notifications', CmsMainInfoManager.get_notifications())
         return cms_context
     elif module_name == 'auth':
         auth_context = Dictionary()

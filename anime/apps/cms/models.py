@@ -1,5 +1,17 @@
 from django.db import models
 
+class CmsMainInfo(models.Model):
+    main_notification = models.TextField('Важное уведомление', default = '')
+    mini_notification1 = models.TextField('Уведомление №1', default = '')
+    mini_notification2 = models.TextField('Уведомление №2', default = '')
+
+    class Meta:
+        verbose_name = 'Основная информация по CMS'
+        verbose_name_plural = 'Основная информация по CMS'
+
+    def __str__(self):
+        return 'Основная информация по CMS'
+
 class CmsNavigationLink(models.Model):
     name = models.CharField(max_length = 255, null = False)
     url = models.CharField(max_length = 999, null = False)
