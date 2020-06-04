@@ -8,6 +8,7 @@ from datetime import date
 # Подключение кастомных классов
 from tools import rest
 from tools import utils
+from tools import debugger
 
 '''
     ElasticTalker - переговорщик который отправляет запросы в эластик и обрабатывает ответ

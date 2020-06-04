@@ -39,16 +39,13 @@ class ElasticSearchManager:
         return self.index_manager.get_all()
     
     # удаление индекса
-    def delete_index(self, data_type):
-        if data_type == 'anime':
-            self.index_manager.delete_anime_index()
-        else:
-            Utils.raise_exception('Не поддерживаемый тип данных')
+    def delete_index(self, index_name):
+        self.index_manager.delete_index_by_name(index_name)
     
     # создание индекса
     def create_index(self, data_type):
         if data_type == 'anime':
-            self.index_manager.delete_anime_index()
+            self.index_manager.delete_index_by_type(data_type)
             self.index_manager.create_anime_index()
         else:
             Utils.raise_exception('Не поддерживаемый тип данных')
@@ -63,3 +60,8 @@ class ElasticSearchManager:
     # поиск аниме
     def search_anime(self, query):
         return self.searcher.search_anime(query)
+    
+    # возвращает тип удаляемых данных
+    def define_index_type(self, index_name):
+        before_minus = index_name.split('-')
+        return before_minus[0]

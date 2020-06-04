@@ -110,9 +110,8 @@ def manage_anime_view(request, pk):
 ######################## ElasticSearch ##########################
 
 def elastic_delete_index_ajax(request, index_name):
-    if es_manager.delete_index(index_name):
-        return redirect_elastic()
-    return not_found()
+    es_manager.delete_index(index_name)
+    return redirect_elastic()
 
 def elastic_fill_get(request, data_type):
     es_manager.create_index(data_type)

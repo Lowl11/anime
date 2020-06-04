@@ -3,6 +3,7 @@ from datetime import date
 
 # Подключение кастомных классов
 from tools import utils
+from tools import debugger
 
 
 '''
@@ -66,12 +67,21 @@ class IndexManager:
         self.__base_check(json_response)
         return json_response
     
-    # удаление индекса
-    def delete_anime_index(self):
-        data = {}
-        json_response = self.talker.talk(IndexManager.anime_index_name(), data, 'DELETE')
-        return json_response
+    # удаление индекса по типу индекса
+    def delete_index_by_type(self, index_data_type):
+        index_name = None
+        if index_data_type == 'anime':
+            index_name = IndexManager.anime_index_name()
+        
+        return self.delete_index_by_name(index_name)
     
+    # удаление индекса по названию индекса
+    def delete_index_by_name(self, index_name):
+        data = {}
+        json_response = None
+        if index_name is not None:
+            json_response = self.talker.talk(index_name, data, 'DELETE')
+        return json_response
 
     ####################################################################
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
@@ -156,6 +166,7 @@ class IndexManager:
             self.size = ''
             self.docs_count = 0
             self.delete_count = 0
+            self.size = ''
         
         def __str__(self):
-            return self.status + ' | ' + self.name + ' | ' + self.hash_code + ' | ' + self.size
+            return self.status + ' | ' + self.name + ' | ' + self.hash_code + ' | ' + self.size + ' | ' + self.size
