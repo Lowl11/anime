@@ -166,7 +166,6 @@ class IndexManager:
             self.size = ''
             self.docs_count = 0
             self.delete_count = 0
-            self.size = ''
         
         def __str__(self):
             return self.status + ' | ' + self.name + ' | ' + self.hash_code + ' | ' + self.size + ' | ' + self.size
