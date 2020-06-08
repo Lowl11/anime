@@ -14,10 +14,10 @@ from tools.elastic.index import IndexManager
 from tools.elastic.data import DataManager
 from tools.elastic.searcher import Searcher
 
-'''
-    ElasticSearchManager - класс помогающий делать всякое с эластиком поверхностно
-'''
+
 class ElasticSearchManager:
+    """ ElasticSearchManager - класс помогающий делать всякое с эластиком поверхностно """
+
     def __init__(self):
         self.url = 'http://127.0.0.1:9200/'
         self.talker = talker(self.url)
@@ -30,38 +30,41 @@ class ElasticSearchManager:
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
 
-    # проверка статуса сервера эластика
     def check_status(self):
+        """ проверка статуса сервера эластика """
         return self.talker.check_status()
 
-    # возвращает все индексы в эластике
     def get_all_indices(self):
+        """ возвращает все индексы в эластике """
         return self.index_manager.get_all()
-    
-    # удаление индекса
+
     def delete_index(self, index_name):
+        """ удаление индекса """
         self.index_manager.delete_index_by_name(index_name)
-    
-    # создание индекса
+
     def create_index(self, data_type):
+        """ создание индекса """
+
         if data_type == 'anime':
             self.index_manager.delete_index_by_type(data_type)
             self.index_manager.create_anime_index()
         else:
             Utils.raise_exception('Не поддерживаемый тип данных')
-        
-    # заполнение данными
+
     def fill_index(self, data_type):
+        """ заполнение данными """
+
         if data_type == 'anime':
             self.data_manager.fill_anime_index()
         else:
             Utils.raise_exception('Не поддерживаемый тип данных')
-    
-    # поиск аниме
+
     def search_anime(self, query):
+        """ поиск аниме """
         return self.searcher.search_anime(query)
-    
-    # возвращает тип удаляемых данных
+
     def define_index_type(self, index_name):
+        """ возвращает тип удаляемых данных """
+
         before_minus = index_name.split('-')
         return before_minus[0]

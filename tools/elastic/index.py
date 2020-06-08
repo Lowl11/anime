@@ -6,25 +6,24 @@ from tools import utils
 from tools import debugger
 
 
-'''
-    IndexManager - CRUD для индексов эластика
-'''
 class IndexManager:
+    """ IndexManager - CRUD для индексов эластика """
+
     def __init__(self, talker):
         self.talker = talker
-    
-    # возвращает акутальное название индекса
+
     @staticmethod
     def anime_index_name():
+        """ возвращает акутальное название индекса """
         return 'anime-' + date.today().strftime('%d.%m.%Y')
-
 
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
-    
-    # возвращает все индексы
+
     def get_all(self):
+        """ возвращает все индексы """
+
         data = {}
         postfix = '_cat/indices'
         response = self.talker.talk(postfix, data, 'GET')
@@ -32,7 +31,7 @@ class IndexManager:
         if response is None:
             utils.raise_exception('Response не вернулся после запроса всех индексов')
             return
-        
+
         text = response.text
         lines = text.splitlines()
 
@@ -50,8 +49,9 @@ class IndexManager:
 
         return self.__sort_indices(indices)
 
-    # создание индекса аниме
     def create_anime_index(self):
+        """ создание индекса аниме """
+
         fields = ['title_rus', 'title_foreign', 'description']
         data = {
             "settings": {
@@ -66,17 +66,19 @@ class IndexManager:
         json_response = self.talker.talk(IndexManager.anime_index_name(), data, 'PUT')
         self.__base_check(json_response)
         return json_response
-    
-    # удаление индекса по типу индекса
+
     def delete_index_by_type(self, index_data_type):
+        """ удаление индекса по типу индекса """
+
         index_name = None
         if index_data_type == 'anime':
             index_name = IndexManager.anime_index_name()
-        
+
         return self.delete_index_by_name(index_name)
-    
-    # удаление индекса по названию индекса
+
     def delete_index_by_name(self, index_name):
+        """ удаление индекса по названию индекса """
+
         data = {}
         json_response = None
         if index_name is not None:
@@ -87,16 +89,18 @@ class IndexManager:
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
     ####################################################################
 
-    # базовая проверка каждого возвращаемого JSON
     def __base_check(self, response):
+        """ базовая проверка каждого возвращаемого JSON """
+
         # после взаимодействия с индексами эластик возвращает acknowledged
         success = utils.try_get_from_array(response, 'acknowledged')
         if success is None:
             utils.raise_exception('Ошибка после запроса на действие с индексом\nResponse: ' + str(response))
         return
 
-    # анализатор аниме индекса (конкретно под данные аниме)
     def __build_anime_analyzer(self):
+        """ анализатор аниме индекса (конкретно под данные аниме) """
+
         anime_analyzer = {
             'anime_analyzer': {
                 'type': 'custom',
@@ -107,34 +111,40 @@ class IndexManager:
                 'filter': self.__default_text_filters()
             }
         }
-    
-    # настройки индекса типа кол-ва шардов
+
+        return anime_analyzer
+
     def __build_index_settings(self):
+        """ настройки индекса типа кол-ва шардов """
+
         index_settings = {
             "number_of_shards": 3,
             "number_of_replicas": 2
         }
         return index_settings
-    
-    # строит маппинг (структуру) данных судя по заданным полям
+
     def __build_mappings(self, fields):
+        """ строит маппинг (структуру) данных судя по заданным полям """
+
         properties = {}
         for field in fields:
-            properties[field] = { 'type': 'text' }
+            properties[field] = {'type': 'text'}
         mappings = {
             'properties': properties
         }
         return mappings
-    
-    # дефолтные текстовые фильтры
+
     def __default_text_filters(self):
+        """ дефолтные текстовые фильтры """
+
         return ["lowercase",
                 "asciifolding",
                 "english_stop",
                 "russian_stop"]
 
-    # дефолтные языковые фильтры
     def __default_lang_filters(self):
+        """ дефолтные языковые фильтры """
+
         return {
             "english_stop": {
                 "type": "stop",
@@ -145,18 +155,18 @@ class IndexManager:
                 "stopwords": "_russian_"
             }
         }
-    
-    # сортировка индексов
-    # TODO нужно добавить сортировку по месяцам
+
     def __sort_indices(self, indices):
+        """ сортировка индексов """
+
+        # TODO нужно добавить сортировку по месяцам
         length = len(indices)
         for i in range(length):
-            for j in range(i+1, length):
+            for j in range(i + 1, length):
                 if indices[i].name > indices[j].name:
                     indices[i], indices[j] = indices[j], indices[i]
         return indices
-    
-    
+
     class Index:
         def __init__(self):
             # yellow open test HNYXPGoRSjKBIJTot-e9oA 1 1 0 0 283b 283b
@@ -166,6 +176,6 @@ class IndexManager:
             self.size = ''
             self.docs_count = 0
             self.delete_count = 0
-        
+
         def __str__(self):
             return self.status + ' | ' + self.name + ' | ' + self.hash_code + ' | ' + self.size + ' | ' + self.size

@@ -5,10 +5,9 @@ from tools.elastic.index import IndexManager
 from dao.anime import AnimeManager
 
 
-'''
-    Searcher - инструмент для поиска непосредественно по эластику
-'''
 class Searcher:
+    """ Searcher - инструмент для поиска непосредественно по эластику """
+
     def __init__(self, talker):
         self.talker = talker
     
@@ -85,13 +84,15 @@ class Searcher:
                 return self.search_anime(biggest['text'])
 
         return anime_list
-    
-    # возвращает актуальное название аниме индекса
+
     def __anime_index_name(self):
+        """ возвращает актуальное название аниме индекса """
+
         return IndexManager.anime_index_name()
-    
-    # строит multi_match запрос (тип поиска в эластике)
+
     def __build_multi_match(self, query, fields):
+        """ строит multi_match запрос (тип поиска в эластике) """
+
         multi_match = {
             'multi_match': {
                 'query': query,
@@ -101,16 +102,18 @@ class Searcher:
             }
         }
         return multi_match
-    
-    # строит suggestion'ы (подсказки) для каждого поискового поля
+
     def __build_suggestions(self, query, fields):
+        """ строит suggestion'ы (подсказки) для каждого поискового поля """
+
         suggestions = {}
         for field in fields:
             suggestions[field + '_suggestion'] = self.__text_field(field, query)
         return suggestions
-    
-    # возвращает тип поля text
+
     def __text_field(self, field_name, query):
+        """ возвращает тип поля text """
+
         text_field = {
             'text': query,
             'term': {
