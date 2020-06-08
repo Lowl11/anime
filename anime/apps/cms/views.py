@@ -11,9 +11,9 @@ from dao.fm import FileManager
 from tools.elastic.manager import ElasticSearchManager
 from anime import starter
 from .forms import ManageAnimeForm
-from tools import debugger
 from tools.dict import Dictionary
 from tools import utils
+from tools import logger
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -114,6 +114,7 @@ def elastic_delete_index_ajax(request, index_name):
     return redirect_elastic()
 
 def elastic_fill_get(request, data_type):
+    logger.write('Пользователь запросил пересоздание актуального индекса "' + str(data_type) + '"', logger.ELASTIC)
     es_manager.create_index(data_type)
     es_manager.fill_index(data_type)
     
@@ -151,10 +152,10 @@ def fm_delete_folder_get(request):
 
 def fm_upload_file_post(request):
     if request.POST:
-        debugger.write(request.FILES, 'request files: ')
+        # debugger.write(request.FILES, 'request files: ')
         parent_id = utils.try_get_from_request(request, 'POST', 'parent_id')
         file = utils.try_get_from_request(request, 'POST', 'file')
-        debugger.write(parent_id, 'Parent ID: ')
+        # debugger.write(parent_id, 'Parent ID: ')
         FileManager.upload_file(parent_id, file)
     return HttpResponse('')
 
@@ -173,7 +174,7 @@ def create_anime(request):
     created.add('description', utils.try_get_from_request(request, 'POST', 'description'))
 
     image = utils.try_get_from_request(request, 'POST', 'image')
-    debugger.write(image)
+    # debugger.write(image)
 
     created.clear_from_empty()
 

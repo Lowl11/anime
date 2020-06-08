@@ -1,18 +1,10 @@
-import requests
-import json
-import os
-
-from django.conf import settings
-from datetime import date
-
 # Подключение кастомных классов
-from tools import debugger
 from tools import utils as Utils
-from dao.anime import AnimeManager
-from tools.elastic.talker import ElasticTalker as talker
-from tools.elastic.index import IndexManager
 from tools.elastic.data import DataManager
+from tools.elastic.index import IndexManager
 from tools.elastic.searcher import Searcher
+from tools.elastic.talker import ElasticTalker as talker
+from tools import logger
 
 
 class ElasticSearchManager:
@@ -36,10 +28,12 @@ class ElasticSearchManager:
 
     def get_all_indices(self):
         """ возвращает все индексы в эластике """
+        logger.write('Пользователь запросил Список всех индексов', logger.ELASTIC)
         return self.index_manager.get_all()
 
     def delete_index(self, index_name):
         """ удаление индекса """
+        logger.write('Пользователь запросил удаление индекса "' + str(index_name) + '"', logger.ELASTIC)
         self.index_manager.delete_index_by_name(index_name)
 
     def create_index(self, data_type):
@@ -57,11 +51,15 @@ class ElasticSearchManager:
         if data_type == 'anime':
             self.data_manager.fill_anime_index()
         else:
-            Utils.raise_exception('Не поддерживаемый тип данных')
+            Utils.raise_exception('Не поддерживаемый тип данных', logger.ELASTIC)
 
     def search_anime(self, query):
         """ поиск аниме """
-        return self.searcher.search_anime(query)
+        anime_list = self.searcher.search_anime(query)
+        result_quantity = str(len(anime_list))
+        logger.write('Пользователь запросил поиск по запросу "' + query + '"\nКол-во результатов: ' + result_quantity,
+                     logger.ELASTIC)
+        return anime_list
 
     def define_index_type(self, index_name):
         """ возвращает тип удаляемых данных """

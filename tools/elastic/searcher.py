@@ -4,7 +4,6 @@ import json
 from tools.elastic.index import IndexManager
 from dao.anime import AnimeManager
 
-
 class Searcher:
     """ Searcher - инструмент для поиска непосредественно по эластику """
 
