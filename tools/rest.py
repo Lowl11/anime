@@ -1,8 +1,4 @@
 import requests
-import json
-import os
-
-from tools import utils
 
 """ REST - тулза которая помогает отправить запрос по урлу """
 
@@ -13,6 +9,7 @@ def make_request(url, data, request_type, headers=None):
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
     response = None
+    err = None
     # try/except потому что нужно будет отловить ошибку и логировать (или выкинуть)
     try:
 
@@ -26,6 +23,6 @@ def make_request(url, data, request_type, headers=None):
             response = requests.delete(url, data=data, headers=headers)
 
     except Exception as error:
-        utils.raise_exception(error, 'Ошибка запроса')
+        err = error
 
-    return response
+    return response, err

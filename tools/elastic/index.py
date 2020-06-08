@@ -1,9 +1,8 @@
-from django.conf import settings
 from datetime import date
 
 # Подключение кастомных классов
 from tools import utils
-from tools import debugger
+from tools import logger
 
 
 class IndexManager:
@@ -29,7 +28,6 @@ class IndexManager:
         response = self.talker.talk(postfix, data, 'GET')
 
         if response is None:
-            utils.raise_exception('Response не вернулся после запроса всех индексов')
             return
 
         text = response.text

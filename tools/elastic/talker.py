@@ -3,6 +3,7 @@ import json
 # Подключение кастомных классов
 from tools import rest
 from tools import utils
+from tools import logger
 
 
 class ElasticTalker:
@@ -22,7 +23,10 @@ class ElasticTalker:
         full_url = self.url + postfix  # site.com:9200/postfix
 
         # отправляем непосредственно запрос
-        response = rest.make_request(full_url, json.dumps(data), request_type)
+        response, err = rest.make_request(full_url, json.dumps(data), request_type)
+
+        if err is not None:
+            utils.raise_exception(str(err), logger.ELASTIC)
 
         try:
             # бывает такое что ответ не в виде json а просто в виде текста (читать следующий коммент)

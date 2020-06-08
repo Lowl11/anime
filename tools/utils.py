@@ -44,13 +44,13 @@ def erase_empty_strings(array):
 
 
 # вызывает эксепшн если мы в режиме дебаггера
-def raise_exception(exception, title = None):
+def raise_exception(exception, type):
     if SETTINGS['debug']:
         if type('') is type(exception):
             raise Exception(exception)
         raise exception
 
-    logger.write(str(exception), title)
+    logger.write(str(exception), type)
 
 
 def today(with_time=False):
