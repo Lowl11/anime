@@ -1,3 +1,5 @@
+import textwrap
+
 from tools import debugger
 from tools import utils
 
@@ -18,10 +20,14 @@ def prepare_message(message, title):
     result += 'Дата и время: '
     result += utils.today(with_time = True) + '\n'
     if title is not None:
-        result += '\t' + title + ':'
-    result += '\t\tТекст ошибки: ' + message
+        result += '\t\t*** ' + title + ' ***\n'
+    result += '\t\tТекст ошибки:\n' + beautify_message(message)
     result += '\n-----------------------------------\n\n'
     return result
+
+
+def beautify_message(message):
+    return textwrap.fill(message, 100)
 
 
 def get_logs_name():

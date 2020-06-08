@@ -24,11 +24,6 @@ class ElasticTalker:
         # отправляем непосредственно запрос
         response = rest.make_request(full_url, json.dumps(data), request_type)
 
-        self.last_request_status = 1  # последний запрос был успешным
-        if response is None:
-            utils.raise_exception('Ошибка соеденения сервера с ElasticSearch')
-            self.last_request_status = 2  # последний запрос был с ошибкой
-
         try:
             # бывает такое что ответ не в виде json а просто в виде текста (читать следующий коммент)
             json_response = response.json()

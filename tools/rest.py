@@ -12,6 +12,7 @@ def make_request(url, data, request_type, headers=None):
     if headers is None:  # по дефолту будем отправлять JSON
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
+    response = None
     # try/except потому что нужно будет отловить ошибку и логировать (или выкинуть)
     try:
 
@@ -25,6 +26,6 @@ def make_request(url, data, request_type, headers=None):
             response = requests.delete(url, data=data, headers=headers)
 
     except Exception as error:
-        utils.raise_exception(error)
+        utils.raise_exception(error, 'Ошибка запроса')
 
     return response
