@@ -56,9 +56,10 @@ class ElasticSearchManager:
     def search_anime(self, query):
         """ поиск аниме """
         anime_list = self.searcher.search_anime(query)
-        result_quantity = str(len(anime_list))
-        logger.write('Пользователь запросил поиск по запросу "' + query + '"\nКол-во результатов: ' + result_quantity,
-                     logger.ELASTIC)
+        if anime_list is not None:
+            result_quantity = str(len(anime_list))
+            logger.write('Пользователь запросил поиск по запросу "' + query + '"\nКол-во результатов: ' + result_quantity,
+                         logger.ELASTIC)
         return anime_list
 
     def define_index_type(self, index_name):
