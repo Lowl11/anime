@@ -1,3 +1,5 @@
+from datetime import date, datetime
+
 from django.conf import settings
 
 from tools import logger
@@ -45,3 +47,24 @@ def raise_exception(exception):
         raise exception
 
     logger.write(str(exception))
+
+def today(with_time = False):
+    if with_time:
+        day = datetime.now()
+    else:
+        day = date.today()
+
+    date_str = two_digit_number(str(day.day)) + '-' + \
+               two_digit_number(str(day.month)) + '-' + str(day.year)
+
+    if with_time:
+        date_str += ' ' + two_digit_number(str(day.hour)) + \
+                    ':' + two_digit_number(str(day.minute)) + \
+                    ':' + two_digit_number(str(day.second))
+    return date_str
+
+def two_digit_number(num):
+    str_num = str(num)
+    if len(str_num) == 1:
+        str_num = '0' + str_num
+    return str_num

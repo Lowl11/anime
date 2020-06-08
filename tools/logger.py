@@ -1,10 +1,9 @@
-from datetime import date, datetime
-
 from tools import debugger
+from tools import utils
 
 
 def write(message, title=None):
-    debugger(message, title)
+    debugger.write(message, title)
     write_to_file(message, title)
 
 
@@ -15,18 +14,15 @@ def write_to_file(message, title):
 
 
 def prepare_message(message, title):
-    current_time = datetime.now()
-    result = '-----------------------------------'
+    result = '-----------------------------------\n'
     result += 'Дата и время: '
-    result += str(current_time.day) + '-' + str(current_time.month) + '-' + str(current_time.day) + ' '
-    result += str(current_time.hour) + ':' + str(current_time.min) + ':' + str(current_time.second) + '\n'
+    result += utils.today(with_time = True) + '\n'
     if title is not None:
         result += '\t' + title + ':'
-    result += '\t\t' + message
-    result += '-----------------------------------'
+    result += '\t\tТекст ошибки: ' + message
+    result += '\n-----------------------------------\n\n'
     return result
 
 
 def get_logs_name():
-    today = date.today()
-    return 'errors_' + str(today.day) + '-' + str(today.month) + '-' + str(today.year) + '.log'
+    return 'errors_' + utils.today(with_time = False) + '.log'
