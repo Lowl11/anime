@@ -1,5 +1,7 @@
 from django.conf import settings
 
+from tools import logger
+
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
@@ -26,7 +28,7 @@ def try_get_from_array(array, name):
         return array[name]
     except:
         return None
-    
+
 # вырезает пустые строки в массиве
 def erase_empty_strings(array):
     result = []
@@ -41,4 +43,5 @@ def raise_exception(exception):
         if type('') is type(exception):
             raise Exception(exception)
         raise exception
-    # в любом случае здесь должно быть логирование
+
+    logger.write(str(exception))
