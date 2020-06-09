@@ -5,6 +5,7 @@ import requests
 
 def make_request(url, data, request_type, headers=None):
     """ делает запрос по урлу """
+
     if headers is None:  # по дефолту будем отправлять JSON
         headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 

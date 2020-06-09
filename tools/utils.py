@@ -1,5 +1,4 @@
 from datetime import date, datetime
-
 from django.conf import settings
 
 from tools import logger
@@ -8,21 +7,24 @@ from tools import logger
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
+POST = 'POST'
+GET = 'GET'
+SESSION = 'SESSION'
+
 
 # пытатется вернуть значение с массива по названию с реквеста
-def try_get_from_request(request, type, name):
+def try_get_from_request(request, request_type, name):
     try:
-        if type == 'POST':
+        if request_type == POST:
             return request.POST[name]
-        elif type == 'GET':
+        elif request_type == GET:
             return request.GET[name]
-        elif type == 'SESSION':
+        elif request_type == SESSION:
             return request.session[name]
         else:
-            raise_exception('Данный тип не поддерживается')
-    except:
-        # логирование
-        pass
+            logger.write('Тип ' + request_type + ' не поддерживается', logger.HTTP)
+    except Exception as error:
+        logger.write('Неизвестная ошибка: ' + str(error), logger.HTTP)
     return None
 
 
@@ -30,7 +32,7 @@ def try_get_from_request(request, type, name):
 def try_get_from_array(array, name):
     try:
         return array[name]
-    except:
+    finally:
         return None
 
 
@@ -44,13 +46,13 @@ def erase_empty_strings(array):
 
 
 # вызывает эксепшн если мы в режиме дебаггера
-def raise_exception(exception, type):
+def raise_exception(exception, logger_type):
     if SETTINGS['debug']:
         if type('') is type(exception):
             raise Exception(exception)
         raise exception
 
-    logger.write(str(exception), type)
+    logger.write(str(exception), logger_type)
 
 
 def today(with_time=False):

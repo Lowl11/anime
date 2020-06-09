@@ -4,7 +4,7 @@ from django.conf import settings
 from tools.dict import Dictionary
 from watch.forms import XSearchForm
 from cms.forms import ManageAnimeForm
-from tools import debugger
+from tools import logger
 from dao.cms_navigation_links import CmsNavigationLinksManager
 from dao.cms_main_info import CmsMainInfoManager
 
@@ -12,8 +12,10 @@ from dao.cms_main_info import CmsMainInfoManager
     ModuleHelper - вспомогающий класс служащий инструменто помощи для работы с подулями
 """
 
-# Возвращает контекст в зависимости от названия модуля
+
 def get_context(module_name):
+    """" Возвращает контекст в зависимости от названия модуля """
+
     SETTINGS = settings.A_SETTINGS
     CONSTANTS = settings.A_CONSTANTS
     if module_name == 'watch':
@@ -30,4 +32,6 @@ def get_context(module_name):
     elif module_name == 'auth':
         auth_context = Dictionary()
         return auth_context
+    else:
+        logger.write('Модуля "' + module_name + '" нет', logger.MODULE)
     return None

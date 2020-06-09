@@ -1,118 +1,115 @@
-"""
-    Dictionary - кастомный словарь "ключ - значение".
-    Приемущества:
-        1. Можно обращаться отдельно к ключам
-        2. Можно будет менять поведение как будет нужно
-"""
 class Dictionary:
+    """ Dictionary - кастомный словарь "ключ - значение". """
+
     __nodes = []
     __type = None
 
-    
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
 
     def __init__(self):
         self.clear()
-    
-    # добавление новой записи
+
     def add(self, key, value):
+        """ добавление новой записи """
+
         if self.check_key(key):
             if self.check_value(value):
                 self.__nodes.append(self.Node(key, value))
-            
-    # удаление элемента по ключу
+
     def remove_by_key(self, key):
+        """ удаление элемента по ключу """
         del self.__nodes[key]
-    
-    # удаление по индексу
+
     def remove_by_index(self, index):
+        """ удаление по индексу """
         del self.__nodes[int(index)]
-    
-    # возвращает запись по индексу
+
     def get_by_index(self, index):
+        """ возвращает запись по индексу """
         return self.__nodes[index]
-    
-    # возвращает запись по ключу
+
     def get_by_key(self, key):
+        """ возвращает запись по ключу """
+
         nodes = self.__nodes
         for node in nodes:
             if node.key == key:
                 return node.value
         return None
-    
-    # возвращает размер словаря
+
     def size(self):
+        """ возвращает размер словаря """
         return len(self.__nodes)
-    
-    # возвращает лист из значений словаря
+
     def to_list(self):
+        """ возвращает лист из значений словаря """
         values = []
         nodes = self.__nodes
         for node in nodes:
             values.append(node.value)
         return values
-    
-    # возвращает ассоциотивный массив
+
     def to_assosiative(self):
+        """ возвращает ассоциотивный массив """
         array = {}
         nodes = self.__nodes
         for node in nodes:
             array[node.key] = node.value
         return array
-    
-    # очистить от пустых значений
+
     def clear_from_empty(self):
+        """ очистить от пустых значений """
         nodes = self.__nodes
         for node in nodes:
             if node.value is None or len(node.value) == 0:
                 self.remove_by_key(node.key)
         return self
-    
-    # проставляет обязательный тип данных
-    def set_data_type(self, type):
-        self.__type = type
 
-    # очистика словаря
+    def set_data_type(self, data_type):
+        """ проставляет обязательный тип данных """
+        self.__type = data_type
+
     def clear(self):
+        """ очистика словаря """
         self.__nodes = []
         self.__type = None
-    
 
     ####################################################################
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
     ####################################################################
 
-    # проверка на схожесть ключа
     def check_key(self, key):
+        """ проверка на схожесть ключа """
+
         nodes = self.__nodes
         for node in nodes:
             if node.key == key:
                 return False
         return True
-    
-    # проверка(-и) значения
+
     def check_value(self, value):
-        if self.__type is not None: # у нас есть заданный тип данных
-            if self.__type is not value: # value равен заданному типу данных
+        """ проверка(-и) значения """
+        if self.__type is not None:  # у нас есть заданный тип данных
+            if self.__type is not value:  # value равен заданному типу данных
                 return True
         else:
             return True
         return False
-    
-    # перезапись метода toString()
+
     def __str__(self):
+        """ перезапись метода toString() """
+
         result = ''
         nodes = self.__nodes
         for node in nodes:
             result += '{' + str(node.key) + ' : ' + str(node.value) + '}\n'
         return result
-        
-    """
-        Node - POKO класс служащий для хранения ключа и значения
-    """
+
     class Node:
+        """ Node - POKO класс служащий для хранения ключа и значения """
+
         key = None
         value = None
 
