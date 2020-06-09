@@ -93,7 +93,7 @@ class IndexManager:
         # после взаимодействия с индексами эластик возвращает acknowledged
         success = utils.try_get_from_array(response, 'acknowledged')
         if success is None:
-            utils.raise_exception('Ошибка после запроса на действие с индексом\nResponse: ' + str(response))
+            utils.raise_exception('Ошибка возвращаемого json.\nResponse: ' + str(response), logger.ELASTIC)
         return
 
     def __build_anime_analyzer(self):
@@ -126,7 +126,7 @@ class IndexManager:
 
         properties = {}
         for field in fields:
-            properties[field] = {'type': 'text'}
+            properties[field] = {'type': 'text', 'analyzer': 'anime_analyzer'}
         mappings = {
             'properties': properties
         }
@@ -138,10 +138,13 @@ class IndexManager:
         return ["lowercase",
                 "asciifolding",
                 "english_stop",
-                "russian_stop"]
+                "russian_stop",
+                "anime_synonyms"]
 
     def __default_lang_filters(self):
         """ дефолтные языковые фильтры """
+        # TODO нужно добавить каждой записи теги по которым будет поиск
+        synonyms = ["дъявол, демон", "сёнен, наруто, хвост феи, ван пис"]
 
         return {
             "english_stop": {
@@ -151,6 +154,11 @@ class IndexManager:
             "russian_stop": {
                 "type": "stop",
                 "stopwords": "_russian_"
+            },
+            "anime_synonyms": {
+                "type": "synonym",
+                "synonyms": synonyms,
+                "tokenizer": "standard"
             }
         }
 
