@@ -15,27 +15,22 @@ class Searcher:
     def search_anime(self, query):
         """ поиск аниме """
 
-        # TODO 1: в будущем конечно будет круче вынести большинство из этого кода в общий код
-        # чтобы было без разницы какой тип данных искать
-
-        # TODO 2: ниже говнокод, а точнее где-то ниже if len(inside_hits) == 0
-
         # REST данные
         postfix = self.__anime_index_name() + '/_search'
         request_type = 'POST'
 
         # данные по поиску
         fields = ['title_rus', 'title_foreign', 'description', 'tags']
-        data = {}
-        data['query'] = self.__build_multi_match(query, fields)
-        data['suggest'] = self.__build_suggestions(query, fields)
+        data = self.__build_data(query, fields)
 
+        # непосредственно сам запрос
         response, err = self.talker.talk(postfix, data, request_type)
 
         if err is not None:
             logger.write(err, logger.ELASTIC)
             return None
 
+        # если поиск прошел успешно
         json_response = response.json()
 
         # есть коренной объект hits и внутри еще один hits (в котором уже лежат данные)
@@ -48,52 +43,57 @@ class Searcher:
             anime = hit['_source']
             anime_list.append(AnimeManager.parse(anime))
 
-        # если поиск не дал результатов то могут быть возвращены suggestion'ы
-        # с помощью которых можно сделать еще один запрос (к примеру пользователь ввел
-        # "злодий" а в suggestion'ах есть вариант "злодей")
+        # если поиск по фразе query ничего не дал, то находим suggestion
+        # по которому произведем поиск еще раз
         if len(inside_hits) == 0:
-            suggest = json_response['suggest']  # коренной объект suggest и в нем suggestion по каждому из полей
-
-            description_suggestions = suggest['description_suggestion']  # description
-            title_rus_suggestions = suggest['title_rus_suggestion']  # title_rus
-            title_foreign_suggestions = suggest['title_foreign_suggestion']  # title_foreign
-
-            # эластик предлогает варианты основываясь на каждом из полей
-            # по этому из каждого поля берем первый вариант (то есть самый вероятный)
-            description_options = description_suggestions[0]['options']
-            title_rus_options = title_rus_suggestions[0]['options']
-            title_foreign_options = title_foreign_suggestions[0]['options']
-
-            # дальше вычисляем самый вероятный вариант из лучших вариантов своих полей
-            description_query = {'score': 0}
-            title_rus_query = {'score': 0}
-            title_foreign_query = {'score': 0}
-
-            if len(description_options) > 0:
-                description_query = description_options[0]
-
-            if len(title_rus_options) > 0:
-                title_rus_query = title_rus_options[0]
-
-            if len(title_foreign_options) > 0:
-                title_foreign_query = title_foreign_options[0]
-
-            biggest = title_rus_query
-            if biggest['score'] < title_foreign_query['score']:
-                biggest = title_foreign_query
-
-            if biggest['score'] < description_query['score']:
-                biggest = description_query
-
-            if biggest['score'] > 0:  # если есть suggestion ищем по самому вероятному
-                return self.search_anime(biggest['text'])
+            suggestion = self.__find_suggestion(json_response, fields)
+            if suggestion is not None:
+                anime_list = self.search_anime(suggestion)
 
         return anime_list
+
+    def __find_suggestion(self, json_response, fields):
+        suggest = json_response['suggest']  # коренной объект suggest и в нем suggestion по каждому из полей
+
+        suggestions = []
+        for field in fields:
+            suggestions.append(suggest[field + '_suggestion'])
+
+        # эластик предлогает варианты основываясь на каждом из полей
+        # по этому из каждого поля берем первый вариант (то есть самый вероятный)
+        options = []
+        for suggestion in suggestions:
+            options.append(suggestion[0]['options'])
+
+        # вычисляем самый вероятный вариант из лучших вариантов своих полей
+        queries = []
+        for option in options:
+            if len(option) > 0:
+                queries.append(option[0])
+
+        # находим вариант с самым большим кол-вом score
+        if len(queries) > 0:
+            biggest = queries[0]
+            for query in queries:
+                if biggest['score'] < query['score']:
+                    biggest = query
+
+            if biggest['score'] > 0:  # если есть suggestion возвращаем
+                return biggest['text']
+
+        return None
 
     def __anime_index_name(self):
         """ возвращает актуальное название аниме индекса """
 
         return IndexManager.anime_index_name()
+
+    def __build_data(self, query, fields):
+        data = {
+            'query': self.__build_multi_match(query, fields),
+            'suggest': self.__build_suggestions(query, fields)
+        }
+        return data
 
     def __build_multi_match(self, query, fields):
         """ строит multi_match запрос (тип поиска в эластике) """
