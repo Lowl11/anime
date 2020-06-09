@@ -6,6 +6,7 @@ from tools import utils
 
 HTTP = 1
 ELASTIC = 2
+AUTH = 3
 
 
 def write(message, logger_type):
@@ -42,6 +43,9 @@ def define(logger_type):
     elif logger_type == ELASTIC:
         title = 'ElasticSearch'
         file_name = 'elastic'
+    elif logger_type == AUTH:
+        title = 'Authentication'
+        file_name = 'auth'
     else:
         title = 'Неизвестная запись'
         file_name = 'unknown'

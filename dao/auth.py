@@ -4,6 +4,7 @@ from django.conf import settings
 
 # Подключение кастомных классов
 from a_auth.models import Viewer, Role
+from tools import logger
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -20,6 +21,7 @@ class AuthManager:
     # выход из аккаунта
     @staticmethod
     def logout(request):
+        logger.write('Пользователь ' + request.user.username + ' вышел', logger.AUTH)
         logout(request)
 
     # авторизация пользователя
@@ -35,6 +37,7 @@ class AuthManager:
                 login(request, base_user)
                 viewer = Viewer.objects.get(base_user = base_user)
                 request.session['role'] = viewer.role.value
+                logger.write('Пользователь ' + base_user.username + ' залогинился', logger.AUTH)
         # end
     
     # регистрация пользователя
