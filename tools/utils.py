@@ -12,8 +12,9 @@ GET = 'GET'
 SESSION = 'SESSION'
 
 
-# пытатется вернуть значение с массива по названию с реквеста
 def try_get_from_request(request, request_type, name):
+    """ пытатется вернуть значение с массива по названию с реквеста """
+
     try:
         if request_type == POST:
             return request.POST[name]
@@ -24,20 +25,23 @@ def try_get_from_request(request, request_type, name):
         else:
             logger.write('Тип ' + request_type + ' не поддерживается', logger.HTTP)
     except Exception as error:
-        logger.write('Неизвестная ошибка: ' + str(error), logger.HTTP)
+        logger.write('Неизвестная ошибка. Попытка взять значение по ключу "' + name + '" из "' + request_type + '". '
+                   '\nСообщение об ошибке: ' + str(error), logger.HTTP)
     return None
 
 
-# пытается вернуть значение с массива по названию
 def try_get_from_array(array, name):
+    """ пытается вернуть значение с массива по названию """
+
     try:
         return array[name]
     finally:
         return None
 
 
-# вырезает пустые строки в массиве
 def erase_empty_strings(array):
+    """ вырезает пустые строки в массиве """
+
     result = []
     for word in array:
         if len(word) > 0:
@@ -45,8 +49,9 @@ def erase_empty_strings(array):
     return result
 
 
-# вызывает эксепшн если мы в режиме дебаггера
 def raise_exception(exception, logger_type):
+    """ вызывает эксепшн если мы в режиме дебаггера """
+
     if SETTINGS['debug']:
         if type('') is type(exception):
             raise Exception(exception)
