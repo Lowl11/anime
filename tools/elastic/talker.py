@@ -4,6 +4,7 @@ import json
 from tools import rest
 from tools import utils
 from tools import logger
+from tools import debugger
 
 
 class ElasticTalker:
@@ -27,15 +28,11 @@ class ElasticTalker:
 
         if err is not None:
             utils.raise_exception(str(err), logger.ELASTIC)
+        else:
+            if not response.ok:
+                err = Exception('Ошибка ElasticSearch. Response: ' + str(response.text))
 
-        try:
-            # бывает такое что ответ не в виде json а просто в виде текста (читать следующий коммент)
-            json_response = response.json()
-        except:
-            # по этому возвращаем сам респонс как текст
-            return response
-
-        return json_response
+        return response, err
 
     def check_status(self):
         """ проверка статуса сервера """

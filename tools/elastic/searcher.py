@@ -3,7 +3,8 @@ import json
 # Подключение кастомных классов
 from tools.elastic.index import IndexManager
 from dao.anime import AnimeManager
-from tools import debugger
+from tools import logger
+
 
 class Searcher:
     """ Searcher - инструмент для поиска непосредественно по эластику """
@@ -29,10 +30,13 @@ class Searcher:
         data['query'] = self.__build_multi_match(query, fields)
         data['suggest'] = self.__build_suggestions(query, fields)
 
-        json_response = self.talker.talk(postfix, data, request_type)
+        response, err = self.talker.talk(postfix, data, request_type)
 
-        if json_response is None:
-            return json_response
+        if err is not None:
+            logger.write(err, logger.ELASTIC)
+            return None
+
+        json_response = response.json()
 
         # есть коренной объект hits и внутри еще один hits (в котором уже лежат данные)
         out_hits = json_response['hits']
@@ -48,7 +52,6 @@ class Searcher:
         # с помощью которых можно сделать еще один запрос (к примеру пользователь ввел
         # "злодий" а в suggestion'ах есть вариант "злодей")
         if len(inside_hits) == 0:
-            debugger.write(json_response, "Json response from search:")
             suggest = json_response['suggest']  # коренной объект suggest и в нем suggestion по каждому из полей
 
             description_suggestions = suggest['description_suggestion']  # description

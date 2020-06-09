@@ -25,10 +25,10 @@ class IndexManager:
 
         data = {}
         postfix = '_cat/indices'
-        response = self.talker.talk(postfix, data, 'GET')
+        response, err = self.talker.talk(postfix, data, 'GET')
 
-        if response is None:
-            return
+        if err is not None:
+            return None
 
         text = response.text
         lines = text.splitlines()
@@ -61,7 +61,12 @@ class IndexManager:
             }
         }
         data['mappings'] = self.__build_mappings(fields)
-        json_response = self.talker.talk(IndexManager.anime_index_name(), data, 'PUT')
+
+        response, err = self.talker.talk(IndexManager.anime_index_name(), data, 'PUT')
+        if err is not None:
+            return None
+        json_response = response.json()
+
         self.__base_check(json_response)
         return json_response
 
@@ -80,7 +85,10 @@ class IndexManager:
         data = {}
         json_response = None
         if index_name is not None:
-            json_response = self.talker.talk(index_name, data, 'DELETE')
+            response, err = self.talker.talk(index_name, data, 'DELETE')
+            if err is not None:
+                return None
+            json_response = response.json()
         return json_response
 
     ####################################################################
@@ -143,7 +151,6 @@ class IndexManager:
 
     def __default_lang_filters(self):
         """ дефолтные языковые фильтры """
-        # TODO нужно добавить каждой записи теги по которым будет поиск
         synonyms = ["дъявол, демон", "сёнен, наруто, хвост феи, ван пис"]
 
         return {

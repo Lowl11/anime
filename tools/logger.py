@@ -33,7 +33,7 @@ def prepare_message(message, title):
 
 
 def beautify_message(message):
-    return textwrap.fill(message, 100)
+    return textwrap.fill(str(message), 100)
 
 
 def define(logger_type):
