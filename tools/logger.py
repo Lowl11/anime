@@ -8,8 +8,8 @@ HTTP = 1
 ELASTIC = 2
 
 
-def write(message, type):
-    title, file_name = define(type)
+def write(message, logger_type):
+    title, file_name = define(logger_type)
     debugger.write(message, title)
     write_to_file(message, title, file_name)
 
