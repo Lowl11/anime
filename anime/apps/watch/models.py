@@ -9,6 +9,7 @@ class Anime(models.Model):
     episodes_quantity = models.IntegerField('Количество серий', default = 12)
     start_date = models.DateField('Дата начала', default = '2020-01-01')
     image = models.ImageField('Обложка', upload_to = 'anime')
+    tags = models.CharField('Поисковые теги', max_length = 1000, null = True, blank = True)
 
     class Meta:
         verbose_name = 'Аниме'

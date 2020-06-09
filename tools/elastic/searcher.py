@@ -24,7 +24,7 @@ class Searcher:
         request_type = 'POST'
 
         # данные по поиску
-        fields = ['title_rus', 'title_foreign', 'description']
+        fields = ['title_rus', 'title_foreign', 'description', 'tags']
         data = {}
         data['query'] = self.__build_multi_match(query, fields)
         data['suggest'] = self.__build_suggestions(query, fields)
