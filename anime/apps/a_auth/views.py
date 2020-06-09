@@ -1,12 +1,11 @@
-from django.shortcuts import render, redirect
-from django.contrib.auth import login, authenticate
 from django.conf import settings
+from django.shortcuts import redirect
 
+from dao.auth import AuthManager
+from tools import utils as UtilsHelper
 # подключение кастомных файлов
 from tools.viewmodel import ViewModel
-from dao.auth import AuthManager
 from .forms import SigninForm, SignupForm
-from tools import utils as UtilsHelper
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS

@@ -3,17 +3,17 @@ from django.contrib.auth import login, authenticate, logout
 from django.conf import settings
 
 # Подключение кастомных классов
-from a_auth.models import Viewer, Role
+from a_auth.models import Viewer, Role  # it's okay, cause apps moved from root folder
 from tools import logger
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
-"""
-    AuthManager - инструмент для авторизации, регистрации и выхода
-"""
+
 class AuthManager:
+    """ AuthManager - инструмент для авторизации, регистрации и выхода """
+
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
@@ -28,18 +28,18 @@ class AuthManager:
     @staticmethod
     def signin_user(request, dict):
         # проверяем есть ли пользователь с такими данными
-        base_user = authenticate(username = dict['username'], password = dict['password'])
+        base_user = authenticate(username=dict['username'], password=dict['password'])
 
         if base_user is not None:
-            viewer = Viewer.objects.get(base_user = base_user)
+            viewer = Viewer.objects.get(base_user=base_user)
             if viewer is not None:
                 # авторизуем пользователя
                 login(request, base_user)
-                viewer = Viewer.objects.get(base_user = base_user)
+                viewer = Viewer.objects.get(base_user=base_user)
                 request.session['role'] = viewer.role.value
                 logger.write('Пользователь ' + base_user.username + ' залогинился', logger.AUTH)
         # end
-    
+
     # регистрация пользователя
     @staticmethod
     def signup_user(request, dict):
@@ -65,8 +65,7 @@ class AuthManager:
         if request.user.is_anonymous:
             return False
         return request.user.is_authenticated
-    
-    
+
     ####################################################################
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
     ####################################################################
@@ -75,4 +74,3 @@ class AuthManager:
     @staticmethod
     def default_role():
         return Role.objects.get(value = 3)
-    
