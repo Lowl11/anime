@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Anime(models.Model):
     title_rus = models.CharField('Название на русском', max_length = 255)
     title_foreign = models.CharField('Название на иностранном', max_length = 255, default = '')

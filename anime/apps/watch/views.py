@@ -25,19 +25,21 @@ def page_view(request):
 # Отображение одного аниме
 def anime_view(reqeust, pk):
     anime = AnimeManager.get_anime_by_id(pk)
-    if anime == False:
+    if not anime:
         return not_found()
-    
+
     vm = ViewModel()
     vm.add_path('watch/anime.html')
     vm.add_object('title', 'Смотреть аниме "' + str(anime) + '"')
     vm.add_object('anime', anime)
     return vm.render(reqeust)
 
+
 # отображение аниме принадлежащие определенному жанру
 def genre_view(request, name):
     title = 'Аниме по жанру "' + name + '"'
     return display_anime_list(request, AnimeManager.get_by_genre(name), title)
+
 
 # отображение аниме по году
 def year_view(request, year):
@@ -59,18 +61,20 @@ def xsearch_get(request):
         return display_anime_list(request, anime_list, title, no_image)
     return not_found()
 
+
 ####################################################################
 ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
 ####################################################################
 
 # метод отображения списка аниме
-def display_anime_list(request, anime_list, title, no_image = False):
+def display_anime_list(request, anime_list, title, no_image=False):
     vm = ViewModel()
     vm.add_path('watch/page.html')
     vm.add_object('title', title)
     vm.add_object('anime_list', anime_list)
     vm.add_object('no_image', no_image)
     return vm.render(request)
+
 
 def not_found():
     return SETTINGS['not_found_method']()

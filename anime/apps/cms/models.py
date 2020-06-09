@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class CmsMainInfo(models.Model):
     main_notification = models.TextField('Важное уведомление', default = '')
     mini_notification1 = models.TextField('Уведомление №1', default = '')
@@ -11,6 +12,7 @@ class CmsMainInfo(models.Model):
 
     def __str__(self):
         return 'Основная информация по CMS'
+
 
 class CmsNavigationLink(models.Model):
     name = models.CharField(max_length = 255, null = False)
@@ -37,6 +39,7 @@ class Folder(models.Model):
     def __str__(self):
         return self.name
 
+
 class File(models.Model):
     name = models.CharField(max_length = 255, null = False)
     path = models.CharField(max_length = 999, null = False)
@@ -48,4 +51,3 @@ class File(models.Model):
     
     def __str__(self):
         return self.name
-    

@@ -1,10 +1,8 @@
-from django.shortcuts import render, redirect
 from django.conf import settings
+from django.shortcuts import redirect
 
 # подключение кастомных файлов
 from tools.viewmodel import ViewModel
-from tools import debugger
-from watch import views as watch_view
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -21,6 +19,7 @@ def home_view(request):
     if start_from == 'watch':
         return redirect('/watch/')
     return not_found()
+
 
 def not_found_view(request):
     vm = ViewModel()

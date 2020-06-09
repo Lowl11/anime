@@ -1,7 +1,9 @@
+from django.contrib.auth.models import User
 from django.db import models
 
-# Роль пользователей
+
 class Role(models.Model):
+    """ роль пользователя """
     name = models.CharField(max_length = 255, unique = True)
     value = models.IntegerField(default = 1, unique = True)
 
@@ -13,8 +15,8 @@ class Role(models.Model):
         return self.name + ' [' + str(self.value) + ']'
 
 
-# Пользователь
 class Viewer(models.Model):
+    """ пользователь """
     base_user = models.ForeignKey('auth.User', on_delete = models.CASCADE)
     image = models.ImageField(upload_to = 'users')
     role = models.ForeignKey(Role, on_delete = models.PROTECT)

@@ -3,11 +3,13 @@ from django.contrib import admin
 # подключение кастомных классов
 from .models import NavigationLink
 
-# админ класс моделей
+
 class NavigationLinkAdmin(admin.ModelAdmin):
+    """ админ класс моделей """
     model = NavigationLink
     list_display = ['id', 'name', 'url']
     list_editable = ['name', 'url']
+
 
 # регистрация моделей БД в админ-панели
 admin.site.register(NavigationLink, NavigationLinkAdmin)
