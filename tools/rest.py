@@ -26,6 +26,7 @@ def make_request(url, data, request_type, headers=None):
     except Exception as error:
         err = error
 
-    response.close()
+    if response is not None:
+        response.close()
 
     return response, err

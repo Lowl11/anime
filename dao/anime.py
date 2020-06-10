@@ -13,23 +13,24 @@ from tools import debugger
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
-"""
-    AnimeManager - управление записями аниме
-"""
+
 class AnimeManager:
+    """ AnimeManager - управление записями аниме """
+
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
 
-    # возвращает все аниме
     @staticmethod
     def get_all():
+        """ возвращает все аниме """
         anime_list = Anime.objects.all()
         return AnimeManager.prepare_anime_list(anime_list)
-    
-    # возвращает список аниме по жанру
+
     @staticmethod
     def get_by_genre(genre_name):
+        """ возвращает список аниме по жанру """
+
         # достаем список привязок аниме-жанр
         genres = GenreManager.get_genres_by_name(genre_name)
 
@@ -43,22 +44,23 @@ class AnimeManager:
             anime_list.add(anime.id, anime)
         
         return AnimeManager.prepare_anime_list(anime_list.to_list())
-    
-    # возвращает список аниме по году
+
     @staticmethod
     def get_by_year(year):
+        """ возвращает список аниме по году """
         anime_list = Anime.objects.filter(start_date__year = year)
         return AnimeManager.prepare_anime_list(anime_list)
 
-    # возвращает определенное аниме по ID
     @staticmethod
     def get_anime_by_id(id):
+        """ возвращает определенное аниме по ID """
         anime = Anime.objects.get(pk = id)
         return anime
-    
-    # обновление данных аниме по id
+
     @staticmethod
     def update_anime_by_id(id, updated):
+        """ обновление данных аниме по id """
+
         try:
             anime = AnimeManager.get_anime_by_id(id)
             anime.title_rus = updated['title_rus']
@@ -72,10 +74,11 @@ class AnimeManager:
         except:
             return False
         return True
-    
-    # заполнение формы значениями существующего аниме
+
     @staticmethod
     def fill_form(form, anime):
+        """ заполнение формы значениями существующего аниме """
+
         # TODO понять через какое поле или через какой параметр заполняется textarea
         fields = form.fields
         FormManager.update_field(fields['title_rus'], anime.title_rus)
@@ -86,10 +89,11 @@ class AnimeManager:
         FormManager.update_field(fields['start_date'], anime.start_date)
         FormManager.update_field(fields['image'], anime.image.url)
         return form
-    
-    # поиск аниме
+
     @staticmethod
     def search(query):
+        """ поиск аниме """
+
         anime_list = []
         anime_list.extend(Anime.objects.filter(title_rus__icontains = query))
         anime_list.extend(Anime.objects.filter(title_foreign__icontains = query))
@@ -100,10 +104,11 @@ class AnimeManager:
             result_list.add(anime.id, anime)
 
         return result_list.to_list()
-    
-    # превращение объекта в аниме
+
     @staticmethod
     def parse(array):
+        """ превращение объекта в аниме """
+
         anime = Anime()
         anime.id = array['id']
         anime.title_rus = array['title_rus']
@@ -114,10 +119,11 @@ class AnimeManager:
         anime.episodes_quantity = int(array['episodes_quantity'])
         anime.image = open('media/anime/one_piece.png')
         return anime
-    
-    # проверащение аниме списка в список объектов
+
     @staticmethod
     def parse_to_objects(anime_list):
+        """ проверащение аниме списка в список объектов """
+
         objects_list = []
         for anime in anime_list:
             data = {
@@ -139,26 +145,29 @@ class AnimeManager:
     ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
     ####################################################################
 
-    # подготовка списка аниме
     @staticmethod
     def prepare_anime_list(anime_list):
+        """ подготовка списка аниме """
+
         # обязательно сортировка первая
         anime_list = AnimeManager.sort(anime_list)
         for anime in anime_list:
             anime.genre_links = GenreManager.anime_genres_links(anime)
         return anime_list
-    
-    # сортировка аниме листа
+
     @staticmethod
     def sort(anime_list):
+        """ сортировка аниме листа """
+
         # пока что так, сортировка по дате (DESC)
         if type(anime_list) == type([]):
             return AnimeManager.sort_list(anime_list)
         return anime_list.order_by('-start_date')
-    
-    # сортировка аниме листа list
+
     @staticmethod
     def sort_list(anime_list):
+        """ сортировка аниме листа list """
+
         for i in range(0, len(anime_list)):
             for j in range(i+1, len(anime_list)):
                 # < desc
