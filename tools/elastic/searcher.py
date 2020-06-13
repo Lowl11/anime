@@ -27,7 +27,7 @@ class Searcher:
         response, err = self.talker.talk(postfix, data, request_type)
 
         if err is not None:
-            logger.write(err, logger.ELASTIC)
+            # здесь не нужно логировать ошибку т.к. в talker это уже делается
             return None
 
         # если поиск прошел успешно
