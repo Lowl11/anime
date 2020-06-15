@@ -51,6 +51,8 @@ def year_view(request, year):
 def xsearch_get(request):
     if request.GET:
         query = request.GET['query']
+        if len(query) < 4:
+            return not_found()
         anime_list = es_manager.search_anime(query)
         no_image = True
         if anime_list is None:

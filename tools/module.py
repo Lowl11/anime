@@ -33,5 +33,8 @@ def get_context(module_name):
         auth_context = Dictionary()
         return auth_context
     else:
-        logger.write('Модуля "' + module_name + '" нет', logger.MODULE)
+        if module_name is None:
+            logger.write('Был произведен запрос в безмодульный режим', logger.MODULE)
+        else:
+            logger.write('Модуля "' + module_name + '" нет', logger.MODULE)
     return None
