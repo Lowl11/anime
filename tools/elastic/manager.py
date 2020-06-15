@@ -18,7 +18,6 @@ class ElasticSearchManager:
         self.data_manager = DataManager(self.talker)
         self.searcher = Searcher(self.talker)
 
-
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
@@ -60,8 +59,9 @@ class ElasticSearchManager:
         if anime_list is not None:
             anime_list = AnimeManager.prepare_anime_list(anime_list)
             result_quantity = str(len(anime_list))
-            logger.write('Пользователь запросил поиск по запросу "' + query + '"\nКол-во результатов: ' + result_quantity,
-                         logger.ELASTIC)
+            logger.write(
+                'Пользователь запросил поиск по запросу "' + query + '"\nКол-во результатов: ' + result_quantity,
+                logger.ELASTIC)
         return anime_list
 
     def define_index_type(self, index_name):

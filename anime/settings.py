@@ -151,6 +151,6 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_BEAT_SCHEDULE = {
     'index_anime': {
         'task': 'cms.tasks.index_anime',
-        'schedule': 3600.0 # 3600 секунд в одном часе
+        'schedule': 3600.0  # 3600 секунд в одном часе
     }
 }
