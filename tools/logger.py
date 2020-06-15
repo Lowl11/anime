@@ -9,6 +9,7 @@ ELASTIC = 2
 AUTH = 3
 MODULE = 4
 FILE = 5
+TASK = 6
 
 
 def write(message, logger_type):
@@ -54,6 +55,9 @@ def define(logger_type):
     elif logger_type == FILE:
         title = 'Файловая система'
         file_name = 'file'
+    elif logger_type == TASK:
+        title = 'Tasks/Jobs'
+        file_name = 'tasks'
     else:
         title = 'Неизвестная запись'
         file_name = 'unknown'

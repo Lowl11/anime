@@ -101,7 +101,7 @@ class IndexManager:
         # после взаимодействия с индексами эластик возвращает acknowledged
         success = utils.try_get_from_array(response, 'acknowledged')
         if success is None:
-            utils.raise_exception('Ошибка возвращаемого json.\nResponse: ' + str(response), logger.ELASTIC)
+            utils.raise_exception('Содержимое возвращаемого json.\nResponse: ' + str(response), logger.ELASTIC)
         return
 
     def __build_anime_analyzer(self):
