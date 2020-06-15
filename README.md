@@ -1,5 +1,5 @@
 # Anime
-> Проект не несет в себе ничего особенно. Основные цели проекта это личное пользование и практика.
+> Проект созданный по кайфу
 
 # Versions
 - 0.1
@@ -26,6 +26,8 @@
 3. Pillow
 4. django-grappelli
 5. requests
+6. celery
+7. redis
 ### К примеру
 ```Terminal
 pip install psycopg2-binary
