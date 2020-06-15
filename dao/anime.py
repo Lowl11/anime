@@ -117,7 +117,7 @@ class AnimeManager:
         anime.start_date = datetime.strptime(array['start_date'], '%Y-%m-%d')
         anime.season = int(array['season'])
         anime.episodes_quantity = int(array['episodes_quantity'])
-        anime.image = open('media/anime/one_piece.png')
+        anime.image = array['image']
         return anime
 
     @staticmethod
