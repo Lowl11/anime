@@ -5,6 +5,7 @@ from tools.elastic.index import IndexManager
 from tools.elastic.searcher import Searcher
 from tools.elastic.talker import ElasticTalker as talker
 from tools import logger
+from dao.anime import AnimeManager
 
 
 class ElasticSearchManager:
@@ -57,6 +58,7 @@ class ElasticSearchManager:
         """ поиск аниме """
         anime_list = self.searcher.search_anime(query)
         if anime_list is not None:
+            anime_list = AnimeManager.prepare_anime_list(anime_list)
             result_quantity = str(len(anime_list))
             logger.write('Пользователь запросил поиск по запросу "' + query + '"\nКол-во результатов: ' + result_quantity,
                          logger.ELASTIC)
