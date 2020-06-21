@@ -1,9 +1,9 @@
 # Подключение кастомных классов
-from tools import utils as Utils
 from tools.elastic.data import DataManager
 from tools.elastic.index import IndexManager
 from tools.elastic.searcher import Searcher
 from tools.elastic.talker import ElasticTalker as talker
+from tools import utils as Utils
 from tools import logger
 from dao.anime import AnimeManager
 
