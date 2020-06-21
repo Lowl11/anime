@@ -10,6 +10,7 @@ AUTH = 3
 MODULE = 4
 FILE = 5
 TASK = 6
+FRONT = 7
 
 
 def write(message, logger_type):
@@ -58,8 +59,11 @@ def define(logger_type):
     elif logger_type == TASK:
         title = 'Tasks/Jobs'
         file_name = 'tasks'
+    elif logger_type == FRONT:
+        title = 'Front'
+        file_name = 'front'
     else:
-        title = 'Неизвестная запись'
+        title = 'Неизвестный тип записи'
         file_name = 'unknown'
     return title, file_name
 

@@ -21,6 +21,13 @@ def home_view(request):
     return not_found()
 
 
+def feedback_view(request):
+    vm = ViewModel()
+    vm.add_path('main/feedback.html')
+    vm.add_object('title', 'Обратная связь')
+    return vm.render(request)
+
+
 def not_found_view(request):
     vm = ViewModel()
     vm.add_path('main/notfound.html')

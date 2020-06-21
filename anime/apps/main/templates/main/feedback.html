@@ -1,0 +1,20 @@
+{% extends "main/template.html" %}
+{% load static %}
+
+
+{% block js %}
+<script src="{% static 'js/main/feedback.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="feedback-form-block">
+    <h1 class="page-header">Обратная связь</h1>
+    <div class="text-block">
+        Отправьте оценку или мнение о проекте использовав форму.
+    </div>
+    <div class="feedback-form-wrapper">
+        <textarea placeholder="Текст..." class="form-control feedback-form" autocomplete="false"></textarea>
+        <button class="btn btn-primary feedback-send">Отправить</button>
+    </div>
+</div>
+{% endblock %}

@@ -6,6 +6,7 @@ from . import views
 urlpatterns = [
     ############################# MAIN ########################################
     url(r'^$', views.home_view, name = 'home_view'),
+    url(r'^feedback/$', views.feedback_view, name = 'feedback_view'),
     url(r'^not-found/$', views.not_found_view, name = 'not_found_view'),
     ############################# /MAIN #######################################
 ]

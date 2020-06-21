@@ -9,6 +9,8 @@ urlpatterns = [
     url(r'^dashboard/$', views.dashboard_view, name='cms_dashboard_view'),
     url(r'^elastic/$', views.elastic_view, name = 'cms_elastic_view'),
     url(r'^fm/$', views.fm_view, name = 'cms_fm_view'),
+    url(r'^log/$', views.handle_log, name = 'cms_handle_log'),
+    url(r'^feedback_send', views.feedback_send, name = 'cms_feedback_send'),
 
     ### Manage Anime ###
     url(r'^anime/new/$', views.anime_new_view, name = 'cms_new_anime_view'),

@@ -14,6 +14,7 @@ from .forms import ManageAnimeForm
 from tools.dict import Dictionary
 from tools import utils
 from tools import logger
+from tools import debugger
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -65,6 +66,31 @@ def fm_view(request):
     vm.add_path('cms/fm.html')
     vm.add_object('title', 'Файловый менеджер')
     return vm.render(request)
+
+
+def feedback_send(request):
+    code = 1
+    if request.POST:
+        try:
+            text = utils.try_get_from_request(request, 'POST', 'text')
+            debugger.write(text, 'Text from feedback')
+        except Exception as error:
+            logger.write(str(error), logger.MODULE)
+    return HttpResponse(code)
+
+
+def handle_log(request):
+    code = 1
+    if request.POST:
+        message = utils.try_get_from_request(request, 'POST', 'message')
+        send_data = utils.try_get_from_request(request, 'POST', 'data')
+        debugger.write(send_data)
+        url = utils.try_get_from_request(request, 'POST', 'url')
+        log_text = message + ' | URL: ' + url
+        if send_data is not None:
+            log_text += ' | Параметры: ' + str(send_data)
+        logger.write(log_text, logger.FRONT)
+    return HttpResponse(code)
 
 
 ######################## Manage Anime ##########################
