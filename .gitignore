@@ -5,3 +5,4 @@ db.sqlite3
 /static/
 .idea/
 /logs/
+celerybeat-schedule.db
