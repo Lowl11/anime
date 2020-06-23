@@ -75,6 +75,7 @@ def feedback_send(request):
             text = utils.try_get_from_request(request, 'POST', 'text')
             AppealManager.create(text, request.user)
         except Exception as error:
+            code = 2
             logger.write(str(error), logger.MODULE)
     return HttpResponse(code)
 

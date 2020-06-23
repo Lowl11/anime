@@ -44,6 +44,16 @@ body {
     font-family: 'Ubuntu Condensed', sans-serif;
 }
 
+.success-block {
+    display: none;
+    background: rgb(63, 202, 133);
+}
+
+.error-block {
+    display: none;
+    background: rgb(214, 112, 112);
+}
+
 .page-header {
     text-align: center;
     border-top: 2px solid rgb(119, 119, 119);

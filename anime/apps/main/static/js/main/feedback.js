@@ -8,6 +8,8 @@ class Feedback {
 
     TextArea = $('.feedback-form');
     Submit = $('.feedback-send');
+    SuccessBlock = $('.success-block');
+    ErrorBlock = $('.error-block');
 
     constructor() {
         this.BindActions();
@@ -35,13 +37,22 @@ class Feedback {
             url: url,
             data: data,
             cache: false,
-            success: function(data) {
-                // 
+            success: (data) => {
+                this.HideElements();
+                if (data == "1")
+                    this.SuccessBlock.show();
+                else
+                    this.ErrorBlock.show();
             },
             error: (jqXHR, exception) => {
                 logger.HandleException(jqXHR, exception, url, data);
             }
         });
+    }
+
+    HideElements() {
+        this.TextArea.hide();
+        this.Submit.hide();
     }
 
     collectData() {
