@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # подключение кастомных классов
-from .models import CmsNavigationLink, File, Folder, CmsMainInfo
+from .models import CmsNavigationLink, File, Folder, CmsMainInfo, Appeal
 
 
 class CmsNavigationLinkAdmin(admin.ModelAdmin):
@@ -17,8 +17,15 @@ class CmsMainInfoAdmin(admin.ModelAdmin):
     list_editable = ['main_notification', 'mini_notification1', 'mini_notification2']
 
 
+class AppealAdmin(admin.ModelAdmin):
+    model = Appeal
+    list_display = ['id', 'author', 'text', 'date']
+    list_editable = ['author', 'text', 'date']
+
+
 # регистрация моделей БД в админ-панели
 admin.site.register(CmsNavigationLink, CmsNavigationLinkAdmin)
 admin.site.register(File)
 admin.site.register(Folder)
 admin.site.register(CmsMainInfo)
+admin.site.register(Appeal, AppealAdmin)

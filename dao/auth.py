@@ -18,6 +18,26 @@ class AuthManager:
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
 
+    @staticmethod
+    def get_by_id(id):
+        try:
+            viewer = Viewer.objects.get(pk = id)
+        except Exception as error:
+            viewer = None
+            logger.write('Поиск пользователя по ID. ' + str(error), logger.AUTH)
+
+        return viewer
+
+    @staticmethod
+    def get_by_base_user(base_user):
+        try:
+            viewer = Viewer.objects.get(base_user = base_user)
+        except Exception as error:
+            viewer = None
+            logger.write('Поиск пользователя по базовому пользователю. ' + str(error), logger.AUTH)
+
+        return viewer
+
     # выход из аккаунта
     @staticmethod
     def logout(request):

@@ -2,12 +2,12 @@ import json
 from django.shortcuts import render, redirect, HttpResponse
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from datetime import date
 
 # подключение кастомных файлов
 from tools.viewmodel import ViewModel
 from dao.anime import AnimeManager
 from dao.fm import FileManager
+from dao.appeal import AppealManager
 from tools.elastic.manager import ElasticSearchManager
 from anime import starter
 from .forms import ManageAnimeForm
@@ -73,7 +73,7 @@ def feedback_send(request):
     if request.POST:
         try:
             text = utils.try_get_from_request(request, 'POST', 'text')
-            debugger.write(text, 'Text from feedback')
+            AppealManager.create(text, request.user)
         except Exception as error:
             logger.write(str(error), logger.MODULE)
     return HttpResponse(code)

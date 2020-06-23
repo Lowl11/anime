@@ -1,4 +1,5 @@
 from django.db import models
+from a_auth.models import Viewer
 
 
 class CmsMainInfo(models.Model):
@@ -51,3 +52,16 @@ class File(models.Model):
     
     def __str__(self):
         return self.name
+
+
+class Appeal(models.Model):
+    author = models.ForeignKey(Viewer, models.SET_NULL, null = True, blank = True)
+    text = models.TextField('Текст обращения')
+    date = models.DateTimeField('Дата обращения')
+
+    class Meta:
+        verbose_name = 'Обращение'
+        verbose_name_plural = 'Обращения'
+
+    def __str__(self):
+        return 'Обращение от ' + str(self.author) + ' [' + str(self.date) + ']'
