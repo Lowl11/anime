@@ -32,6 +32,9 @@ def get_context(module_name):
     elif module_name == 'auth':
         auth_context = Dictionary()
         return auth_context
+    elif module_name == 'feedback':
+        feedback_context = Dictionary()
+        return feedback_context
     else:
         if module_name is None:
             logger.write('Был произведен запрос в безмодульный режим', logger.MODULE)
