@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Anime, ConstantGenre, Genre, AnimeComments
+from .models import Anime, ConstantGenre, Genre, AnimeComment
 
 
 class AnimeAdmin(admin.ModelAdmin):
@@ -10,8 +10,8 @@ class AnimeAdmin(admin.ModelAdmin):
     list_filter = ['season', 'episodes_quantity']
 
 
-class AnimeCommentsAdmin(admin.ModelAdmin):
-    model = AnimeComments
+class AnimeCommentAdmin(admin.ModelAdmin):
+    model = AnimeComment
     list_display = ['id', 'author', 'anime', 'text']
     list_editable = ['author', 'anime', 'text']
 
@@ -28,6 +28,6 @@ class GenreAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Anime, AnimeAdmin)
-admin.site.register(AnimeComments, AnimeCommentsAdmin)
+admin.site.register(AnimeComment, AnimeCommentAdmin)
 admin.site.register(ConstantGenre, ConstantGenreAdmin)
 admin.site.register(Genre, GenreAdmin)

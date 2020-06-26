@@ -23,7 +23,7 @@ class Anime(models.Model):
         return self.title_rus + slash + self.title_foreign + ' [TV-' + str(self.season) + ']'
 
 
-class AnimeComments(models.Model):
+class AnimeComment(models.Model):
     author = models.ForeignKey(Viewer, models.SET_NULL, null = True, blank = True)
     anime = models.ForeignKey(Anime, models.CASCADE)
     text = models.TextField('Текст комментария')

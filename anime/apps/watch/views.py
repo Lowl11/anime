@@ -4,6 +4,7 @@ from django.conf import settings
 # подключение кастомных файлов
 from tools.viewmodel import ViewModel
 from dao.anime import AnimeManager
+from dao.anime_comments import AnimeCommentsManager
 from tools.elastic.manager import ElasticSearchManager
 
 # глобальные объекты и переменные
@@ -32,6 +33,7 @@ def anime_view(reqeust, pk):
     vm.add_path('watch/anime.html')
     vm.add_object('title', 'Смотреть аниме "' + str(anime) + '"')
     vm.add_object('anime', anime)
+    vm.add_object('comments', AnimeCommentsManager.get_all(anime))
     return vm.render(reqeust)
 
 
