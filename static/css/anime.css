@@ -38,6 +38,55 @@
 
 .anime .anime-info .anime-description-text {
     overflow: hidden;
-    max-height: 140px;
+    max-height: 170px;
     text-overflow: ellipsis;
+}
+
+.anime .anime-info .anime-title a.anime-edit-button {
+    padding: 0 10px;
+    margin: 0;
+}
+
+.anime .anime-info .anime-title a.anime-edit-button:hover {
+    color: #fff;
+}
+
+.xsearch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 10px 0;
+}
+
+.xsearch input {
+    width: 60%;
+}
+
+.anime-page {
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.anime-page .description-block {
+    display: flex;
+    flex-direction: row;
+}
+
+.anime-page .anime-info {
+    margin-left: 20px;
+}
+
+.anime-page .anime-cover {
+    width: 300px;
+    height: 400px;
+}
+
+.comments-block {
+    margin-top: 60px;
+}
+
+.comments-block .send-comment-button {
+    margin-top: 10px;
 }

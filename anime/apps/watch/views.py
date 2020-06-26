@@ -1,11 +1,14 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import HttpResponse
 from django.conf import settings
 
 # подключение кастомных файлов
 from tools.viewmodel import ViewModel
 from dao.anime import AnimeManager
 from dao.anime_comments import AnimeCommentsManager
+from dao.auth import AuthManager
 from tools.elastic.manager import ElasticSearchManager
+from tools import utils
+from tools import debugger
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -35,6 +38,21 @@ def anime_view(reqeust, pk):
     vm.add_object('anime', anime)
     vm.add_object('comments', AnimeCommentsManager.get_all(anime))
     return vm.render(reqeust)
+
+
+def comment_post(request):
+    code = 1
+    if request.POST:
+        anime_id = utils.try_get_from_request(request, utils.POST, 'anime_id')
+        text = utils.try_get_from_request(request, utils.POST, 'text')
+
+        author = AuthManager.get_by_id(request.session['viewer_id'])
+        anime = AnimeManager.get_anime_by_id(anime_id)
+        AnimeCommentsManager.create(author, anime, text)
+
+        return HttpResponse(code)
+    code = 0
+    return HttpResponse(code)
 
 
 # отображение аниме принадлежащие определенному жанру

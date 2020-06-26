@@ -5,6 +5,12 @@
     <link rel="stylesheet" href="{% static 'css/anime.css' %}">
 {% endblock %}
 
+
+{% block js %}
+    <script src="{% static 'js/main/anime.js' %}"></script>
+{% endblock %}
+
+
 {% block content %}
 <div class="anime-page">
     <div class="description-block">
@@ -20,5 +26,16 @@
     <div class="watch-block">
         <h1>Watch</h1>
     </div>
+    <div class="comments-block">
+        {% for comment in comments %}
+        <div class="comment">
+            <div class="author">{{ comment.author }}</div>
+            <div class="text">{{ comment.text }}</div>
+        </div>
+        {% endfor %}
+        <textarea placeholder="Ваш комментарий..." class="form-control send-comment-textarea"></textarea>
+        <button class="btn btn-primary send-comment-button">Отправить комментарий</button>
+    </div>
 </div>
+<div id="anime-id" style="display: none;">{{ anime.id }}</div>
 {% endblock %}

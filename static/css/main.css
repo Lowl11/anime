@@ -27,10 +27,67 @@ body {
     background-color: #313131;
     color: #edeef0;
     border-radius: 10px;
+    height: 1000px;
 }
 
 /* Центральный столбец */
 .center-container {
     flex: 5;
     background: #fff;
+}
+
+.text-block {
+    background: rgb(223, 223, 223);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 30px;
+    font-family: 'Ubuntu Condensed', sans-serif;
+}
+
+.success-block {
+    display: none;
+    background: rgb(63, 202, 133);
+}
+
+.error-block {
+    display: none;
+    background: rgb(214, 112, 112);
+}
+
+.page-header {
+    text-align: center;
+    border-top: 2px solid rgb(119, 119, 119);
+    border-bottom: 2px solid rgb(119, 119, 119);
+    margin-top: 10px;
+    padding: 3px 0;
+    font-family: 'Ubuntu Condensed', sans-serif;
+}
+
+.feedback-form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.feedback-form-wrapper .feedback-form {
+    display: block;
+    width: 65%;
+    height: 300px;
+}
+
+.feedback-form-wrapper .btn {
+    margin-top: 10px;
+}
+
+
+
+/* FOOTER */
+
+footer {
+    background: #4a76a8;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 30px;
 }

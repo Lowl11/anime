@@ -12,3 +12,8 @@ $(() => {
     });
 
 });
+
+// handle the errors
+window.onerror = function(errorMessage, url, lineNumber) {
+    logger.Write(errorMessage + ' на линии ' + lineNumber, url);
+}

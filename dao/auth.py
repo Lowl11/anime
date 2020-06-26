@@ -24,7 +24,7 @@ class AuthManager:
             viewer = Viewer.objects.get(pk = id)
         except Exception as error:
             viewer = None
-            logger.write('Поиск пользователя по ID. ' + str(error), logger.AUTH)
+            logger.write('Поиск пользователя по ID[' + str(id) + ']. ' + str(error), logger.AUTH)
 
         return viewer
 
@@ -57,6 +57,7 @@ class AuthManager:
                 login(request, base_user)
                 viewer = Viewer.objects.get(base_user=base_user)
                 request.session['role'] = viewer.role.value
+                request.session['viewer_id'] = viewer.id
                 logger.write('Пользователь ' + base_user.username + ' залогинился', logger.AUTH)
         # end
 
