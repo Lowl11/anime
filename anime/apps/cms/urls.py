@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^elastic/$', views.elastic_view, name = 'cms_elastic_view'),
     url(r'^fm/$', views.fm_view, name = 'cms_fm_view'),
     url(r'^log/$', views.handle_log, name = 'cms_handle_log'),
+    url(r'^appeals/$', views.appeals_view, name = 'cms_appeals_view'),
     url(r'^feedback_send', views.feedback_send, name = 'cms_feedback_send'),
 
     ### Manage Anime ###

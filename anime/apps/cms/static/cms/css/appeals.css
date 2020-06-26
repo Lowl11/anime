@@ -1,0 +1,27 @@
+.appeal-list {
+    display: flex;
+    flex-direction: column;
+}
+
+.appeal-list .appeal {
+    margin: 5px 0;
+    background: #eff0f3;
+    padding: 5px 10px;
+}
+
+.appeal-list .appeal .author {
+    font-weight: bold;
+}
+
+.appeal-list .appeal .author:before {
+    content: "Автор: ";
+    font-weight: normal;
+}
+
+.appeal-list .appeal .text {
+    margin-top: 20px;
+}
+
+.appeal-list .appeal .text b {
+    display: block;
+}

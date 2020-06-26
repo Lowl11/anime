@@ -68,6 +68,15 @@ def fm_view(request):
     return vm.render(request)
 
 
+@login_required(login_url = CONSTANTS['url_signin'])
+def appeals_view(request):
+    vm = ViewModel()
+    vm.add_path('cms/appeals.html')
+    vm.add_object('title', 'Обращения')
+    vm.add_object('appeals', AppealManager.get_all())
+    return vm.render(request)
+
+
 def feedback_send(request):
     code = 1
     if request.POST:

@@ -1,0 +1,21 @@
+{% extends "cms/template.html" %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'cms/css/appeals.css' %}">
+{% endblock %}
+
+{% block content %}
+<h1>Обращения</h1>
+<div class="appeal-list">
+    {% for appeal in appeals %}
+        <div class="appeal">
+            <div class="author">{{ appeal.author }}</div>
+            <div class="text">
+                <b>Текст:</b>
+                {{ appeal.text }}
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
