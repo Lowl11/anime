@@ -26,7 +26,7 @@ es_manager = ElasticSearchManager()
 ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
 ####################################################################
 
-@login_required(login_url = CONSTANTS['url_signin'])
+@login_required(login_url=CONSTANTS['url_signin'])
 def home_view(request):
     # выбираем что грузим первым
     start_from = SETTINGS['cms_start_from']
@@ -36,7 +36,8 @@ def home_view(request):
         return dashboard_view(request)
     return not_found()
 
-@login_required(login_url = CONSTANTS['url_signin'])
+
+@login_required(login_url=CONSTANTS['url_signin'])
 def anime_view(request):
     vm = ViewModel()
     vm.add_path('cms/anime.html')
@@ -44,14 +45,16 @@ def anime_view(request):
     vm.add_object('anime_list', AnimeManager.get_all())
     return vm.render(request)
 
-@login_required(login_url = CONSTANTS['url_signin'])
+
+@login_required(login_url=CONSTANTS['url_signin'])
 def dashboard_view(request):
     vm = ViewModel()
     vm.add_path('cms/dashboard.html')
     vm.add_object('title', 'Dashboard')
     return vm.render(request)
 
-@login_required(login_url = CONSTANTS['url_signin'])
+
+@login_required(login_url=CONSTANTS['url_signin'])
 def elastic_view(request):
     vm = ViewModel()
     vm.add_path('cms/elastic.html')
@@ -60,7 +63,8 @@ def elastic_view(request):
     vm.add_object('status', es_manager.check_status())
     return vm.render(request)
 
-@login_required(login_url = CONSTANTS['url_signin'])
+
+@login_required(login_url=CONSTANTS['url_signin'])
 def fm_view(request):
     vm = ViewModel()
     vm.add_path('cms/fm.html')
@@ -68,7 +72,7 @@ def fm_view(request):
     return vm.render(request)
 
 
-@login_required(login_url = CONSTANTS['url_signin'])
+@login_required(login_url=CONSTANTS['url_signin'])
 def appeals_view(request):
     vm = ViewModel()
     vm.add_path('cms/appeals.html')
@@ -117,7 +121,8 @@ def manage_anime_post(request):
             utils.raise_exception('Не существующее действие (CMS - views - manage_anime_post)')
     return redirect('/cms/')
 
-@login_required(login_url = CONSTANTS['url_signin'])
+
+@login_required(login_url=CONSTANTS['url_signin'])
 def anime_new_view(request):
     vm = ViewModel()
     vm.add_path('cms/manage-anime.html')
@@ -126,7 +131,8 @@ def anime_new_view(request):
     vm.add_object('action', 'create')
     return vm.render(request)
 
-@login_required(login_url = CONSTANTS['url_signin'])
+
+@login_required(login_url=CONSTANTS['url_signin'])
 def manage_anime_view(request, pk):
     vm = ViewModel()
     vm.add_path('cms/manage-anime.html')
@@ -149,11 +155,12 @@ def elastic_delete_index_ajax(request, index_name):
     es_manager.delete_index(index_name)
     return redirect_elastic()
 
+
 def elastic_fill_get(request, data_type):
     logger.write('Пользователь запросил пересоздание актуального индекса "' + str(data_type) + '"', logger.ELASTIC)
     es_manager.create_index(data_type)
     es_manager.fill_index(data_type)
-    
+
     return redirect_elastic()
 
 
@@ -166,12 +173,14 @@ def fm_objects_get(request):
         objects = FileManager.get_objects_array(parent)
     return HttpResponse(json.dumps(objects))
 
+
 def fm_create_folder_get(request):
     if request.GET:
         folder_name = utils.try_get_from_request(request, 'GET', 'name')
         parent_id = utils.try_get_from_request(request, 'GET', 'parent_id')
         FileManager.create_folder(parent_id, folder_name)
     return HttpResponse('')
+
 
 def fm_rename_folder_get(request):
     if request.GET:
@@ -180,11 +189,13 @@ def fm_rename_folder_get(request):
         FileManager.rename_folder(folder_id, folder_name)
     return HttpResponse('')
 
+
 def fm_delete_folder_get(request):
     if request.GET:
         folder_id = utils.try_get_from_request(request, 'GET', 'folder_id')
         FileManager.delete_folder(folder_id)
     return HttpResponse('')
+
 
 def fm_upload_file_post(request):
     if request.POST:
@@ -214,6 +225,7 @@ def create_anime(request):
 
     created.clear_from_empty()
 
+
 def edit_anime(request):
     updated = Dictionary()
     updated.add('title_rus', utils.try_get_from_request(request, 'POST', 'title_rus'))
@@ -228,11 +240,14 @@ def edit_anime(request):
     AnimeManager.update_anime_by_id(anime_id, updated.to_assosiative())
     return anime_id
 
+
 def not_found():
     return starter.not_found_method()
 
+
 def redirect_elastic():
     return redirect('/cms/elastic/')
+
 
 def redirect_manage_anime(anime_id):
     return redirect('/cms/anime/manage/' + str(anime_id))

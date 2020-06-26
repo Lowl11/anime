@@ -41,7 +41,10 @@ class ElasticTalker:
         full_url = self.url + postfix
         data = {}
 
-        response = rest.make_request(full_url, json.dumps(data), 'GET')
+        response, err = rest.make_request(full_url, json.dumps(data), 'GET')
+
+        if err is not None:
+            return False
 
         if response is None:
             return False
