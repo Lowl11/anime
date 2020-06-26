@@ -1,5 +1,7 @@
 from django.db import models
 
+from a_auth.models import Viewer
+
 
 class Anime(models.Model):
     title_rus = models.CharField('Название на русском', max_length = 255)
@@ -19,6 +21,19 @@ class Anime(models.Model):
         if len(self.title_foreign) > 0:
             slash = ' / '
         return self.title_rus + slash + self.title_foreign + ' [TV-' + str(self.season) + ']'
+
+
+class AnimeComments(models.Model):
+    author = models.ForeignKey(Viewer, models.SET_NULL, null = True, blank = True)
+    anime = models.ForeignKey(Anime, models.CASCADE)
+    text = models.TextField('Текст комментария')
+
+    class Meta:
+        verbose_name = 'Комментарий под аниме'
+        verbose_name_plural = 'Комментарии под аниме'
+
+    def __str__(self):
+        return str(self.author.base_user) + ' оставил(а) комментарий под ' + str(self.anime)
 
 
 class ConstantGenre(models.Model):
