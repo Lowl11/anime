@@ -9,9 +9,6 @@ nav {
 nav .logo {
     margin: 60px;
     text-transform: uppercase;
-    font-size: 30px;
-    font-family: 'Frijole', cursive;
-    cursor: pointer;
 }
 
 nav .logo a {
@@ -19,8 +16,8 @@ nav .logo a {
     color: #fff;
 }
 
-nav .logo a:hover {
-    color: #d7e2ec;
+nav .logo a img {
+    cursor: pointer;
 }
 
 nav ul {
@@ -46,7 +43,6 @@ nav ul li a:hover {
 }
 
 nav .auth {
-    width: 100%;
     display: flex;
     justify-content: flex-end;
     position: absolute;
