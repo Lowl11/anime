@@ -26,25 +26,13 @@ class AnimeManager {
                     'anime_id': this.AnimeId
                 };
 
-                $.ajaxSetup({
-                    beforeSend: (xhr, settings) => {
-                        xhr.setRequestHeader("X-CSRFToken", this.GetCSRFToken());
-                    }
-                });
-                $.ajax({
-                    type: "POST",
-                    url: "/watch/comment/",
-                    data: data,
-                    cache: false,
-                    success: (data) => {
-                        if (data == "1") {
-                            window.location.reload();
-                        }
-                    },
-                    error: (jqXHR, exception) => {
-                        logger.HandleException(jqXHR, exception, this.URL, data);
-                    }
-                });
+                let url = "/watch/comment/";
+                let onSuccess = (successData) => {
+                    if (successData == "1")
+                        window.location.reload();
+                };
+
+                Utils.AjaxRequest(url, data, onSuccess);
             }
         });
     }
