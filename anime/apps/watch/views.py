@@ -95,6 +95,10 @@ def display_anime_list(request, anime_list, title, no_image=False):
     vm.add_object('title', title)
     vm.add_object('anime_list', anime_list)
     vm.add_object('no_image', no_image)
+
+    query = utils.try_get_from_request(request, utils.GET, 'query')
+    if query is not None:
+        vm.add_object('query', query)
     return vm.render(request)
 
 

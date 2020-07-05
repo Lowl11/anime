@@ -11,6 +11,11 @@ $(() => {
         }
     });
 
+    let queryPlaceholder = $('.xsearch input:hidden').val();
+    if (queryPlaceholder.length > 0) {
+        xsearch.val(queryPlaceholder);
+    }
+
 });
 
 // handle the errors

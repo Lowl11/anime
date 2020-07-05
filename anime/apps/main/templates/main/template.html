@@ -53,6 +53,7 @@
                 {% if user is not None %}
                     {% if module == 'watch' %}
                     <div class="xsearch">
+                        <input type="hidden" name="query-placeholder" value="{{ query }}">
                         {{ xsearch_form }}
                     </div>
                     {% endif %}
