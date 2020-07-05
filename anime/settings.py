@@ -1,8 +1,7 @@
-### Django 3.0.5
+""" Django 3.0.7 """
 
-### Подключенные библиотеки
 import os, sys
-from . import starter
+from . import starter, config
 
 ### Базовые и первые настройки
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -17,11 +16,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 ### Подключение более сложных настроек
 # Список подключенных приложений
 INSTALLED_APPS = [
-    'grappelli', # для более красивой админки Django !!! Обязательно перед django.contrib.admin
+    'grappelli',  # для более красивой админки Django !!! Обязательно перед django.contrib.admin
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -67,7 +65,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'anime.wsgi.application'
 
-
 # Подключение к базе данных
 DATABASES = {
     'default': {
@@ -79,7 +76,6 @@ DATABASES = {
         'PORT': '5432'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -99,15 +95,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Дополнительные настройки связанные с локализацией
 LANGUAGE_CODE = 'ru-ru'
 TIME_ZONE = 'Asia/Almaty'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
-
 
 # Путь к статическим файлам
 STATIC_URL = '/static/'
@@ -125,11 +118,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Глобальный массив кастомных настроек используемых по всему проекту
 A_SETTINGS = starter.get_settings()
 A_SETTINGS['debug'] = False  # variable == DEBUG
+A_SETTINGS['config'] = config.DEBUG
 A_SETTINGS['media_root'] = MEDIA_ROOT
 
 A_CONSTANTS = {
     'title_not_found': 'Ошибка 404 - Страница не найдена',
-    
+
     'module_name_watch': 'watch',
     'module_name_main': 'main',
     'module_name_auth': 'a_auth',

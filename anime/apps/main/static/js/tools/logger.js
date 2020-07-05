@@ -33,6 +33,9 @@ class Logger {
             'url': url
         };
 
+        if (ProjectSettings.Environemnt == Environments.DEBUG)
+            this.DebugWrite(sendData.message);
+
         $.ajaxSetup({
             beforeSend: (xhr, settings) => {
                 xhr.setRequestHeader("X-CSRFToken", this.GetCSRFToken());
@@ -46,6 +49,10 @@ class Logger {
             success: function(data) {},
             error: function() {}
         });
+    }
+
+    DebugWrite(message) {
+        console.log("Message:", message);
     }
 
     GetCSRFToken() {

@@ -86,6 +86,10 @@
     </div>
 
     <!-- Скрипты -->
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script>
+        ProjectSettings.SetEnvironment("{{ environment }}");
+    </script>
     <script src="{% static 'js/libs/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/libs/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/tools/logger.js' %}"></script>
