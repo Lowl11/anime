@@ -46,9 +46,11 @@ nav ul li a:hover {
 }
 
 nav .auth {
-    width: 30%;
+    width: 100%;
     display: flex;
     justify-content: flex-end;
+    position: absolute;
+    right: 5px;
 }
 
 nav .auth ul li a {
