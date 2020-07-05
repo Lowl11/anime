@@ -134,7 +134,7 @@ class AnimeManager:
                 'season': str(anime.season),
                 'episodes_quantity': str(anime.episodes_quantity),
                 'start_date': str(anime.start_date),
-                'image': str(anime.image.url),
+                'image': str(anime.image),
                 'tags': anime.tags
             }
             objects_list.append(data)
