@@ -28,7 +28,7 @@
         <div class="container-fluid">
             <!-- Навигация по сайту -->
             <nav>
-                <div class="logo"><a href="{% url 'home_view' %}">Anime</a></div>
+                <div class="logo"><a href="{% url 'home_view' %}"><img src="{% static 'img/logo.png' %}" alt="Anime"></a></div>
                 <ul>
                     {% for link in navbar_links %}
                     <li><a href="{{ link.url }}">{{ link.name }}</a></li>
