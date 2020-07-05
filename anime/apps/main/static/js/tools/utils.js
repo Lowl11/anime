@@ -22,7 +22,7 @@ class Utils {
                 onSuccess(successData);
             },
             error: (jqXHR, exception) => {
-                logger.HandleException(jqXHR, exception, this.URL, data);
+                logger.HandleException(jqXHR, exception, url, data);
                 if (onError != null)
                     onError();
             }
