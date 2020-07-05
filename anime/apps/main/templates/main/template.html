@@ -7,6 +7,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ title }} - Anime</title>
 
+    <script src="{% static 'js/settings.js' %}"></script>
+    <script>
+        ProjectSettings.SetEnvironment("{{ environment }}");
+    </script>
+    <script src="{% static 'js/libs/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'js/tools/logger.js' %}"></script>
+
     <!-- Шрифты -->
     <link rel="stylesheet" href="{% static 'fonts/Frijole-Regular.ttf' %}">
     <link rel="stylesheet" href="{% static 'fonts/UbuntuCondensed-Regular.ttf' %}">
@@ -86,13 +93,7 @@
     </div>
 
     <!-- Скрипты -->
-    <script src="{% static 'js/settings.js' %}"></script>
-    <script>
-        ProjectSettings.SetEnvironment("{{ environment }}");
-    </script>
-    <script src="{% static 'js/libs/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'js/libs/bootstrap.min.js' %}"></script>
-    <script src="{% static 'js/tools/logger.js' %}"></script>
     <script src="{% static 'js/tools/utils.js' %}"></script>
     <script src="{% static 'js/main/main.js' %}"></script>
     {% block js %}

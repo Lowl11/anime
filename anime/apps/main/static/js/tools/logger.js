@@ -74,8 +74,8 @@ class Logger {
 
 }
 
-var logger;
+var logger = new Logger();
 
-$(function() {
-    logger = new Logger();
-});
+window.onerror = function(errorMessage, url, lineNumber) {
+    logger.Write(errorMessage + ' на линии ' + lineNumber, url);
+}
