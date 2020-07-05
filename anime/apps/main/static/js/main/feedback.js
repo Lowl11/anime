@@ -25,29 +25,15 @@ class Feedback {
     SendForm() {
         let data = this.collectData();
         let url = '/cms/feedback_send/';
+        let onSuccess = (successData) => {
+            this.HideElements();
+            if (successData == "1")
+                this.SuccessBlock.show();
+            else
+                this.ErrorBlock.show();
+        };
 
-        
-        $.ajaxSetup({
-            beforeSend: (xhr, settings) => {
-                xhr.setRequestHeader("X-CSRFToken", this.GetCSRFToken());
-            }
-        });
-        $.ajax({
-            type: "POST",
-            url: url,
-            data: data,
-            cache: false,
-            success: (data) => {
-                this.HideElements();
-                if (data == "1")
-                    this.SuccessBlock.show();
-                else
-                    this.ErrorBlock.show();
-            },
-            error: (jqXHR, exception) => {
-                logger.HandleException(jqXHR, exception, url, data);
-            }
-        });
+        Utils.AjaxRequest(url, data, onSuccess);
     }
 
     HideElements() {
@@ -61,23 +47,6 @@ class Feedback {
             'text': text
         };
         return data;
-    }
-
-    GetCSRFToken() {
-        let name = 'csrftoken';
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            let cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                let cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
     }
 
 }
