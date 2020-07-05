@@ -14,7 +14,7 @@ SECRET_KEY = '#i)f3^l)5e(uz%44z($mqacm2v%#5agz=rho(@uczoh!(%wgl-'
 # Трансформер
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 ### Подключение более сложных настроек
 # Список подключенных приложений
