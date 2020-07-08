@@ -55,6 +55,17 @@ def comment_post(request):
     return HttpResponse(code)
 
 
+def delete_comment_post(request):
+    code = 1
+    if request.POST:
+        comment_id = utils.try_get_from_request(request, utils.POST, 'id')
+        if not AnimeCommentsManager.delete(comment_id):
+            code = 0
+        return HttpResponse(code)
+    code = 0
+    return HttpResponse(code)
+
+
 # отображение аниме принадлежащие определенному жанру
 def genre_view(request, name):
     title = 'Аниме по жанру "' + name + '"'

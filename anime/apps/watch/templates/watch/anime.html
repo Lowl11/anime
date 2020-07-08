@@ -30,14 +30,14 @@
     </div>
     <div class="comments-block">
         {% for comment in comments %}
-        <div class="comment">
+        <div class="comment" id="comment{{ comment.id }}">
             <div class="author-image"><img src="{{ comment.author.image.url }}" alt=""></div>
             <div class="comment-info">
                 <div class="author">{{ comment.author }}</div>
                 <div class="text">{{ comment.text }}</div>
                 <div class="publish-date">{{ comment.publish_date }}</div>
             </div>
-            {% if role == 3 %}
+            {% if role == 3 or comment.author.base_user.id is user.id %}
             <div class="comment-management">
                 <img src="{% static 'img/icons/delete.png' %}" alt="Удалить комментарий" class="delete-comment" data-id="{{ comment.id }}">
             </div>

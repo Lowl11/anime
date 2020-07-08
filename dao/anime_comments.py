@@ -2,6 +2,7 @@ from datetime import datetime
 
 from watch.models import Anime
 from watch.models import AnimeComment
+from tools import logger
 
 
 class AnimeCommentsManager:
@@ -9,6 +10,16 @@ class AnimeCommentsManager:
     def get_all(anime):
         comments = AnimeComment.objects.filter(anime = anime)
         return comments
+
+    @staticmethod
+    def delete(pk):
+        try:
+            comment = AnimeComment.objects.get(pk=pk)
+            comment.delete()
+        except Exception as error:
+            logger.write('Не получилось удалить комментарий с ID: ' + str(pk) + '. Message: ' + str(error), logger.HTTP)
+            return False
+        return True
 
     @staticmethod
     def create(author, anime, text):
