@@ -11,10 +11,15 @@ class BaseDaoManager:
         self._preparation_method = preparation_method
 
     def get_all(self):
-        record_list = self._model_type.objects.all()
-        return self._preparation_method(record_list)
+        records = self._model_type.objects.all()
+        return self.prepare_records(records)
 
     def get_by_id(self, pk: int):
         record = self._model_type.objects.get(pk=pk)
         return record
+
+    def prepare_records(self, records):
+        if self._preparation_method is None:
+            return records
+        return self._preparation_method(records)
 

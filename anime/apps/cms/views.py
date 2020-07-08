@@ -20,6 +20,8 @@ from tools import debugger
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 es_manager = ElasticSearchManager()
+appeal_manager = AppealManager()
+anime_manager = AnimeManager()
 
 
 ####################################################################
@@ -42,7 +44,7 @@ def anime_view(request):
     vm = ViewModel()
     vm.add_path('cms/anime.html')
     vm.add_object('title', 'Аниме')
-    vm.add_object('anime_list', AnimeManager.get_all())
+    vm.add_object('anime_list', anime_manager.get_all())
     return vm.render(request)
 
 
@@ -77,7 +79,7 @@ def appeals_view(request):
     vm = ViewModel()
     vm.add_path('cms/appeals.html')
     vm.add_object('title', 'Обращения')
-    vm.add_object('appeals', AppealManager.get_all())
+    vm.add_object('appeals', appeal_manager.get_all())
     return vm.render(request)
 
 
@@ -138,7 +140,7 @@ def manage_anime_view(request, pk):
     vm.add_path('cms/manage-anime.html')
     vm.add_object('title', 'Редактирование аниме')
 
-    anime = AnimeManager.get_anime_by_id(pk)
+    anime = anime_manager.get_by_id(pk)
     if anime is None:
         return not_found()
     vm.add_object('anime', anime)
