@@ -28,8 +28,8 @@ def page_view(request):
 
 
 # Отображение одного аниме
-def anime_view(reqeust, pk):
-    anime = AnimeManager.get_anime_by_id(pk)
+def anime_view(request, pk):
+    anime = anime_manager.get_by_id(pk)
     if not anime:
         return not_found()
 
@@ -38,7 +38,7 @@ def anime_view(reqeust, pk):
     vm.add_object('title', 'Смотреть аниме "' + str(anime) + '"')
     vm.add_object('anime', anime)
     vm.add_object('comments', AnimeCommentsManager.get_all(anime))
-    return vm.render(reqeust)
+    return vm.render(request)
 
 
 def comment_post(request):
