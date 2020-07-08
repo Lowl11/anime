@@ -2,6 +2,7 @@
     margin: 20px 0;
     display: flex;
     flex-direction: row;
+    position: relative;
 }
 
 .comment .author-image,
@@ -32,4 +33,16 @@
     right: 0;
     top: 0;
     color: rgb(131, 131, 131);
+}
+
+.comment .comment-management {
+    position: absolute;
+    right: 5px;
+    top: 25px;
+}
+
+.comment .comment-management > * {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
 }

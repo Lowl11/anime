@@ -37,6 +37,11 @@
                 <div class="text">{{ comment.text }}</div>
                 <div class="publish-date">{{ comment.publish_date }}</div>
             </div>
+            {% if role == 3 %}
+            <div class="comment-management">
+                <img src="{% static 'img/icons/delete.png' %}" alt="Удалить комментарий" class="delete-comment" data-id="{{ comment.id }}">
+            </div>
+            {% endif %}
         </div>
         {% endfor %}
         <textarea placeholder="Ваш комментарий..." class="form-control send-comment-textarea"></textarea>
