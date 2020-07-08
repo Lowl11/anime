@@ -3,6 +3,7 @@ class CommentManager {
     CommentSendButton = $('.send-comment-button');
     CommentTextArea = $('.send-comment-textarea');
     DeleteCommentButton = $('.delete-comment');
+    CommentsBlock = $('.comments-block');
 
     Data = {};
     CreateUrl = "";
@@ -19,6 +20,8 @@ class CommentManager {
     }
 
     BindActions() {
+        this.DeleteCommentButton = $('.delete-comment');
+
         // Отправка комментария
         this.CommentSendButton.off('click.SendComment');
         this.CommentSendButton.on('click.SendComment', () => {
@@ -27,11 +30,13 @@ class CommentManager {
                 this.Data['text'] = text;
 
                 let onSuccess = (successData) => {
-                    if (successData == "1")
-                        window.location.reload();
+                    if (successData != "1") {
+                        this.CreateVisualComment(successData);
+                        setTimeout(() => { this.BindActions(); }, 0);
+                    }
                 };
 
-                Utils.AjaxRequest(this.Url, this.Data, onSuccess);
+                Utils.AjaxRequest(this.CreateUrl, this.Data, onSuccess);
             }
         });
 
@@ -50,6 +55,24 @@ class CommentManager {
                 Utils.AjaxRequest(this.DeleteUrl, data, onSuccess);
             }
         });
+    }
+
+    CreateVisualComment(commentData) {
+        let commentsBlockHtml = this.CommentsBlock.html();
+        let html = '<div class="comment" id="comment"' + commentData.id + '">';
+        html += '<div class="author-image"><img src="' + commentData.author.image_url + '" alt=""></div>';
+        html += '<div class="comment-info">';
+        html += '<div class="author">' + commentData.author.username + '</div>';
+        html += '<div class="text">' + commentData.text + '</div>';
+        html += '<div class="publish-date">' + commentData.publish_date + '</div>';
+        html += '</div>';
+        if (commentData.author.role == 3) {
+            html += '<div class="comment-management">';
+            html += '<img src="/static/img/icons/delete.png" alt="Удалить комментарий" class="delete-comment" data-id="' + commentData.id + '">';
+            html += '</div>';
+        }
+        html += '</div>';
+        this.CommentsBlock.html(html + commentsBlockHtml);
     }
 
     DeleteVisualComment(id) {

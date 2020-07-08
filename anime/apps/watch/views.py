@@ -1,5 +1,6 @@
 from django.shortcuts import HttpResponse
 from django.conf import settings
+import json
 
 # подключение кастомных файлов
 from tools.viewmodel import ViewModel
@@ -41,16 +42,27 @@ def anime_view(reqeust, pk):
 
 
 def comment_post(request):
-    code = 1
     if request.POST:
         anime_id = utils.try_get_from_request(request, utils.POST, 'anime_id')
         text = utils.try_get_from_request(request, utils.POST, 'text')
 
         author = AuthManager.get_by_id(request.session['viewer_id'])
         anime = AnimeManager.get_anime_by_id(anime_id)
-        AnimeCommentsManager.create(author, anime, text)
+        comment = AnimeCommentsManager.create(author, anime, text)
 
-        return HttpResponse(code)
+        obj = {
+            'id': comment.id,
+            'author': {
+                'id': str(comment.author.id),
+                'image_url': str(comment.author.image.url),
+                'username': str(comment.author.base_user.username),
+                'role': str(comment.author.role.value)
+            },
+            'publish_date': str(comment.publish_date),
+            'text': comment.text
+        }
+        comment_json = json.dumps(obj)
+        return HttpResponse(comment_json, content_type='application/json')
     code = 0
     return HttpResponse(code)
 

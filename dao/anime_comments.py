@@ -9,7 +9,7 @@ class AnimeCommentsManager:
     @staticmethod
     def get_all(anime):
         comments = AnimeComment.objects.filter(anime = anime)
-        return comments
+        return reversed(comments)
 
     @staticmethod
     def delete(pk):
@@ -29,3 +29,4 @@ class AnimeCommentsManager:
         comment.text = text
         comment.publish_date = datetime.now()
         comment.save()
+        return comment
