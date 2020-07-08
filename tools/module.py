@@ -12,6 +12,8 @@ from dao.cms_main_info import CmsMainInfoManager
     ModuleHelper - вспомогающий класс служащий инструменто помощи для работы с подулями
 """
 
+cms_navigation_links_manager = CmsNavigationLinksManager()
+
 
 def get_context(module_name):
     """" Возвращает контекст в зависимости от названия модуля """
@@ -26,7 +28,7 @@ def get_context(module_name):
         return watch_context
     elif module_name == 'cms':
         cms_context = Dictionary()
-        cms_context.add('cms_navigation_links', CmsNavigationLinksManager.get_links_by_order())
+        cms_context.add('cms_navigation_links', cms_navigation_links_manager.get_all())
         cms_context.add('notifications', CmsMainInfoManager.get_notifications())
         return cms_context
     elif module_name == 'auth':

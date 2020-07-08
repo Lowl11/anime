@@ -12,6 +12,7 @@ from tools import debugger
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
+
 class CmsMainInfoManager:
     @staticmethod
     def get_notifications():
