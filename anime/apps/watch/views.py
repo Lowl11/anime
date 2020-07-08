@@ -2,6 +2,7 @@ from django.shortcuts import HttpResponse
 from django.conf import settings
 from datetime import datetime
 import json
+import pytz
 
 # подключение кастомных файлов
 from dao.anime import AnimeManager
@@ -50,10 +51,7 @@ def comment_post(request):
         anime = AnimeManager.get_anime_by_id(anime_id)
         comment = AnimeCommentsManager.create(author, anime, text)
 
-        need_datetime_format = '%d %B %Y %H:%M'
-        current_datetime_format = '%Y-%m-%d %H:%M:%S.%f'
-        publish_date = datetime.strptime(str(comment.publish_date), current_datetime_format)
-        publish_date = datetime.strftime(publish_date, need_datetime_format)
+        publish_date = comment.publish_date.astimezone(pytz.timezone("Asia/Almaty")).strftime("%d %B %Y %H:%M")
 
         obj = {
             'id': comment.id,

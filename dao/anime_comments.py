@@ -1,4 +1,4 @@
-from datetime import datetime
+from django.utils import timezone
 
 from watch.models import Anime
 from watch.models import AnimeComment
@@ -27,6 +27,6 @@ class AnimeCommentsManager:
         comment.author = author
         comment.anime = anime
         comment.text = text
-        comment.publish_date = datetime.now()
+        comment.publish_date = timezone.now()
         comment.save()
         return comment
