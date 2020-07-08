@@ -1,5 +1,8 @@
 class Logger {
 
+    /**
+     * Отлавливание ошибок запросов
+     */
     HandleException(jqueryXHR, exception, url, data = null) {
         let msg = '';
         if (jqueryXHR.status === 0) {
@@ -18,19 +21,23 @@ class Logger {
         } else {
             msg = 'Неизвестная ошибка: \n' + jqueryXHR.responseText;
         }
-        this.Write(msg, url, data);
+        msg += '\nRequest URL: ' + url;
+        this.Write(msg, data);
     }
     
-    Write(message, url, data = null) {
+    /**
+     * Отправка сообщения (Info, Warn, Error)
+     */
+    Write(message, data = null) {
         if (data == null)
-            data = 0;
+            data = "empty";
         else
             data = JSON.stringify(data);
         
         let sendData = {
             'message': message,
             'data': data,
-            'url': url
+            'url': window.location.href
         };
 
         if (ProjectSettings.Environemnt == Environments.DEBUG)
@@ -50,7 +57,7 @@ class Logger {
             error: function() {}
         });
     }
-
+    
     DebugWrite(message) {
         console.log("Message:", message);
     }
@@ -77,5 +84,5 @@ class Logger {
 var logger = new Logger();
 
 window.onerror = function(errorMessage, url, lineNumber) {
-    logger.Write(errorMessage + ' на линии ' + lineNumber, url);
+    logger.Write(errorMessage + ' на линии ' + lineNumber);
 }

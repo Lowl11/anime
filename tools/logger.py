@@ -1,7 +1,12 @@
 import textwrap
+from django.conf import settings
 
 from tools import debugger
 from tools import utils
+
+# глобальные объекты и переменные
+SETTINGS = settings.A_SETTINGS
+CONSTANTS = settings.A_CONSTANTS
 
 
 HTTP = 1
@@ -15,7 +20,8 @@ FRONT = 7
 
 def write(message, logger_type):
     title, file_name = define(logger_type)
-    debugger.write(message, title)
+    if SETTINGS['debug']:
+        debugger.write(message, title)
     write_to_file(message, title, file_name)
 
 

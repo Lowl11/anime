@@ -98,7 +98,6 @@ def handle_log(request):
     if request.POST:
         message = utils.try_get_from_request(request, 'POST', 'message')
         send_data = utils.try_get_from_request(request, 'POST', 'data')
-        debugger.write(send_data)
         url = utils.try_get_from_request(request, 'POST', 'url')
         log_text = message + ' | URL: ' + url
         if send_data is not None:
