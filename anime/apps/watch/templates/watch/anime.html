@@ -3,6 +3,7 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/anime.css' %}">
+    <link rel="stylesheet" href="{% static 'css/comment.css' %}">
 {% endblock %}
 
 
@@ -30,8 +31,11 @@
     <div class="comments-block">
         {% for comment in comments %}
         <div class="comment">
-            <div class="author">{{ comment.author }}</div>
-            <div class="text">{{ comment.text }}</div>
+            <div class="author-image"><img src="{{ comment.author.image.url }}" alt=""></div>
+            <div class="comment-info">
+                <div class="author">{{ comment.author }}</div>
+                <div class="text">{{ comment.text }}</div>
+            </div>
         </div>
         {% endfor %}
         <textarea placeholder="Ваш комментарий..." class="form-control send-comment-textarea"></textarea>
