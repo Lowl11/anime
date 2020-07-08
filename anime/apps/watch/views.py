@@ -8,7 +8,7 @@ from dao.anime_comments import AnimeCommentsManager
 from dao.auth import AuthManager
 from tools.elastic.manager import ElasticSearchManager
 from tools import utils
-from tools import debugger
+from tools import logger
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -50,6 +50,11 @@ def comment_post(request):
 
         author = auth_manager.get_by_id(request.session['viewer_id'])
         anime = anime_manager.get_by_id(anime_id)
+        if author is None or anime is None:
+            logger.write('В методе comment_post() отсутствует author или anime. Author = ' + str(author) + ' | '
+                         + str(anime), logger.DAO)
+            code = 0
+            return HttpResponse(code)
         AnimeCommentsManager.create(author, anime, text)
 
         return HttpResponse(code)

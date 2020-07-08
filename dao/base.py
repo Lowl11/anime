@@ -23,6 +23,7 @@ class BaseDaoManager:
             record = self._model_type.objects.get(pk=pk)
         except Exception as error:
             logger.write('Ошибка поиска модели "' + str(self._model_type) + '". Сообщение: ' + str(error), logger.DAO)
+            record = None
         return record
 
     @staticmethod
