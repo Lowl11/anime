@@ -88,7 +88,7 @@ def feedback_send(request):
     if request.POST:
         try:
             text = utils.try_get_from_request(request, 'POST', 'text')
-            AppealManager.create(text, request.user)
+            appeal_manager.create(text, request.user)
         except Exception as error:
             code = 2
             logger.write(str(error), logger.MODULE)

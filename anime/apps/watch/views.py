@@ -15,6 +15,7 @@ SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 es_manager = ElasticSearchManager()
 anime_manager = AnimeManager()
+auth_manager = AuthManager()
 
 
 ####################################################################
@@ -47,8 +48,8 @@ def comment_post(request):
         anime_id = utils.try_get_from_request(request, utils.POST, 'anime_id')
         text = utils.try_get_from_request(request, utils.POST, 'text')
 
-        author = AuthManager.get_by_id(request.session['viewer_id'])
-        anime = AnimeManager.get_anime_by_id(anime_id)
+        author = auth_manager.get_by_id(request.session['viewer_id'])
+        anime = anime_manager.get_by_id(anime_id)
         AnimeCommentsManager.create(author, anime, text)
 
         return HttpResponse(code)

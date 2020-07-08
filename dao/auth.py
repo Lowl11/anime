@@ -4,6 +4,7 @@ from django.conf import settings
 
 # Подключение кастомных классов
 from a_auth.models import Viewer, Role  # it's okay, cause apps moved from root folder
+from dao.base import BaseDaoManager
 from tools import logger
 
 # глобальные объекты и переменные
@@ -11,22 +12,15 @@ SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
 
-class AuthManager:
+class AuthManager(BaseDaoManager):
     """ AuthManager - инструмент для авторизации, регистрации и выхода """
+
+    def __init__(self):
+        super(AuthManager, self).__init__(Viewer)
 
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
-
-    @staticmethod
-    def get_by_id(id):
-        try:
-            viewer = Viewer.objects.get(pk = id)
-        except Exception as error:
-            viewer = None
-            logger.write('Поиск пользователя по ID[' + str(id) + ']. ' + str(error), logger.AUTH)
-
-        return viewer
 
     @staticmethod
     def get_by_base_user(base_user):
