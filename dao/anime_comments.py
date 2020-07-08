@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from watch.models import Anime
 from watch.models import AnimeComment
 
@@ -14,4 +16,5 @@ class AnimeCommentsManager:
         comment.author = author
         comment.anime = anime
         comment.text = text
+        comment.publish_date = datetime.now()
         comment.save()
