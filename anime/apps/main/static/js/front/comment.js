@@ -24,39 +24,58 @@ class CommentManager {
 
         // Отправка комментария
         this.CommentSendButton.off('click.SendComment');
-        this.CommentSendButton.on('click.SendComment', () => {
-            let text = this.CommentTextArea.val();
-            if (text.length > this.MinLength) {
-                this.Data['text'] = text;
+        this.CommentSendButton.on('click.SendComment', () => { this.CreateComment(); });
 
-                let onSuccess = (successData) => {
-                    if (successData != "1") {
-                        this.CreateVisualComment(successData);
-                        setTimeout(() => { this.BindActions(); }, 0);
-                    }
-                };
-
-                Utils.AjaxRequest(this.CreateUrl, this.Data, onSuccess);
+        let pressMap = { 17: false, 13: false };
+        // Отправка комментария с помощью CTRL + ENTER
+        this.CommentTextArea.off('keydown.SendComment');
+        this.CommentTextArea.on('keydown.SendComment', (e) => {
+            if (e.keyCode in pressMap) {
+                pressMap[e.keyCode] = true;
+                if (pressMap[17] && pressMap[13])
+                    this.CreateComment();
             }
+        }).keyup((e) => { // Отмена нажатия на клавишу
+            if (e.keyCode in pressMap)
+                pressMap[e.keyCode] = false;
         });
 
         // Удаление комментария
         this.DeleteCommentButton.off('click.DeleteComment');
-        this.DeleteCommentButton.on('click.DeleteComment', (e) => {
-            let ask = confirm("Вы точно хотите удалить данный комментарий?");
-            if (ask) {
-                let id = $(e.currentTarget).data('id');
-                let data = { 'id': id };
-                let onSuccess = (successData) => {
-                    if (successData == "1") {
-                        this.DeleteVisualComment(id);
-                    }
-                };
-                Utils.AjaxRequest(this.DeleteUrl, data, onSuccess);
-            }
-        });
+        this.DeleteCommentButton.on('click.DeleteComment', (e) => { this.DeleteComment(e); });
     }
 
+    CreateComment() {
+        let text = this.CommentTextArea.val();
+        if (text.length > this.MinLength) {
+            this.Data['text'] = text;
+
+            let onSuccess = (successData) => {
+                if (successData != "1") {
+                    this.CreateVisualComment(successData);
+                    setTimeout(() => { this.BindActions(); }, 0);
+                }
+            };
+
+            Utils.AjaxRequest(this.CreateUrl, this.Data, onSuccess);
+        }
+    }
+
+    DeleteComment(e) {
+        let ask = confirm("Вы точно хотите удалить данный комментарий?");
+        if (ask) {
+            let id = $(e.currentTarget).data('id');
+            let data = { 'id': id };
+            let onSuccess = (successData) => {
+                if (successData == "1") {
+                    this.DeleteVisualComment(id);
+                }
+            };
+            Utils.AjaxRequest(this.DeleteUrl, data, onSuccess);
+        }
+    }
+
+    /** Создание визуального вида комментария */
     CreateVisualComment(commentData) {
         let commentsBlockHtml = this.CommentsBlock.html();
         let html = '<div class="comment" id="comment"' + commentData.id + '">';
@@ -75,6 +94,7 @@ class CommentManager {
         this.CommentsBlock.html(html + commentsBlockHtml);
     }
 
+    /** Удаление визуального вида комментария */
     DeleteVisualComment(id) {
         let commentElement = $('#comment' + id);
         commentElement.remove();
