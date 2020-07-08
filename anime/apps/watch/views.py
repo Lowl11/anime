@@ -1,15 +1,15 @@
 from django.shortcuts import HttpResponse
 from django.conf import settings
+from datetime import datetime
 import json
 
 # подключение кастомных файлов
-from tools.viewmodel import ViewModel
 from dao.anime import AnimeManager
 from dao.anime_comments import AnimeCommentsManager
 from dao.auth import AuthManager
+from tools.viewmodel import ViewModel
 from tools.elastic.manager import ElasticSearchManager
-from tools import utils
-from tools import debugger
+from tools import utils, debugger, logger
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -50,6 +50,11 @@ def comment_post(request):
         anime = AnimeManager.get_anime_by_id(anime_id)
         comment = AnimeCommentsManager.create(author, anime, text)
 
+        need_datetime_format = '%d %B %Y %H:%M'
+        current_datetime_format = '%Y-%m-%d %H:%M:%S.%f'
+        publish_date = datetime.strptime(str(comment.publish_date), current_datetime_format)
+        publish_date = datetime.strftime(publish_date, need_datetime_format)
+
         obj = {
             'id': comment.id,
             'author': {
@@ -58,7 +63,7 @@ def comment_post(request):
                 'username': str(comment.author.base_user.username),
                 'role': str(comment.author.role.value)
             },
-            'publish_date': str(comment.publish_date),
+            'publish_date': str(publish_date),
             'text': comment.text
         }
         comment_json = json.dumps(obj)
