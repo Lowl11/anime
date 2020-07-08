@@ -7,6 +7,7 @@ from watch.models import Anime
 from .genre import GenreManager
 from tools.dict import Dictionary
 from tools import forms as FormManager
+from .base import BaseDaoManager
 from tools import debugger
 
 # глобальные объекты и переменные
@@ -14,18 +15,16 @@ SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
 
-class AnimeManager:
+class AnimeManager(BaseDaoManager):
     """ AnimeManager - управление записями аниме """
+
+    def __init__(self):
+        preparation_method = AnimeManager.prepare_anime_list
+        super(AnimeManager, self).__init__(Anime, preparation_method)
 
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
-
-    @staticmethod
-    def get_all():
-        """ возвращает все аниме """
-        anime_list = Anime.objects.all()
-        return AnimeManager.prepare_anime_list(anime_list)
 
     @staticmethod
     def get_by_genre(genre_name):

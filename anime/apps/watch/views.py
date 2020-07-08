@@ -14,6 +14,7 @@ from tools import debugger
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 es_manager = ElasticSearchManager()
+anime_manager = AnimeManager()
 
 
 ####################################################################
@@ -23,7 +24,7 @@ es_manager = ElasticSearchManager()
 # Отображение списка аниме
 def page_view(request):
     title = 'Смотреть аниме'
-    return display_anime_list(request, AnimeManager.get_all(), title)
+    return display_anime_list(request, anime_manager.get_all(), title)
 
 
 # Отображение одного аниме
