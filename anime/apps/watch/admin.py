@@ -12,8 +12,8 @@ class AnimeAdmin(admin.ModelAdmin):
 
 class AnimeCommentAdmin(admin.ModelAdmin):
     model = AnimeComment
-    list_display = ['id', 'author', 'anime', 'text']
-    list_editable = ['author', 'anime', 'text']
+    list_display = ['id', 'author', 'anime', 'text', 'publish_date']
+    list_editable = ['author', 'anime', 'text', 'publish_date']
 
 
 class ConstantGenreAdmin(admin.ModelAdmin):

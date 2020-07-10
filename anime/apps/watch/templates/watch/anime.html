@@ -3,11 +3,13 @@
 
 {% block css %}
     <link rel="stylesheet" href="{% static 'css/anime.css' %}">
+    <link rel="stylesheet" href="{% static 'css/comment.css' %}">
 {% endblock %}
 
 
 {% block js %}
-    <script src="{% static 'js/main/anime.js' %}"></script>
+    <script src="{% static 'js/front/comment.js' %}"></script>
+    <script src="{% static 'js/front/anime.js' %}"></script>
 {% endblock %}
 
 
@@ -28,9 +30,18 @@
     </div>
     <div class="comments-block">
         {% for comment in comments %}
-        <div class="comment">
-            <div class="author">{{ comment.author }}</div>
-            <div class="text">{{ comment.text }}</div>
+        <div class="comment" id="comment{{ comment.id }}">
+            <div class="author-image"><img src="{{ comment.author.image.url }}" alt=""></div>
+            <div class="comment-info">
+                <div class="author">{{ comment.author }}</div>
+                <div class="text">{{ comment.text }}</div>
+                <div class="publish-date">{{ comment.publish_date }}</div>
+            </div>
+            {% if role == 3 or comment.author.base_user.id is user.id %}
+            <div class="comment-management">
+                <img src="{% static 'img/icons/delete.png' %}" alt="Удалить комментарий" class="delete-comment" data-id="{{ comment.id }}">
+            </div>
+            {% endif %}
         </div>
         {% endfor %}
         <textarea placeholder="Ваш комментарий..." class="form-control send-comment-textarea"></textarea>
