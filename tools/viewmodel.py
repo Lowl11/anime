@@ -12,6 +12,8 @@ from . import route
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
+navigation_links_manager = NavigationLinksManager()
+
 
 class ViewModel:
     """ Видмодель - класс вызывающийся при каждом рендеринге страницы, вызывается на каждом Action методе """
@@ -64,7 +66,7 @@ class ViewModel:
         self.add_module_context(module_name)
 
         # добавление пунктов навигационной панели
-        self.add_object('navbar_links', NavigationLinksManager.get_links_by_order())
+        self.add_object('navbar_links', navigation_links_manager.get_all())
 
         # добавление всех жанров аниме
         self.add_object('genre_list', GenreManager.get_genres())
