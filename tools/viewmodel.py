@@ -46,6 +46,9 @@ class ViewModel:
     def pre_render_settings(self, request):
         """ настройки / проверки перед рендерингом абсолютно каждой страницы """
 
+        # переменная на тестовое окружение
+        self.add_object('environment', SETTINGS['config'])
+
         # Проверка на залогиненность юзера
         user = request.user
         if user.is_anonymous:

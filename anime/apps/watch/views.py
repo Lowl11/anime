@@ -1,14 +1,16 @@
 from django.shortcuts import HttpResponse
 from django.conf import settings
+from datetime import datetime
+import json
+import pytz
 
 # подключение кастомных файлов
-from tools.viewmodel import ViewModel
 from dao.anime import AnimeManager
 from dao.anime_comments import AnimeCommentsManager
 from dao.auth import AuthManager
+from tools.viewmodel import ViewModel
 from tools.elastic.manager import ElasticSearchManager
-from tools import utils
-from tools import debugger
+from tools import utils, debugger, logger
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
@@ -41,15 +43,39 @@ def anime_view(reqeust, pk):
 
 
 def comment_post(request):
-    code = 1
     if request.POST:
         anime_id = utils.try_get_from_request(request, utils.POST, 'anime_id')
         text = utils.try_get_from_request(request, utils.POST, 'text')
 
         author = AuthManager.get_by_id(request.session['viewer_id'])
         anime = AnimeManager.get_anime_by_id(anime_id)
-        AnimeCommentsManager.create(author, anime, text)
+        comment = AnimeCommentsManager.create(author, anime, text)
 
+        publish_date = comment.publish_date.astimezone(pytz.timezone("Asia/Almaty")).strftime("%d %B %Y %H:%M")
+
+        obj = {
+            'id': comment.id,
+            'author': {
+                'id': str(comment.author.id),
+                'image_url': str(comment.author.image.url),
+                'username': str(comment.author.base_user.username),
+                'role': str(comment.author.role.value)
+            },
+            'publish_date': str(publish_date),
+            'text': comment.text
+        }
+        comment_json = json.dumps(obj)
+        return HttpResponse(comment_json, content_type='application/json')
+    code = 0
+    return HttpResponse(code)
+
+
+def delete_comment_post(request):
+    code = 1
+    if request.POST:
+        comment_id = utils.try_get_from_request(request, utils.POST, 'id')
+        if not AnimeCommentsManager.delete(comment_id):
+            code = 0
         return HttpResponse(code)
     code = 0
     return HttpResponse(code)

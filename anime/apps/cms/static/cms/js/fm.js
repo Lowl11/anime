@@ -247,7 +247,7 @@ class FileManagerData {
 
     constructor(gui) {
         this.GUI = gui;
-        this.CSRF = this.GetCSRFToken();
+        this.CSRF = Utils.GetCSRFToken();
     }
 
     GetObjects(parentId) {
@@ -258,7 +258,7 @@ class FileManagerData {
             let objects = JSON.parse(data);
             this.GUI.DrawObjects(objects);
         }
-        this.SendAjax(this.GetObjectsUrl, data, onSuccess);
+        Utils.AjaxRequest(this.GetObjectsUrl, data, onSuccess, null, RequestTypes.GET);
     }
 
     CreateFolder(parentId, folderName, onSuccess) {
@@ -266,7 +266,7 @@ class FileManagerData {
             'name': folderName,
             'parent_id': parentId
         };
-        this.SendAjax(this.CreateFolderUrl, data, onSuccess);
+        Utils.AjaxRequest(this.CreateFolderUrl, data, onSuccess, null, RequestTypes.GET);
     }
 
     RenameFolder(folderId, folderName, onSuccess) {
@@ -274,34 +274,21 @@ class FileManagerData {
             'name': folderName,
             'folder_id': folderId
         };
-        this.SendAjax(this.RenameFolderUrl, data, onSuccess);
+        Utils.AjaxRequest(this.RenameFolderUrl, data, onSuccess, null, RequestTypes.GET);
     }
 
     DeleteFolder(folderId, onSuccess) {
         let data = {
             'folder_id': folderId
         };
-        this.SendAjax(this.DeleteFolderUrl, data, onSuccess);
+        Utils.AjaxRequest(this.DeleteFolderUrl, data, onSuccess, null, RequestTypes.GET);
     }
 
     UploadFile(parentId, file, onSuccess) {
         let data = new FormData();
         data.append('file', file);
         data.append('parent_id', parentId);
-        this.UploadFileAjax(this.UploadFileUrl, data, onSuccess);
-    }
-
-    SendAjax(url, data, onSuccess) {
-        $.ajax({
-            type: 'GET',
-            url: url,
-            data: data,
-            cache: false,
-            success: onSuccess,
-            error: function() {
-                console.error('Ошибка отправки Ajax запроса');
-            }
-        });
+        this.UploadFileAjax(this.UploadFileUrl, data, onSuccess, null, RequestTypes.GET);
     }
 
     UploadFileAjax(url, data, onSuccess) {
@@ -324,23 +311,6 @@ class FileManagerData {
             processData: false,
             timeout: 6000
         });
-    }
-
-    GetCSRFToken() {
-        let name = 'csrftoken';
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            let cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                let cookie = cookies[i].trim();
-                // Does this cookie string begin with the name we want?
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
-            }
-        }
-        return cookieValue;
     }
 
 }

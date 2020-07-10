@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^year/(?P<year>\d+)$', views.year_view, name = 'watch_year_view'),
     url(r'^xsearch/$', views.xsearch_get, name = 'xsearch_get'),
     url(r'^comment/$', views.comment_post, name = 'watch_comment_post'),
+    url(r'^delete-comment/$', views.delete_comment_post, name = 'watch_delete_comment_post'),
     ############################# /MAIN #######################################
 ]

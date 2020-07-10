@@ -27,6 +27,7 @@ class AnimeComment(models.Model):
     author = models.ForeignKey(Viewer, models.SET_NULL, null = True, blank = True)
     anime = models.ForeignKey(Anime, models.CASCADE)
     text = models.TextField('Текст комментария')
+    publish_date = models.DateTimeField('Дата публикации', default='2020-07-08')
 
     class Meta:
         verbose_name = 'Комментарий под аниме'
