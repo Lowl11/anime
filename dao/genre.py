@@ -2,24 +2,22 @@ from django.conf import settings
 
 # Подключение кастомных классов
 from watch.models import Genre, ConstantGenre
+from .base import BaseDaoManager
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
-"""
-    GenreManager - вспомогающий класс
-"""
-class GenreManager:
+
+class GenreManager(BaseDaoManager):
+    """ GenreManager - вспомогающий класс """
+
+    def __init__(self):
+        super(GenreManager, self).__init__(ConstantGenre)
+
     ####################################################################
     ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
     ####################################################################
-
-    # Возвращает все жанры аниме
-    @staticmethod
-    def get_genres():
-        genre_list = ConstantGenre.objects.all()
-        return genre_list
     
     # возвращает список жанров одного аниме как список ссылок HTML
     @staticmethod

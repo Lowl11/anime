@@ -2,19 +2,17 @@ from datetime import datetime
 
 from cms.models import Appeal
 from dao.auth import AuthManager
+from dao.base import BaseDaoManager
 
 
-class AppealManager:
+class AppealManager(BaseDaoManager):
 
-    @staticmethod
-    def get_all():
-        appeals = Appeal.objects.all()
-        return appeals
+    def __init__(self):
+        super(AppealManager, self).__init__(Appeal)
 
-    @staticmethod
-    def create(text, base_user):
+    def create(self, text, base_user):
         appeal = Appeal()
         appeal.text = text
         appeal.date = datetime.now()
         appeal.author = AuthManager.get_by_base_user(base_user)
-        appeal.save()
+        self.save(appeal)

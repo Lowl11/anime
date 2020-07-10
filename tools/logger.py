@@ -16,6 +16,7 @@ MODULE = 4
 FILE = 5
 TASK = 6
 FRONT = 7
+DAO = 8
 
 
 def write(message, logger_type):
@@ -68,6 +69,9 @@ def define(logger_type):
     elif logger_type == FRONT:
         title = 'Front'
         file_name = 'front'
+    elif logger_type == DAO:
+        title = 'Dao/База Данных'
+        file_name = 'dao'
     else:
         title = 'Неизвестный тип записи'
         file_name = 'unknown'

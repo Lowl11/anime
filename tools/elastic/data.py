@@ -4,6 +4,8 @@ import json
 from tools.elastic.index import IndexManager
 from dao.anime import AnimeManager
 
+anime_manager = AnimeManager()
+
 
 class DataManager:
     """ DataManager - CRUD для данных заполняемых в индексы """
@@ -19,7 +21,7 @@ class DataManager:
         """ заполняет индекс аниме анимешками """
 
         postfix = self.__anime_index_name() + '/_doc'
-        anime_list = AnimeManager.get_all()  # берем все анимешки
+        anime_list = anime_manager.get_all()  # берем все анимешки
         objects_list = AnimeManager.parse_to_objects(anime_list)  # превращаем их в объекты (для JSON)
         for anime in objects_list:  # по очереди заполянем индекс анимешками
             self.__create_doc(postfix, anime)

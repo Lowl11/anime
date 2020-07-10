@@ -16,6 +16,8 @@ from tools import utils, debugger, logger
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 es_manager = ElasticSearchManager()
+anime_manager = AnimeManager()
+auth_manager = AuthManager()
 
 
 ####################################################################
@@ -25,12 +27,12 @@ es_manager = ElasticSearchManager()
 # Отображение списка аниме
 def page_view(request):
     title = 'Смотреть аниме'
-    return display_anime_list(request, AnimeManager.get_all(), title)
+    return display_anime_list(request, anime_manager.get_all(), title)
 
 
 # Отображение одного аниме
-def anime_view(reqeust, pk):
-    anime = AnimeManager.get_anime_by_id(pk)
+def anime_view(request, pk):
+    anime = anime_manager.get_by_id(pk)
     if not anime:
         return not_found()
 
@@ -39,7 +41,7 @@ def anime_view(reqeust, pk):
     vm.add_object('title', 'Смотреть аниме "' + str(anime) + '"')
     vm.add_object('anime', anime)
     vm.add_object('comments', AnimeCommentsManager.get_all(anime))
-    return vm.render(reqeust)
+    return vm.render(request)
 
 
 def comment_post(request):
@@ -47,8 +49,13 @@ def comment_post(request):
         anime_id = utils.try_get_from_request(request, utils.POST, 'anime_id')
         text = utils.try_get_from_request(request, utils.POST, 'text')
 
-        author = AuthManager.get_by_id(request.session['viewer_id'])
-        anime = AnimeManager.get_anime_by_id(anime_id)
+        author = auth_manager.get_by_id(request.session['viewer_id'])
+        anime = anime_manager.get_by_id(anime_id)
+        if author is None or anime is None:
+            logger.write('В методе comment_post() отсутствует author или anime. Author = ' + str(author) + ' | '
+                         + str(anime), logger.DAO)
+            code = 0
+            return HttpResponse(code)
         comment = AnimeCommentsManager.create(author, anime, text)
 
         publish_date = comment.publish_date.astimezone(pytz.timezone("Asia/Almaty")).strftime("%d %B %Y %H:%M")

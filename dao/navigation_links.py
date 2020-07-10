@@ -2,36 +2,19 @@ from django.conf import settings
 
 # Подключение кастомных классов
 from main.models import NavigationLink
+from .base import BaseDaoManager
 
 # глобальные объекты и переменные
 SETTINGS = settings.A_SETTINGS
 CONSTANTS = settings.A_CONSTANTS
 
-"""
-    NavigationLinksManager - вспомогательный класс являющийся инструментом для навигационных ссылок
-"""
-class NavigationLinksManager:
-    ####################################################################
-    ######################## ПУБЛИЧНЫЕ МЕТОДЫ ##########################
-    ####################################################################
 
-    # возвращает все ссылки
-    @staticmethod
-    def get_links():
-        links = NavigationLink.objects.all()
-        return links
+class NavigationLinksManager(BaseDaoManager):
+    """ Вспомогательный класс являющийся инструментом для навигационных ссылок """
 
-    # возвращает все ссылки отсортированные по порядковому номеру
-    @staticmethod
-    def get_links_by_order():
-        links = NavigationLinksManager.get_links()
-        sorted_links = NavigationLinksManager.sort_by_order_number(links)
-        return sorted_links
-    
-    
-    ####################################################################
-    ######################## ПРИВАТНЫЕ МЕТОДЫ ##########################
-    ####################################################################
+    def __init__(self):
+        preparation_method = NavigationLinksManager.sort_by_order_number
+        super(NavigationLinksManager, self).__init__(NavigationLink, preparation_method)
 
     # сортировка ссылок по порядковому номеру
     @staticmethod
